@@ -1,4 +1,121 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&family=Aoboshi+One&family=Leckerli+One&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+
+:root{
+    --color-secondary-500: theme(colors.secondary.500);
+}
+
+html,
+body {
+	@apply h-full overflow-hidden !bg-surface-500 box-border text-tertiary-500;
+}
+
+/* Define the transition for use in other class */
+.custom-transition {
+	@apply transition-all duration-300;
+}
+
+@layer base{
+    /* Basic style Balise */
+	h1 {
+		@apply text-4xl !font-leckerli tracking-widest;
+	}
+
+    h2{
+        @apply text-6xl !font-akshar font-bold tracking-widest;
+    }
+
+    h3{
+        @apply text-4xl font-bold tracking-wider;
+    }
+
+    h4{
+        @apply text-2xl !font-slab font-bold;
+    }
+
+    /* Important Information */
+    span{
+        @apply !font-slab font-bold tracking-widest;
+    }
+
+    /* For Date */
+    time{
+        @apply !font-condensed font-bold italic tracking-wider;
+    }
+
+    /* Address */
+    address{
+        @apply !font-condensed font-bold;
+    }
+
+    /* Navigation */
+    .nav{
+        @apply text-2xl !font-condensed font-bold;
+    }
+
+    /* Text on Home page */
+    .information{
+        @apply text-2xl font-medium;
+    }
+
+    /* Number */
+    .number{
+        @apply text-3xl font-aoboshi;
+    }
+
+    /* Create Gradient */
+    .gradient{
+        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_20%,_rgba(17,159,230,1)_100%)]
+    }
+
+    .gradient-secondary{
+        @apply bg-[linear-gradient(240deg,_rgba(163,0,156,1)_0%,_rgba(0,100,148,1)_65%,_rgba(59,183,245,1)_100%)]
+    }
+
+    /* Create Gradient for Text */
+    .gradient-text{
+        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_20%,_rgba(17,159,230,1)_100%)] bg-clip-text text-transparent;
+    }
+
+    .gradient-text-secondary{
+        @apply bg-[linear-gradient(240deg,_rgba(163,0,156,1)_0%,_rgba(0,100,148,1)_65%,_rgba(59,183,245,1)_100%)] bg-clip-text text-transparent;
+    }
+
+    /* Define Shadow for Box and Text */
+    .shadow-custom{
+        @apply shadow-[0_0_10px_0_rgba(129,129,129,0.9)];
+    }
+
+    .text-shadow-custom{
+        @apply [text-shadow:4px_4px_10px_rgba(46,46,46,0.86)];
+    }
+
+    .bar{
+        @apply w-full h-[2px]
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 600px){
+
+        /* Responsive style Balise */
+        h2{
+            @apply text-5xl;
+        }
+
+        h3{
+            @apply text-3xl;
+        }
+
+        .nav{
+            @apply text-xl;
+        }
+
+        .information{
+            @apply text-xl;
+        }
+    }
+}
