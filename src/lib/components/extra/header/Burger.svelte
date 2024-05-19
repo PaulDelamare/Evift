@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 
     // Imports
     import { quintOut } from "svelte/easing";
@@ -19,7 +19,7 @@
     *
     * @return {void} This function returns nothing.
     */
-    const changePage = () => {
+    const changePage = (): void => {
         burger = false;
     }
 

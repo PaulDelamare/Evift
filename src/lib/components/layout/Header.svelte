@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 
     // Imports
 	import Burger from "../extra/header/Burger.svelte";
