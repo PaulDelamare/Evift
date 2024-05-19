@@ -36,6 +36,12 @@ export default {
 					950: '#092d48',
 				},
 			},
+			screens: {
+				'tablet': { 'raw': '(max-width: 850px)' },
+				'mini-tablet': { 'raw': '(max-width: 640px)' },
+				'mini-tablet-min': { 'raw': '(min-width: 641px)' },
+				'mobile-large': { 'raw': '(max-width: 430px)' },
+			}
 		}
 	},
 	plugins: [
