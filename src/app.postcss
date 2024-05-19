@@ -20,41 +20,55 @@ body {
 }
 
 @layer base{
+    /* Define basic Wrap */
+    .wrap{
+        @apply w-full max-w-[1300px] mx-auto;
+    }
+
+    .middle-wrap{
+        @apply w-full max-w-[1000px] mx-auto;
+    }
+
     /* Basic style Balise */
 	h1 {
-		@apply text-4xl !font-leckerli tracking-widest;
+		@apply text-4xl !font-leckerli tracking-widest inline leading-normal;
 	}
 
+    .h1{
+        @apply !text-4xl !font-leckerli !tracking-widest !inline !leading-normal !font-normal;
+    }
+
     h2{
-        @apply text-6xl !font-akshar font-bold tracking-widest;
+        @apply text-6xl !font-akshar font-bold tracking-widest inline leading-normal;
     }
 
     h3{
-        @apply text-4xl font-bold tracking-wider;
+        @apply text-4xl font-bold tracking-wider inline leading-normal;
     }
 
     h4{
-        @apply text-2xl !font-slab font-bold;
+        @apply text-2xl !font-slab font-bold inline leading-normal;
     }
 
     /* Important Information */
     span{
-        @apply !font-slab font-bold tracking-widest;
+        @apply !font-slab font-bold tracking-widest inline leading-normal;
     }
 
     /* For Date */
     time{
-        @apply !font-condensed font-bold italic tracking-wider;
+        @apply !font-condensed font-bold italic tracking-wider inline leading-normal;
     }
 
     /* Address */
     address{
-        @apply !font-condensed font-bold;
+        @apply !font-condensed font-bold inline;
     }
 
     /* Navigation */
+    /*! For add transition Add duration !*/
     .nav{
-        @apply text-2xl !font-condensed font-bold;
+        @apply text-2xl !font-condensed font-bold inline leading-normal custom-transition !duration-0;
     }
 
     /* Text on Home page */
@@ -69,7 +83,7 @@ body {
 
     /* Create Gradient */
     .gradient{
-        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_20%,_rgba(17,159,230,1)_100%)]
+        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_15%,_rgba(17,159,230,1)_100%)]
     }
 
     .gradient-secondary{
@@ -78,7 +92,7 @@ body {
 
     /* Create Gradient for Text */
     .gradient-text{
-        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_20%,_rgba(17,159,230,1)_100%)] bg-clip-text text-transparent;
+        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_15%,_rgba(17,159,230,1)_100%)] bg-clip-text text-transparent;
     }
 
     .gradient-text-secondary{
@@ -94,6 +108,28 @@ body {
         @apply [text-shadow:4px_4px_10px_rgba(46,46,46,0.86)];
     }
 
+    /* Class combo */
+    /* For element align in Row */
+    .between{
+        @apply flex justify-between items-center;
+    }
+
+    /* For Element Align in Column */
+    .column{
+        @apply flex flex-col items-center;
+    }
+
+    /* Define Active Style Page */
+	[aria-current='page'] {
+		@apply !gradient-text;
+	}
+
+    /* Define Active Style Page Responsive */
+	[aria-current='location'] {
+		@apply !ring-2 !ring-surface-500;
+	}
+
+    /* Basic Style for Separator */
     .bar{
         @apply w-full h-[2px]
     }
