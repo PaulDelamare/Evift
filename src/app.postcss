@@ -5,8 +5,8 @@
 @tailwind utilities;
 @tailwind variants;
 
-:root{
-    --color-secondary-500: theme(colors.secondary.500);
+:root {
+	--color-secondary-500: theme(colors.secondary.500);
 }
 
 html,
@@ -19,139 +19,138 @@ body {
 	@apply transition-all duration-300;
 }
 
-@layer base{
-    /* Define basic Wrap */
-    .wrap{
-        @apply w-full max-w-[1300px] mx-auto;
-    }
+@layer base {
+	/* Define basic Wrap */
+	.wrap {
+		@apply w-full max-w-[1300px] mx-auto;
+	}
 
-    .middle-wrap{
-        @apply w-full max-w-[1000px] mx-auto;
-    }
+	.middle-wrap {
+		@apply w-full max-w-[1000px] mx-auto;
+	}
 
-    /* Basic style Balise */
+	/* Basic style Balise */
 	h1 {
 		@apply text-4xl !font-leckerli tracking-widest inline leading-normal;
 	}
 
-    .h1{
-        @apply !text-4xl !font-leckerli !tracking-widest !inline !leading-normal !font-normal;
-    }
+	.h1 {
+		@apply !text-4xl !font-leckerli !tracking-widest !inline !leading-normal !font-normal;
+	}
 
-    h2{
-        @apply text-6xl !font-akshar font-bold tracking-widest inline leading-normal;
-    }
+	h2 {
+		@apply text-6xl !font-akshar font-bold tracking-widest inline leading-normal;
+	}
 
-    h3{
-        @apply text-4xl font-bold tracking-wider inline leading-normal;
-    }
+	h3 {
+		@apply text-4xl font-bold tracking-wider inline leading-normal;
+	}
 
-    h4{
-        @apply text-2xl !font-slab font-bold inline leading-normal;
-    }
+	h4 {
+		@apply text-2xl !font-slab font-bold inline leading-normal;
+	}
 
-    /* Important Information */
-    span{
-        @apply !font-slab font-bold tracking-widest inline leading-normal;
-    }
+	/* Important Information */
+	span {
+		@apply !font-slab font-bold tracking-widest inline leading-normal;
+	}
 
-    /* For Date */
-    time{
-        @apply !font-condensed font-bold italic tracking-wider inline leading-normal;
-    }
+	/* For Date */
+	time {
+		@apply !font-condensed font-bold italic tracking-wider inline leading-normal;
+	}
 
-    /* Address */
-    address{
-        @apply !font-condensed font-bold inline;
-    }
+	/* Address */
+	address {
+		@apply !font-condensed font-bold inline;
+	}
 
-    /* Navigation */
-    /*! For add transition Add duration !*/
-    .nav{
-        @apply text-2xl !font-condensed font-bold inline leading-normal custom-transition !duration-0;
-    }
+	/* Navigation */
+	/*! For add transition Add duration !*/
+	.nav {
+		@apply text-2xl !font-condensed font-bold inline leading-normal custom-transition !duration-0;
+	}
 
-    /* Text on Home page */
-    .information{
-        @apply text-2xl font-medium;
-    }
+	/* Text on Home page */
+	.information {
+		@apply text-2xl font-medium;
+	}
 
-    /* Number */
-    .number{
-        @apply text-3xl font-aoboshi;
-    }
+	/* Number */
+	.number {
+		@apply text-3xl font-aoboshi;
+	}
 
-    /* Create Gradient */
-    .gradient{
-        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_15%,_rgba(17,159,230,1)_100%)]
-    }
+	/* Create Gradient */
+	.gradient {
+		@apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_15%,_rgba(17,159,230,1)_100%)];
+	}
 
-    .gradient-secondary{
-        @apply bg-[linear-gradient(240deg,_rgba(163,0,156,1)_0%,_rgba(0,100,148,1)_65%,_rgba(59,183,245,1)_100%)]
-    }
+	.gradient-secondary {
+		@apply bg-[linear-gradient(240deg,_rgba(163,0,156,1)_0%,_rgba(0,100,148,1)_65%,_rgba(59,183,245,1)_100%)];
+	}
 
-    /* Create Gradient for Text */
-    .gradient-text{
-        @apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_15%,_rgba(17,159,230,1)_100%)] bg-clip-text text-transparent;
-    }
+	/* Create Gradient for Text */
+	.gradient-text {
+		@apply bg-[linear-gradient(250deg,_rgba(163,0,156,1)_15%,_rgba(17,159,230,1)_100%)] bg-clip-text text-transparent;
+	}
 
-    .gradient-text-secondary{
-        @apply bg-[linear-gradient(240deg,_rgba(163,0,156,1)_0%,_rgba(0,100,148,1)_65%,_rgba(59,183,245,1)_100%)] bg-clip-text text-transparent;
-    }
+	.gradient-text-secondary {
+		@apply bg-[linear-gradient(240deg,_rgba(163,0,156,1)_0%,_rgba(0,100,148,1)_65%,_rgba(59,183,245,1)_100%)] bg-clip-text text-transparent;
+	}
 
-    /* Define Shadow for Box and Text */
-    .shadow-custom{
-        @apply shadow-[0_0_10px_0_rgba(129,129,129,0.9)];
-    }
+	/* Define Shadow for Box and Text */
+	.shadow-custom {
+		@apply shadow-[0_0_10px_0_rgba(129,129,129,0.9)];
+	}
 
-    .text-shadow-custom{
-        @apply [text-shadow:4px_4px_10px_rgba(46,46,46,0.86)];
-    }
+	.text-shadow-custom {
+		@apply [text-shadow:4px_4px_10px_rgba(46,46,46,0.86)];
+	}
 
-    /* Class combo */
-    /* For element align in Row */
-    .between{
-        @apply flex justify-between items-center;
-    }
+	/* Class combo */
+	/* For element align in Row */
+	.between {
+		@apply flex justify-between items-center;
+	}
 
-    /* For Element Align in Column */
-    .column{
-        @apply flex flex-col items-center;
-    }
+	/* For Element Align in Column */
+	.column {
+		@apply flex flex-col items-center;
+	}
 
-    /* Define Active Style Page */
+	/* Define Active Style Page */
 	[aria-current='page'] {
 		@apply !gradient-text;
 	}
 
-    /* Define Active Style Page Responsive */
+	/* Define Active Style Page Responsive */
 	[aria-current='location'] {
 		@apply !ring-2 !ring-surface-500;
 	}
 
-    /* Basic Style for Separator */
-    .bar{
-        @apply w-full h-[2px]
-    }
+	/* Basic Style for Separator */
+	.bar {
+		@apply w-full h-[2px];
+	}
 
-    /* Responsive */
-    @media screen and (max-width: 600px){
+	/* Responsive */
+	@media screen and (max-width: 600px) {
+		/* Responsive style Balise */
+		h2 {
+			@apply text-5xl;
+		}
 
-        /* Responsive style Balise */
-        h2{
-            @apply text-5xl;
-        }
+		h3 {
+			@apply text-3xl;
+		}
 
-        h3{
-            @apply text-3xl;
-        }
+		.nav {
+			@apply text-xl;
+		}
 
-        .nav{
-            @apply text-xl;
-        }
-
-        .information{
-            @apply text-xl;
-        }
-    }
+		.information {
+			@apply text-xl;
+		}
+	}
 }
