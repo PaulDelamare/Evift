@@ -43,5 +43,8 @@
 		"vite-plugin-tailwind-purgecss": "0.3.3",
 		"vitest": "^1.2.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"svelte-typewriter": "^3.2.3"
+	}
 }
