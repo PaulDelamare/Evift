@@ -23,7 +23,7 @@
 
 <section>
     <div class="wrap w-full between items-start px-8 mini-desk:flex-col mini-desk:gap-12 mini-tablet:px-4">
-        <h3 class="w-3/6 mini-desk:w-full mini-desk:text-center">
+        <h3 class="w-2/6 mini-desk:w-full mini-desk:text-center">
             Votre évènement crée en <b class="text-gradient">quatres étapes</b>
         </h3>
         <div class="w-3/5 column gap-6 mini-desk:w-full">
