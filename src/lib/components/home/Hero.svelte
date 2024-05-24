@@ -1,4 +1,4 @@
-<section class="gradient-secondary h-[50rem] max-h-[94svh]">
+<section class="bg-secondaryGradient h-[50rem] max-h-[94svh]">
     <div class="wrap h-full between px-12 gap-8 tablet:flex-col tablet:py-12 tablet:px-4 tablet:justify-evenly">
         <div class="column w-2/5 mini-desk:w-3/5 text-center gap-8 text-surface-500 tablet:w-full ">
             <h2 class="text-shadow-custom">Créez votre événement</h2>

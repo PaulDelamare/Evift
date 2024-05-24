@@ -10,7 +10,7 @@
 <CustomAppShell
 	headerSticky
 	headerClass="bg-surface-500 shadow-header"
-	footerClass="gradient-secondary"
+	footerClass="bg-secondaryGradient"
 >
 	<!-- Add Header -->
 	<Header slot="header" />
