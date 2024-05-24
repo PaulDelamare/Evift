@@ -41,7 +41,8 @@ export default {
 				'tablet': { raw: '(max-width: 850px)' },
 				'mini-tablet': { raw: '(max-width: 640px)' },
 				'mini-tablet-min': { raw: '(min-width: 641px)' },
-				'mobile-large': { raw: '(max-width: 430px)' }
+				'mobile-large': { raw: '(max-width: 475px)' },
+				'mobile': { raw: '(max-width: 390px)' },
 			},
 			backgroundImage: {
 				'gradient': 'linear-gradient(250deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 15%, rgba(17,159,230,1) 100%)',
