@@ -44,15 +44,15 @@
 		>
 			<!-- For Top Bar -->
 			<div
-				class="bar gradient-secondary bar--top bottom-[calc(50%_+_11px_+_4px/_2)] transition-[bottom,margin,transform] delay-[calc(0s_+0.35s),0s,0s]"
+				class="bar bg-secondaryGradient bar--top bottom-[calc(50%_+_11px_+_4px/_2)] transition-[bottom,margin,transform] delay-[calc(0s_+0.35s),0s,0s]"
 			></div>
 			<!-- For Middle Bar -->
 			<div
-				class="bar gradient-secondary bar--middle top-[calc(50%_-_4px/_2)] transition-[top,opacity] duration-[0.35s,0s] delay-[calc(0s_+_0.35s_*_1.3),calc(0s_+_0.35s_*_1.3)]"
+				class="bar bg-secondaryGradient bar--middle top-[calc(50%_-_4px/_2)] transition-[top,opacity] duration-[0.35s,0s] delay-[calc(0s_+_0.35s_*_1.3),calc(0s_+_0.35s_*_1.3)]"
 			></div>
 			<!-- For Bottom Bar -->
 			<div
-				class="bar gradient-secondary bar--bottom top-[calc(50%_+_11px_+_4px/_2)] transition-[top,transform] delay-0"
+				class="bar bg-secondaryGradient bar--bottom top-[calc(50%_+_11px_+_4px/_2)] transition-[top,transform] delay-0"
 			></div>
 		</label>
 	</div>
@@ -62,7 +62,7 @@
 	<div
 		in:fade={{ duration: 300, easing: quintOut }}
 		out:fade={{ duration: 300, easing: quintOut }}
-		class="fixed top-0 left-0 right-0 bottom-0 gradient z-40"
+		class="fixed top-0 left-0 right-0 bottom-0 bg-gradient z-40"
 	>
 		<Navigation
 			on:changePage={changePage}
