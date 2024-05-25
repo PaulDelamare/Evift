@@ -33,7 +33,7 @@
 		{#if h1}
 			<!-- Define Site name in h1 -->
 			<h1
-				class="{text ? '' : 'hidden'} {gradient ? 'gradient-text' : ''} {white
+				class="{text ? '' : 'hidden'} {gradient ? 'text-gradient' : ''} {white
 					? 'text-surface-500'
 					: ''} {color ? `text-[${color}]` : ''}"
 			>
@@ -42,7 +42,7 @@
 		{:else}
 			<!-- Else Define Site name in span -->
 			<span
-				class="h1 {text ? '' : 'hidden'} {gradient ? 'gradient-text' : ''} {white
+				class="h1 {text ? '' : 'hidden'} {gradient ? 'text-gradient' : ''} {white
 					? 'text-surface-500'
 					: ''} {color ? `text-[${color}]` : ''}">Evift</span
 			>
@@ -65,7 +65,7 @@
 			{#if h1}
 				<!-- Define Site name in h1 -->
 				<h1
-					class="{text ? '' : 'hidden'} {gradient ? 'gradient-text' : ''} {white
+					class="{text ? '' : 'hidden'} {gradient ? 'text-gradient' : ''} {white
 						? 'text-surface-500'
 						: ''} {color ? `text-[${color}]` : ''}"
 				>
@@ -74,7 +74,7 @@
 			{:else}
 				<!-- Else Define Site name in span -->
 				<span
-					class="h1 {text ? '' : 'hidden'} {gradient ? 'gradient-text' : ''} {white
+					class="h1 {text ? '' : 'hidden'} {gradient ? 'text-gradient' : ''} {white
 						? 'text-surface-500'
 						: ''} {color ? `text-[${color}]` : ''}">Evift</span
 				>

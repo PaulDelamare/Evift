@@ -9,8 +9,8 @@
 <!-- Create Custom APP Shell for Element Position -->
 <CustomAppShell
 	headerSticky
-	headerClass="bg-surface-500 shadow-custom"
-	footerClass="gradient-secondary"
+	headerClass="bg-surface-500 shadow-header"
+	footerClass="bg-secondaryGradient"
 >
 	<!-- Add Header -->
 	<Header slot="header" />

@@ -12,7 +12,7 @@
 
 	<!-- TODO Add condition for Loged Nav -->
 	<!-- For Desktop Display Navigation -->
-	<Navigation navClass="tablet:hidden" ulClass="gap-12" hover />
+	<Navigation navClass="tablet:hidden" ulClass="gap-12 pb-2" hover />
 
 	<!-- For Responsive Display Burger Menu -->
 	<Burger divClass="hidden tablet:block" />

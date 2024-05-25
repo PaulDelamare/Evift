@@ -39,7 +39,7 @@
 	// Create Class
 	const ulC = `flex items-center ${ulClass}`;
 	const liC = `${liClass}`;
-	const aC = `nav ${aClass} ${hover ? 'hover:!gradient-text hover:!duration-300' : ''}`;
+	const aC = `nav ${aClass} ${hover ? 'hover:!text-gradient hover:!duration-300' : ''}`;
 	const navC = `${navClass}`;
 
 	// Functions
