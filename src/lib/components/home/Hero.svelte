@@ -54,9 +54,9 @@
                 {:else if text == 1}
                     <h4 class="text-shadow-custom tablet:text-xl">Pour y participer et consulter l'organisation super simplement !</h4>
                 {:else if text == 2}
-                    <h4 class="text-shadow-custom tablet:text-xl">Pour que vos proches puissent vous rendre heureux !</h4>
+                    <h4 class="text-shadow-custom tablet:text-xl">Pour que votre famille et vos amis puissent vous rendre heureux !</h4>
                 {/if}
-            </Typewriter>*
+            </Typewriter>
             <!-- Display button -->
             <a href="/connexion" class="nav px-12 py-2 bg-secondary-500 rounded-xl shadow-custom">
                 Je commence
