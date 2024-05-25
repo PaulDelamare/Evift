@@ -38,20 +38,24 @@ export default {
 			},
 			screens: {
 				'mini-desk': { raw: '(max-width: 1150px)' },
-				'tablet': { raw: '(max-width: 850px)' },
+				tablet: { raw: '(max-width: 850px)' },
 				'mini-tablet': { raw: '(max-width: 640px)' },
 				'mini-tablet-min': { raw: '(min-width: 641px)' },
 				'mobile-large': { raw: '(max-width: 475px)' },
-				'mobile': { raw: '(max-width: 390px)' },
+				mobile: { raw: '(max-width: 390px)' }
 			},
 			backgroundImage: {
-				'gradient': 'linear-gradient(250deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 15%, rgba(17,159,230,1) 100%)',
-				'secondaryGradient': 'linear-gradient(240deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 0%, rgb(var(--color-primary-500) / var(--tw-text-opacity)) 65%, rgba(59,183,245,1) 100%)'
+				gradient:
+					'linear-gradient(250deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 15%, rgba(17,159,230,1) 100%)',
+				secondaryGradient:
+					'linear-gradient(240deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 0%, rgb(var(--color-primary-500) / var(--tw-text-opacity)) 65%, rgba(59,183,245,1) 100%)'
 			},
 			ringColor: {
-				'gradient': 'linear-gradient(250deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 15%, rgba(17,159,230,1) 100%)',
-				'secondaryGradient': 'linear-gradient(240deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 0%, rgb(var(--color-primary-500) / var(--tw-text-opacity)) 65%, rgba(59,183,245,1) 100%)'
-			},
+				gradient:
+					'linear-gradient(250deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 15%, rgba(17,159,230,1) 100%)',
+				secondaryGradient:
+					'linear-gradient(240deg, rgb(var(--color-secondary-500) / var(--tw-text-opacity)) 0%, rgb(var(--color-primary-500) / var(--tw-text-opacity)) 65%, rgba(59,183,245,1) 100%)'
+			}
 		}
 	},
 	plugins: [
