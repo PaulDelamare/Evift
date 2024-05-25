@@ -15,11 +15,13 @@
 <slot name="hero" />
 <!-- Place div whith flex display -->
 <div class="flex flex-col gap-24 py-24 mini-tablet:gap-12 mini-tablet:py-12 relative ">
+    <!-- If pink background is true display pink background -->
     {#if pinkBackground}
         <div class="{pinkWidth} {pinkTop} {pinkLeft} absolute -z-10">
             <img class="w-full" src="/svg/background/pinkBackground.svg" alt="Style de Fond du site EVIFT" />
         </div>
     {/if}
+    <!-- If blue background is true display blue background -->
     {#if blueBackground}
         <div class="{blueWidth} {blueBottom} {blueRight} absolute -z-10">
             <img class="w-full" src="/svg/background/blueBackground.svg" alt="Style de Fond du site EVIFT" />
