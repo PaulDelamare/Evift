@@ -44,7 +44,7 @@
                 {:else if text == 1}
                     <h2 class="text-shadow-custom">Rejoingnez un événement</h2>
                 {:else if text == 2}
-                    <h2 class="text-shadow-custom">Créez votre liste de cadeaux</h2>
+                    <h2 class="text-shadow-custom">Créez votre Wish List</h2>
                 {/if}
             </Typewriter>
             <!-- Display description with Textwritter animation -->
