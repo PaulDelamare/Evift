@@ -16,7 +16,7 @@
 		<!-- Display Footer Logo -->
 		<Logo white text link />
 		<!-- Display Footer Navigation -->
-		<Navigation aClass="text-surface-500" contact ulClass="gap-8 flex-col" />
+		<Navigation hoverFooter aClass="text-surface-500" contact ulClass="gap-8 flex-col" />
 		<!-- Display Footer Network -->
 		<Network />
 	</div>
