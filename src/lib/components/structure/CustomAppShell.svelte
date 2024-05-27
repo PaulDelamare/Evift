@@ -27,7 +27,7 @@
 	<div class="flex-auto w-full h-full flex overflow-hidden">
 		<div
 			id="page"
-			class="relative flex-1 overflow-x-hidden flex flex-col"
+			class="relative flex-1 overflow-x-hidden flex flex-col h-full my-0"
 			style="scrollbar-gutter: auto;"
 		>
 			<!-- Elements -->
