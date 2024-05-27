@@ -22,7 +22,7 @@ body {
 @layer base {
 	/* Define basic Wrap */
 	.wrap {
-		@apply w-full max-w-[1600px] mx-auto;
+		@apply w-full max-w-[1600px] mx-auto desk:max-w-[1300px];
 	}
 
 	.middle-wrap {
@@ -136,7 +136,7 @@ body {
 	}
 
 	/* Responsive */
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 640px) {
 		/* Responsive style Balise */
 		h2 {
 			@apply text-5xl;
