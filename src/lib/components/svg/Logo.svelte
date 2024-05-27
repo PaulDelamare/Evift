@@ -17,7 +17,7 @@
 	<!-- If Logo need to be a link -->
 	{#if link}
 		<!-- Define Logo in Link -->
-		<a href="/">
+		<a href="/" class="hover:scale-105 custom-transition">
 			<LogoSvg
 				{widthSvg}
 				fill={gradient
