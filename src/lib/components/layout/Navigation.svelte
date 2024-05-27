@@ -12,6 +12,7 @@
 	export let mobile = false;
 	export let contact = false;
 	export let hover = false;
+	export let hoverFooter = false;
 
 	// Variable for the navigation
 	// Define text to display, path and start for know if the active need to start with this url or need to be the same
@@ -39,7 +40,7 @@
 	// Create Class
 	const ulC = `flex items-center ${ulClass}`;
 	const liC = `${liClass}`;
-	const aC = `nav ${aClass} ${hover ? 'hover:!text-gradient hover:!duration-300' : ''}`;
+	const aC = `nav ${aClass} ${hover ? 'hover:!text-gradient hover:!duration-300' : ''} ${hoverFooter ? 'hover:!text-surface-700 hover:!duration-300' : ''}`;
 	const navC = `${navClass}`;
 
 	// Functions

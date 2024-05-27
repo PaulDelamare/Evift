@@ -32,41 +32,43 @@
 </script>
 
 <!-- Display Hero -->
-<section class="bg-secondaryGradient h-[50rem] max-h-[94svh]">
+<section class="bg-secondaryGradient h-[55rem] max-h-[94svh]">
 	<!-- Display Hero Information -->
 	<div
 		class="wrap h-full between px-12 gap-8 tablet:flex-col tablet:py-12 tablet:px-4 tablet:justify-evenly"
 	>
 		<!-- Display title and description -->
 		<div class="column w-2/5 mini-desk:w-3/5 text-center gap-8 text-surface-500 tablet:w-full">
+			<div class="column gap-8 min-h-60 mini-tablet:min-h-40">
+				<Typewriter interval={60} cursor={false} unwriteInterval={0}>
+					{#if text == 0}
+						<h2 class="text-shadow-custom">Créez votre événement</h2>
+					{:else if text == 1}
+						<h2 class="text-shadow-custom">Rejoignez un événement</h2>
+					{:else if text == 2}
+						<h2 class="text-shadow-custom">Créez votre Wish List</h2>
+					{/if}
+				</Typewriter>
+				<!-- Display description with Textwritter animation -->
+				<Typewriter interval={30} cursor={false} unwriteInterval={0}>
+					{#if text == 0}
+						<h4 class="text-shadow-custom tablet:text-xl">
+							Pour Noël, un anniversaire ou tout autre occasion !
+						</h4>
+					{:else if text == 1}
+						<h4 class="text-shadow-custom tablet:text-xl">
+							Pour y participer et consulter l'organisation super simplement !
+						</h4>
+					{:else if text == 2}
+						<h4 class="text-shadow-custom tablet:text-xl">
+							Pour que votre famille et vos amis puissent vous rendre heureux !
+						</h4>
+					{/if}
+				</Typewriter>
+			</div>
 			<!-- Display title with Textwritter animation -->
-			<Typewriter interval={60} cursor={false} unwriteInterval={0}>
-				{#if text == 0}
-					<h2 class="text-shadow-custom">Créez votre événement</h2>
-				{:else if text == 1}
-					<h2 class="text-shadow-custom">Rejoingnez un événement</h2>
-				{:else if text == 2}
-					<h2 class="text-shadow-custom">Créez votre Wish List</h2>
-				{/if}
-			</Typewriter>
-			<!-- Display description with Textwritter animation -->
-			<Typewriter interval={30} cursor={false} unwriteInterval={0}>
-				{#if text == 0}
-					<h4 class="text-shadow-custom tablet:text-xl">
-						Pour Noël, un anniversaire ou tout autre occasion !
-					</h4>
-				{:else if text == 1}
-					<h4 class="text-shadow-custom tablet:text-xl">
-						Pour y participer et consulter l'organisation super simplement !
-					</h4>
-				{:else if text == 2}
-					<h4 class="text-shadow-custom tablet:text-xl">
-						Pour que votre famille et vos amis puissent vous rendre heureux !
-					</h4>
-				{/if}
-			</Typewriter>
 			<!-- Display button -->
-			<a href="/connexion" class="nav px-12 py-2 bg-secondary-500 rounded-xl shadow-custom">
+			<a href="/connexion" class="nav px-12 py-2 bg-secondary-500 rounded-xl shadow-custom hover:bg-secondary-600 custom-transition !duration-300">
 				Je commence
 			</a>
 		</div>
