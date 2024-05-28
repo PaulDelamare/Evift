@@ -1,8 +1,8 @@
 <script>
 	// Import components
-	import Features from '$lib/components/home/Features.svelte';
-	import Hero from '$lib/components/home/Hero.svelte';
-	import Stape from '$lib/components/home/Stape.svelte';
+	import Features from '$lib/components/public/home/Features.svelte';
+	import Hero from '$lib/components/public/home/Hero.svelte';
+	import Stape from '$lib/components/public/home/Stape.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 </script>
 
