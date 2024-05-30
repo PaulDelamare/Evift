@@ -1,3 +1,7 @@
+<script lang="ts">
+
+</script>
+
 <div class="bg-surface-500 w-2/4 p-12">
     <!-- Display Form -->
     <form class="column w-full gap-12 text max-w-[450px] mx-auto">

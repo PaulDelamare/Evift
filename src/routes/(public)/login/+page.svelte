@@ -1,6 +1,6 @@
 <script lang="ts">
     import Login from '$lib/components/public/login/Login.svelte';
-import PageLayout from '$lib/components/structure/PageLayout.svelte';
+    import PageLayout from '$lib/components/structure/PageLayout.svelte';
     
 </script>
 
