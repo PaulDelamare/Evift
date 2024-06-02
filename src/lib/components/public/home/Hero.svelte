@@ -11,7 +11,7 @@
 	let intervalId: NodeJS.Timeout; // eslint-disable-line no-undef
 
 	// Create Function for start interval
-	function startInterval() {
+	const startInterval = () => {
 		// Start interval
 		intervalId = setInterval(() => {
 			// Text increment
