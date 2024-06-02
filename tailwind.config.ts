@@ -43,7 +43,7 @@ export default {
 				'mini-tablet': { raw: '(max-width: 640px)' },
 				'mini-tablet-min': { raw: '(min-width: 641px)' },
 				'mobile-large': { raw: '(max-width: 475px)' },
-				mobile: { raw: '(max-width: 390px)' }
+				'mobile': { raw: '(max-width: 390px)' }
 			},
 			backgroundImage: {
 				gradient:
