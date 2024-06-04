@@ -32,7 +32,7 @@
 		>
 			<!-- Elements -->
 			<!-- Header -->
-			<header  class={headerC}>
+			<header class={headerC}>
 				<slot name="header" />
 			</header>
 

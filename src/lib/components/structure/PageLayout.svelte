@@ -17,7 +17,9 @@
 <!-- Display Page Hero -->
 <slot name="hero" />
 <!-- Place div whith flex display -->
-<div class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden">
+<div
+	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden"
+>
 	<!-- If pink background is true display pink background -->
 	{#if pinkBackground}
 		<div class="{pinkWidth} {pinkTop} {pinkLeft} absolute -z-10">
