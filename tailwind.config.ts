@@ -37,9 +37,9 @@ export default {
 				}
 			},
 			screens: {
-				'desk': { raw: '(max-width: 1440px)' },
+				desk: { raw: '(max-width: 1440px)' },
 				'mini-desk': { raw: '(max-width: 1150px)' },
-				'tablet': { raw: '(max-width: 850px)' },
+				tablet: { raw: '(max-width: 850px)' },
 				'mini-tablet': { raw: '(max-width: 640px)' },
 				'mini-tablet-min': { raw: '(min-width: 641px)' },
 				'mobile-large': { raw: '(max-width: 475px)' },

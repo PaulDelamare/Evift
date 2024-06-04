@@ -37,7 +37,7 @@
 			</header>
 
 			<!-- Main (Content) -->
-			<main class={mainC}>
+			<main id="top" class={mainC}>
 				<slot />
 			</main>
 

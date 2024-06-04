@@ -1,4 +1,6 @@
 <script>
+	export let gap = 'gap-24';
+	export let padding = 'py-24';
 	// Imports
 	export let pinkBackground = true;
 	export let pinkWidth = 'w-[526px] mini-tablet:w-[400px]';
@@ -15,7 +17,9 @@
 <!-- Display Page Hero -->
 <slot name="hero" />
 <!-- Place div whith flex display -->
-<div class="flex flex-col gap-24 py-24 mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden">
+<div
+	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden"
+>
 	<!-- If pink background is true display pink background -->
 	{#if pinkBackground}
 		<div class="{pinkWidth} {pinkTop} {pinkLeft} absolute -z-10">

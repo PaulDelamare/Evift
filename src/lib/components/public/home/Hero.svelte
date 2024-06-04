@@ -11,7 +11,7 @@
 	let intervalId: NodeJS.Timeout; // eslint-disable-line no-undef
 
 	// Create Function for start interval
-	function startInterval() {
+	const startInterval = () => {
 		// Start interval
 		intervalId = setInterval(() => {
 			// Text increment
@@ -20,7 +20,7 @@
 			if (text >= 3) text = 0;
 			// Execute all 10 secondes
 		}, 10000);
-	}
+	};
 
 	// Start interval
 	startInterval();
@@ -68,7 +68,10 @@
 			</div>
 			<!-- Display title with Textwritter animation -->
 			<!-- Display button -->
-			<a href="/connexion" class="nav px-12 py-2 bg-secondary-500 rounded-xl shadow-custom hover:bg-secondary-600 custom-transition !duration-300">
+			<a
+				href="/connexion"
+				class="nav px-12 py-2 bg-secondary-500 rounded-xl shadow-custom hover:bg-secondary-600 custom-transition !duration-300"
+			>
 				Je commence
 			</a>
 		</div>
