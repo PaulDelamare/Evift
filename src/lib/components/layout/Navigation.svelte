@@ -3,6 +3,15 @@
 	// import page for know url
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
+	// IMPORT
+	// Import Modal Store
+	import {
+		getModalStore,
+		// getToastStore,
+		type ModalStore
+		// type ToastStore
+	} from '@skeletonlabs/skeleton';
+	import renderModal from '$lib/functions/modal/renderModal';
 
 	// Import vraiable
 	export let ulClass = '';
@@ -53,6 +62,8 @@
 		// Emit the "click" event
 		dispatch('changePage');
 	};
+
+	const modalStore: ModalStore = getModalStore();
 </script>
 
 <!-- Bloc Navigation -->
@@ -89,7 +100,7 @@
 		<!-- If Contact is true, display contact link -->
 		{#if contact}
 			<li class={liC}>
-				<a class={aC} href="/contact"> Contact </a>
+				<button on:click={()=> renderModal(modalStore)} class={aC}> Contact </button>
 			</li>
 		{/if}
 	</ul>
