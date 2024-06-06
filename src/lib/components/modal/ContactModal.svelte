@@ -4,6 +4,7 @@
 	import type { SvelteComponent } from 'svelte';
 	import CloseModalButton from './CloseModalButton.svelte';
     import Input from '../form/Input.svelte';
+	import Submit from '../form/Submit.svelte';
 
 	// Stores
 	const modalStore = getModalStore();
@@ -18,7 +19,7 @@
 
 	// Base Classes
 	const cBase =
-		'card p-4 py-12 w-[75%] max-h-[90svh] shadow-xl space-y-4 bg-surface-500 rounded-2xl relative mini-tablet:w-11/12 z-0  overflow-hidden';
+		'card p-4 py-12 w-[75%] max-h-[95svh] shadow-xl space-y-4 column justify-center bg-surface-500 rounded-2xl relative mini-tablet:w-11/12 z-0  overflow-hidden';
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -29,19 +30,20 @@
 	<div class="{cBase}">
 		<!-- Background style  -->
 		<!-- Close Button -->
-		<CloseModalButton {parent} />
+		<CloseModalButton {parent} classSVG="fill-secondary-500" />
 		<!-- Content in Modal -->
 		<div class="column gap-12 mini-tablet:gap-8 w-full mx-auto max-w-[565px]">
 			<!-- SVG With Titlte PosContact -->
-			<div class="max-w-[387px]">
-				<!-- <img class="w-full" src="/svg/PosContact.svg" alt="logo" /> -->
+			<div class="text-center text-gradient">
+				<h2 class="tablet:text-3xl tracking-normal">Contactez nous !</h2>
 			</div>
 			<!--  Form Contact -->
-			<form class="column gap-12 w-full py-4 max-h-[62svh] overflow-y-auto mini-tablet:gap-8">
+			<form class="column gap-12 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8">
+
                 <Input value="" name="email" label="Email"/>
 				<!-- Bloc with message -->
-                <Input classInput="min-h-[200px]" type="textarea" value="" name="message" label="Contenu du message"/>
-				<button type="submit" class="button-white"> Envoyer </button>
+                <Input classInput="min-h-[200px] tablet:min-h-[130px]" type="content" value="" name="message" label="Contenu du message"/>
+				<Submit textSubmit="Envoyer" />
 			</form>
 		</div>
 	</div>
