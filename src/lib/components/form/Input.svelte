@@ -1,10 +1,11 @@
 <script lang="ts">
 	// Import variable
 	export let value = '';
-	export let onInputFunc = (): void => {};
+	export let onInputFunc: ((event: Event) => void) | undefined = undefined;
 	export let type = 'text';
 	export let label = '';
 	export let name = '';
+    export let classInput = '';
 
 	// Function
 	/**
@@ -33,7 +34,12 @@
 <!-- Container-->
 <div class="form-control gradient">
 	<!-- Email Input need required for animation -->
-	<input {type} class="text-tertiary-500" {name} required {value} on:input={onInputFunc} />
+    {#if type !== 'content'}
+        <input {type} class="text-tertiary-500 {classInput}" {name} required {value} on:input={onInputFunc} />
+    {:else}
+        <textarea class="text-tertiary-500 {classInput}" {name} required {value} on:input={onInputFunc} ></textarea>
+    {/if}
+
 	<!-- svelte-ignore a11y-label-has-associated-control -->
 	<!-- Label with All span in letter for animation -->
 	<label class="text-gradient">
@@ -42,6 +48,7 @@
 		{/each}
 	</label>
 </div>
+
 
 <style lang="postcss">
 	/* All input css for animation */
