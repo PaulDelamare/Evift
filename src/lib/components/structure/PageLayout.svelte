@@ -1,4 +1,7 @@
 <script>
+	import BlueBg from "./BlueBg.svelte";
+import PinkBg from "./PinkBg.svelte";
+
 	export let gap = 'gap-24';
 	export let padding = 'py-24';
 	// Imports
@@ -22,23 +25,11 @@
 >
 	<!-- If pink background is true display pink background -->
 	{#if pinkBackground}
-		<div class="{pinkWidth} {pinkTop} {pinkLeft} absolute -z-10">
-			<img
-				class="w-full"
-				src="/svg/background/pinkBackground.svg"
-				alt="Style de Fond du site EVIFT"
-			/>
-		</div>
+		<PinkBg {pinkWidth} {pinkTop} {pinkLeft} />
 	{/if}
 	<!-- If blue background is true display blue background -->
 	{#if blueBackground}
-		<div class="{blueWidth} {blueBottom} {blueRight} absolute -z-10">
-			<img
-				class="w-full"
-				src="/svg/background/blueBackground.svg"
-				alt="Style de Fond du site EVIFT"
-			/>
-		</div>
+		<BlueBg {blueWidth} {blueBottom} {blueRight} />
 	{/if}
 	<!-- Display all page content -->
 	<slot />
