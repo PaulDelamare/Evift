@@ -30,7 +30,7 @@
 		{#each features as feature}
 			<!-- Display feature in box with icon, title and description -->
 			<div
-				class="size-96 mobile-large:size-80 mobile:size-72 mobile-large:px-4 bg-[linear-gradient(145deg,#cacaca,#f0f0f0)] rounded-3xl shadow-[38px_38px_77px_#bebebe,-38px_-38px_77px_#ffffff] column p-6 justify-center gap-8 hover:scale-[0.98] custom-transition mx-auto"
+				class="size-96 mobile-large:size-80 mobile:size-72 mobile-large:px-4 bg-[linear-gradient(145deg,#cacaca,#f0f0f0)] rounded-3xl shadow-[38px_38px_77px_#bebebe,-38px_-38px_77px_#ffffff] column p-6 justify-center gap-8 hover:scale-[1.02] custom-transition mx-auto"
 			>
 				<!-- SVG And Title -->
 				<div class="flex items-center gap-3 text-center mobile:gap-2">
