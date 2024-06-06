@@ -1,4 +1,6 @@
 <script lang="ts">
+	import test from "node:test";
+
 	// Import variable
 	export let value = '';
 	export let onInputFunc: ((event: Event) => void) | undefined = undefined;
@@ -32,23 +34,27 @@
 </script>
 
 <!-- Container-->
-<div class="form-control gradient">
-	<!-- Email Input need required for animation -->
-    {#if type !== 'content'}
-        <input {type} class="text-tertiary-500 {classInput}" {name} required {value} on:input={onInputFunc} />
-    {:else}
-        <textarea class="text-tertiary-500 {classInput}" {name} required {value} on:input={onInputFunc} ></textarea>
-    {/if}
+<div class="form-control gradient ">
+	<div class="bg-surface-500">
 
-	<!-- svelte-ignore a11y-label-has-associated-control -->
-	<!-- Label with All span in letter for animation -->
-	<label class="text-gradient">
-		{#each labelSpans as { char, delay }}
-			<span style="transition-delay:{delay}ms">{char}</span>
-		{/each}
-	</label>
+	
+		<!-- Email Input need required for animation -->
+		{#if type !== 'content'}
+			<input {type} class="text-tertiary-500 {classInput}" {name} required {value} on:input={onInputFunc} />
+		{:else}
+			<textarea class="!box-border text-tertiary-500 {classInput} resize-none " {name} required  {value} on:input={onInputFunc} ></textarea>
+
+		{/if}
+
+		<!-- svelte-ignore a11y-label-has-associated-control -->
+		<!-- Label with All span in letter for animation -->
+		<label class="text-gradient">
+			{#each labelSpans as { char, delay }}
+				<span style="transition-delay:{delay}ms">{char}</span>
+			{/each}
+		</label>
+	</div>
 </div>
-
 
 <style lang="postcss">
 	/* All input css for animation */
@@ -56,12 +62,17 @@
 		@apply relative pb-[2px] w-full;
 	}
 
-	.form-control input {
+	.form-control input,
+	.form-control textarea
+	 {
 		@apply bg-surface-500 border-0 py-4 text-base w-full;
 	}
 
 	.form-control input:focus,
-	.form-control input:active {
+	.form-control input:active,
+	.form-control textarea:focus,
+	.form-control textarea:active
+	 {
 		@apply border-b-light-blue-500 outline-0;
 	}
 
@@ -74,7 +85,9 @@
 	}
 
 	.form-control input:focus + label span,
-	.form-control input:valid + label span {
+	.form-control input:valid + label span,
+	.form-control textarea:focus + label span,
+	.form-control textarea:valid + label span {
 		@apply text-light-blue-500 -translate-y-8;
 	}
 </style>
