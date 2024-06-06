@@ -3,7 +3,7 @@
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import type { SvelteComponent } from 'svelte';
 	import CloseModalButton from './CloseModalButton.svelte';
-    import Input from '../form/Input.svelte';
+	import Input from '../form/Input.svelte';
 	import Submit from '../form/Submit.svelte';
 
 	// Stores
@@ -26,8 +26,8 @@
 
 <!-- @component Creates a simple form modal. -->
 {#if $modalStore[0]}
-<!-- Component Modal -->
-	<div class="{cBase}">
+	<!-- Component Modal -->
+	<div class={cBase}>
 		<!-- Background style  -->
 		<!-- Close Button -->
 		<CloseModalButton {parent} classSVG="fill-secondary-500" />
@@ -39,10 +39,15 @@
 			</div>
 			<!--  Form Contact -->
 			<form class="column gap-12 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8">
-
-                <Input value="" name="email" label="Email"/>
+				<Input value="" name="email" label="Email" />
 				<!-- Bloc with message -->
-                <Input classInput="min-h-[200px] tablet:min-h-[130px]" type="content" value="" name="message" label="Contenu du message"/>
+				<Input
+					classInput="min-h-[200px] tablet:min-h-[130px]"
+					type="content"
+					value=""
+					name="message"
+					label="Contenu du message"
+				/>
 				<Submit textSubmit="Envoyer" />
 			</form>
 		</div>

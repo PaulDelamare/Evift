@@ -8,7 +8,6 @@
 	import { modalComponentRegistry } from '$lib/components/modal/allModal';
 
 	initializeStores();
-
 </script>
 
 <!-- Create Custom APP Shell for Element Position -->
@@ -25,4 +24,4 @@
 	<Footer slot="footer" />
 </CustomAppShell>
 
-<Modal components= {modalComponentRegistry} regionBackdrop="!bg-black/50" />
+<Modal components={modalComponentRegistry} regionBackdrop="!bg-black/50" />

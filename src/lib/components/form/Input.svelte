@@ -1,13 +1,11 @@
 <script lang="ts">
-	import test from "node:test";
-
 	// Import variable
 	export let value = '';
 	export let onInputFunc: ((event: Event) => void) | undefined = undefined;
 	export let type = 'text';
 	export let label = '';
 	export let name = '';
-    export let classInput = '';
+	export let classInput = '';
 
 	// Function
 	/**
@@ -34,16 +32,26 @@
 </script>
 
 <!-- Container-->
-<div class="form-control gradient ">
+<div class="form-control gradient">
 	<div class="bg-surface-500">
-
-	
 		<!-- Email Input need required for animation -->
 		{#if type !== 'content'}
-			<input {type} class="text-tertiary-500 {classInput}" {name} required {value} on:input={onInputFunc} />
+			<input
+				{type}
+				class="text-tertiary-500 {classInput}"
+				{name}
+				required
+				{value}
+				on:input={onInputFunc}
+			/>
 		{:else}
-			<textarea class="!box-border text-tertiary-500 {classInput} resize-none " {name} required  {value} on:input={onInputFunc} ></textarea>
-
+			<textarea
+				class="!box-border text-tertiary-500 {classInput} resize-none"
+				{name}
+				required
+				{value}
+				on:input={onInputFunc}
+			></textarea>
 		{/if}
 
 		<!-- svelte-ignore a11y-label-has-associated-control -->
@@ -63,16 +71,14 @@
 	}
 
 	.form-control input,
-	.form-control textarea
-	 {
+	.form-control textarea {
 		@apply bg-surface-500 border-0 py-4 text-base w-full;
 	}
 
 	.form-control input:focus,
 	.form-control input:active,
 	.form-control textarea:focus,
-	.form-control textarea:active
-	 {
+	.form-control textarea:active {
 		@apply border-b-light-blue-500 outline-0;
 	}
 

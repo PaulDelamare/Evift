@@ -1,6 +1,6 @@
 <script>
-	import BlueBg from "./BlueBg.svelte";
-import PinkBg from "./PinkBg.svelte";
+	import BlueBg from './BlueBg.svelte';
+	import PinkBg from './PinkBg.svelte';
 
 	export let gap = 'gap-24';
 	export let padding = 'py-24';

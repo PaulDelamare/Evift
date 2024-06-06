@@ -100,7 +100,7 @@
 		<!-- If Contact is true, display contact link -->
 		{#if contact}
 			<li class={liC}>
-				<button on:click={()=> renderModal(modalStore)} class={aC}> Contact </button>
+				<button on:click={() => renderModal(modalStore)} class={aC}> Contact </button>
 			</li>
 		{/if}
 	</ul>
