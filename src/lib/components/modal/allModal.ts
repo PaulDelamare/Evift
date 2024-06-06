@@ -1,0 +1,11 @@
+import type { ModalComponent } from "@skeletonlabs/skeleton";
+import ContactModal from "./ContactModal.svelte";
+
+export const modalComponentRegistry: Record<string, ModalComponent> = {
+    ContactModal: {
+        // Pass a reference to your custom component
+        ref: ContactModal
+        // Add the component properties as key/value pairs
+        // props: { },
+    },
+};
