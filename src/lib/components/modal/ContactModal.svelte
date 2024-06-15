@@ -59,11 +59,6 @@
 	.input-contact-style {
 		@apply font-roboto w-full bg-transparent border-b-2 !border-b-surface-500 !border-transparent focus:!outline-none focus:!shadow-none text-surface-500 placeholder:text-surface-500 px-2 py-2 focus:!ring-offset-0 focus:!ring-0;
 	}
-	/* Global style for textarea */
-	textarea {
-		/* For Remove border */
-		@apply focus:!ring-offset-0 focus:!ring-0 resize-none;
-	}
 	/* background triangle style */
 	.triangle-modal {
 		@apply absolute block w-[53%] h-full top-0 -z-[1] bg-primary-500/50 origin-top-right skew-x-[11deg] right-0 mini-tablet:skew-x-[7deg];
