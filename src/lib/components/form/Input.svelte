@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { fade } from "svelte/transition";
+
 	// Import variable
 	export let value = '';
 	export let onInputFunc: ((event: Event) => void) | undefined = undefined;
@@ -6,14 +8,15 @@
 	export let label = '';
 	export let name = '';
 	export let classInput = '';
+	export let error = '';
 
 	// Function
 	/**
 	 * Creates an array of objects, each containing a character from the input text
 	 * and the delay in milliseconds for the animation.
 	 *
-	 * @param {string} text - The text to create spans from.
-	 * @return {Array<{char: string, delay: number}>} An array of objects with the character and delay.
+	 * @param text - The text to create spans from.
+	 * @return An array of objects with the character and delay.
 	 */
 	function createLabelSpans(text: string) {
 		let spans = [];
@@ -32,36 +35,41 @@
 </script>
 
 <!-- Container-->
-<div class="form-control gradient">
-	<div class="bg-surface-500">
-		<!-- Email Input need required for animation -->
-		{#if type !== 'content'}
-			<input
-				{type}
-				class="text-tertiary-500 {classInput}"
-				{name}
-				required
-				{value}
-				on:input={onInputFunc}
-			/>
-		{:else}
-			<textarea
-				class="!box-border text-tertiary-500 {classInput} resize-none"
-				{name}
-				required
-				{value}
-				on:input={onInputFunc}
-			></textarea>
-		{/if}
+<div class="w-full">
+	<div class="form-control gradient">
+		<div class="bg-surface-500">
+			<!-- Email Input need required for animation -->
+			{#if type !== 'content'}
+				<input
+					{type}
+					class="text-tertiary-500 {classInput}"
+					{name}
+					required
+					{value}
+					on:input={onInputFunc}
+				/>
+			{:else}
+				<textarea
+					class="!box-border text-tertiary-500 {classInput} resize-none"
+					{name}
+					required
+					{value}
+					on:input={onInputFunc}
+				></textarea>
+			{/if}
 
-		<!-- svelte-ignore a11y-label-has-associated-control -->
-		<!-- Label with All span in letter for animation -->
-		<label class="text-gradient">
-			{#each labelSpans as { char, delay }}
-				<span style="transition-delay:{delay}ms">{char}</span>
-			{/each}
-		</label>
+			<!-- svelte-ignore a11y-label-has-associated-control -->
+			<!-- Label with All span in letter for animation -->
+			<label class="text-gradient">
+				{#each labelSpans as { char, delay }}
+					<span style="transition-delay:{delay}ms">{char}</span>
+				{/each}
+			</label>
+		</div>
 	</div>
+	{#if error}
+		<p in:fade={{ duration: 200 }} class="errorMessage">{error}</p>
+	{/if}
 </div>
 
 <style lang="postcss">
@@ -95,5 +103,18 @@
 	.form-control textarea:focus + label span,
 	.form-control textarea:valid + label span {
 		@apply text-light-blue-500 -translate-y-8;
+	}
+
+	input:-webkit-autofill,
+	input:-webkit-autofill:hover, 
+	input:-webkit-autofill:focus, 
+	input:-webkit-autofill:active{
+
+	@apply [box-shadow:_inset_0_0_20px_20px_rgb(var(--color-surface-500)_/_var(--tw-bg-opacity))] [-webkit-background-clip:_text]
+	}
+
+	/*Change text in autofill textbox*/
+	input:-webkit-autofill{
+		@apply ![-webkit-text-fill-color:_rgb(var(--color-tertiary-500)_/_var(--tw-text-opacity))]
 	}
 </style>
