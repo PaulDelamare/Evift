@@ -4,6 +4,9 @@
 	import Login from '$lib/components/public/loginRegister/login/Login.svelte';
 	import Register from '$lib/components/public/loginRegister/register/Register.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 
 	// Variables
 	// Login variable for know if user is Activated
@@ -52,7 +55,6 @@
 	 * @return void This function does not return anything.
 	 */
 	const scrollToTop = (node: HTMLElement) => {
-		console.log(node.id);
 		if (node) {
 			// Scroll to the element with smooth behavior.
 			node.scrollIntoView({ behavior: 'smooth' });
@@ -75,9 +77,9 @@
 		>
 			<!-- Add Login and Register component -->
 			<!-- Login with Form -->
-			<Login {loginActivated} {email} {handleEmailChange} />
+			<Login {form} {loginActivated} {email} {handleEmailChange} />
 			<!-- Register with Form -->
-			<Register {loginActivated} {email} {handleEmailChange} />
+			<Register {form} {loginActivated} {email} {handleEmailChange} {handleActivate} />
 
 			<!-- Add Layer component for change into login or register -->
 			<Layer {loginActivated} {handleActivate} />
