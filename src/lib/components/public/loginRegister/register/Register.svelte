@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ActionData } from '../../../../../routes/(public)/login/$types';
 	import FormRegister from '../FormLoginRegister.svelte';
 
 	// Import Variable
@@ -8,6 +9,9 @@
 	export let email = '';
 	// Function for stock email in variable do on on:input email
 	export let handleEmailChange: (event: Event) => void;
+	export let handleActivate = () => {};
+
+	export let form: ActionData;
 </script>
 
 <!-- If login not Activated, display form Register -->
@@ -15,6 +19,8 @@
 	<!-- Send information to form -->
 	<!-- Send Title/Action/Inputs/onSubmit Function/textSubmit -->
 	<FormRegister
+		{handleActivate}
+		{form}
 		title="Inscription"
 		action="?/register"
 		inputs={[
@@ -23,19 +29,21 @@
 				// Group input for display it in row
 				type: 'group',
 				inputs: [
-					// Firstname Input
+					// firstName Input
 					{
 						type: 'text',
 						label: 'Prénom*',
 						name: 'firstName',
-						value: ''
+						value: '',
+						error: form?.errors?.firstname
 					},
 					// Lastname Input
 					{
 						type: 'text',
 						label: 'Nom*',
 						name: 'name',
-						value: ''
+						value: '',
+						error: form?.errors?.lastname
 					}
 				]
 			},
@@ -45,25 +53,27 @@
 				label: 'Email*',
 				name: 'email',
 				value: email,
-				onInput: handleEmailChange
+				onInput: handleEmailChange,
+				error: form?.errors?.emailRegister
 			},
 			// Password Input
 			{
 				type: 'password',
 				label: 'Mot de passe*',
 				name: 'password',
-				value: ''
+				value: '',
+				error: form?.errors?.passwordRegister
 			},
 			// Password Confirmation Input
 			{
 				type: 'password',
 				label: 'Confirmation mot de passe*',
 				name: 'passwordConfirmation',
-				value: ''
+				value: '',
+				error: form?.errors?.passwordConfirmRegister
 			}
 		]}
 		onSubmit={() => {
-			console.log('submit');
 		}}
 		textSubmit="Inscription"
 	/>
