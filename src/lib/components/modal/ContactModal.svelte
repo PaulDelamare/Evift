@@ -16,6 +16,7 @@
 	// Variable
 	let innerWidth: number;
 	let innerHeight: number;
+	let submitted = false;
 
 	// Base Classes
 	const cBase =
@@ -48,7 +49,7 @@
 					name="message"
 					label="Contenu du message"
 				/>
-				<Submit textSubmit="Envoyer" />
+				<Submit textSubmit="Envoyer" bind:submitted={submitted}/>
 			</form>
 		</div>
 	</div>
