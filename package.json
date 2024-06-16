@@ -1,5 +1,5 @@
 {
-	"name": "evift",
+	"lastname": "evift",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -45,6 +45,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"svelte-typewriter": "^3.2.3"
+		"svelte-typewriter": "^3.2.3",
+		"yup": "^1.4.0"
 	}
 }
