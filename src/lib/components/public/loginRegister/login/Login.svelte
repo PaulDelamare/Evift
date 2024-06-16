@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ActionData } from '../../../../../routes/(public)/login/$types';
 	import FormLoginRegister from '../FormLoginRegister.svelte';
 
 	// Import Variable
@@ -8,6 +9,8 @@
 	export let email = '';
 	// Function for stock email in variable do on on:input email
 	export let handleEmailChange: (event: Event) => void;
+
+	export let form: ActionData;
 </script>
 
 <!-- If login Activated, display form Login -->
@@ -15,6 +18,7 @@
 	<!-- Send information to form -->
 	<!-- Send Title/Action/Inputs/onSubmit Function/textSubmit/forgotPassword -->
 	<FormLoginRegister
+		{form}
 		title="Connexion"
 		action="?/login"
 		inputs={// Display Inputs
@@ -25,18 +29,19 @@
 				label: 'Email',
 				name: 'email',
 				value: email,
-				onInput: handleEmailChange
+				onInput: handleEmailChange,
+				error: form?.errors?.emailLogin
 			},
 			// Password Input
 			{
 				type: 'password',
 				label: 'Mot de passe',
 				name: 'password',
-				value: ''
+				value: '',
+				error: form?.errors?.passwordLogin
 			}
 		]}
 		onSubmit={() => {
-			console.log('submit');
 		}}
 		textSubmit="Connexion"
 		forgotPassword
