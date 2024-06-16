@@ -17,7 +17,9 @@
 	}
 
 	function doRecaptcha() {
+          // @ts-ignore
 		grecaptcha.ready(function () {
+               // @ts-ignore
 			grecaptcha.execute(PUBLIC_CAPTCHA_KEY, { action: 'submit' }).then(function (t) {
 				state = State.success;
 				token = t;				
@@ -27,7 +29,6 @@
 	}
 	onMount(() => {
 		onSubmitCaptcha();
-		// console.log(token)
 	})
 
 </script>
