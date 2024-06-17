@@ -1,7 +1,8 @@
 <script lang="ts">
+	// ! IMPORT
 	import { fade } from "svelte/transition";
 
-	// Import variable
+	// ! VARIABLE
 	export let value = '';
 	export let onInputFunc: ((event: Event) => void) | undefined = undefined;
 	export let type = 'text';
@@ -10,7 +11,7 @@
 	export let classInput = '';
 	export let error = '';
 
-	// Function
+	// ! FUNCTION
 	/**
 	 * Creates an array of objects, each containing a character from the input text
 	 * and the delay in milliseconds for the animation.
@@ -19,14 +20,20 @@
 	 * @return An array of objects with the character and delay.
 	 */
 	function createLabelSpans(text: string) {
+		// Create an array of objects
 		let spans = [];
+
+		// Delay in milliseconds
 		let delay = 0;
 
+		// Loop over the text
 		for (let char of text) {
+			// Add the object to the array
 			spans.push({ char, delay });
 			delay += 50;
 		}
 
+		// Return the array
 		return spans;
 	}
 
@@ -67,6 +74,7 @@
 			</label>
 		</div>
 	</div>
+	<!-- If error for this field display it -->
 	{#if error}
 		<p in:fade={{ duration: 200 }} class="errorMessage">{error}</p>
 	{/if}
