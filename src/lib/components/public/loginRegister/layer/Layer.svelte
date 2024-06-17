@@ -15,7 +15,7 @@
 <div
 	class="tablet:rounded-xl tablet:w-full tablet:!static mini-desk:p-4 w-2/4 top-0 bottom-0 {loginActivated
 		? 'right-0'
-		: 'right-2/4'} transition-all duration-1000 absolute p-12 bg-secondaryGradient text-surface-500 column justify-center z-10"
+		: 'right-2/4'} transition-all duration-1000 absolute p-12 bg-secondaryGradient text-surface-500 column justify-center z-[5]"
 >
 	<div class="w-full column gap-8 text-center mx-auto">
 		<!-- If it's loginActivated -->
