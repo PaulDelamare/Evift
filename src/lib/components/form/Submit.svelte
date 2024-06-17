@@ -1,10 +1,11 @@
 <script lang="ts">
-
+	// ! IMPORT
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 
 	// Import variable
 	export let textSubmit = 'Connexion';
 
+	// Know if form is submitted
 	export let submitted: boolean;
 	
 </script>
@@ -20,7 +21,8 @@
 			type="submit"
 			disabled={submitted}
 		>
-			<b class="self-center">{textSubmit}</b>
+			<b>{textSubmit}</b>
+			<!-- Display Progress if submitted (spinner) -->
 			{#if submitted}
 				<ProgressRadial value={undefined} width="w-8" fill="fill-red-500" track="stroke-tertiary-500/30" meter="stroke-secondary-500"/>
 			{/if}
