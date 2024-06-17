@@ -39,16 +39,17 @@
 				<h2 class="tablet:text-3xl tracking-normal">Contactez nous !</h2>
 			</div>
 			<!--  Form Contact -->
-			<form class="column gap-12 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8">
+			<form class="column gap-8 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8">
 				<Input value="" name="email" label="Email" />
 				<!-- Bloc with message -->
 				<Input
-					classInput="min-h-[200px] tablet:min-h-[130px]"
+					classInput="min-h-[180px] tablet:min-h-[130px]"
 					type="content"
 					value=""
 					name="message"
 					label="Contenu du message"
 				/>
+				<!-- Display Submit -->
 				<Submit textSubmit="Envoyer" bind:submitted={submitted}/>
 			</form>
 		</div>
