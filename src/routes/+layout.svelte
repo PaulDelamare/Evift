@@ -3,11 +3,15 @@
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
 	import CustomAppShell from '$lib/components/structure/CustomAppShell.svelte';
-	import { Modal, initializeStores } from '@skeletonlabs/skeleton';
+	import { Modal, initializeStores, Toast } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
 	import { modalComponentRegistry } from '$lib/components/modal/allModal';
 
 	initializeStores();
+
+	export let data : PageData;
+
+
 </script>
 
 <!-- Create Custom APP Shell for Element Position -->
@@ -25,3 +29,4 @@
 </CustomAppShell>
 
 <Modal components={modalComponentRegistry} regionBackdrop="!bg-black/50" />
+<Toast />

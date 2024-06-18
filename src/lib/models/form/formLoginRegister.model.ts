@@ -4,6 +4,7 @@ interface Input {
 	name: string;
 	value: string;
 	onInput?: (event: Event) => void;
+	error: string | undefined;
 }
 
 interface GroupInput {

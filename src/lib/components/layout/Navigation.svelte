@@ -33,12 +33,12 @@
 		},
 		{
 			text: 'Qui Sommes-Nous ?',
-			path: '/details',
+			path: '/evift/details',
 			start: true
 		},
 		{
 			text: 'Inscription/Connexion',
-			path: '/login',
+			path: '/evift/login',
 			start: true
 		}
 	];
@@ -64,6 +64,7 @@
 	};
 
 	const modalStore: ModalStore = getModalStore();
+
 </script>
 
 <!-- Bloc Navigation -->
@@ -96,6 +97,8 @@
 				</a>
 			</li>
 		{/each}
+		<a href="/auth/logout">Déconnexion</a>
+
 		<!-- TODO Create component for Contact in modal -->
 		<!-- If Contact is true, display contact link -->
 		{#if contact}

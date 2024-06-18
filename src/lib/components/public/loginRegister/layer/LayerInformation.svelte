@@ -12,7 +12,7 @@
 <!-- Container Infomation -->
 <div
 	in:fade={{ duration: timeTransition }}
-	class="w-3/4 mini-desk:w-full column gap-8 text-center mx-auto"
+	class=" mini-desk:w-full column gap-8 text-center mx-auto"
 >
 	<!-- Display SVG -->
 	<div class="w-24 mobile-large:w-20">

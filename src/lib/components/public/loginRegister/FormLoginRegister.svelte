@@ -1,12 +1,15 @@
 <script lang="ts">
-	// Import library
+	// ! Import library
 	import { enhance } from '$app/forms';
 	import Input from '$lib/components/form/Input.svelte';
 	import Submit from '$lib/components/form/Submit.svelte';
 	import type { FormInput } from '$lib/models/form/formLoginRegister.model';
 	import { fade } from 'svelte/transition';
+	import type { ActionData } from '../../../../routes/(public)/login/$types';
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import Captcha from '$lib/components/extra/captcha/Captcha.svelte';
 
-	// Import variable
+	// ! Import variable
 	// Title
 	export let title = '';
 	// Inputs
@@ -19,21 +22,71 @@
 	export let textSubmit: string;
 	// If gotgotPassword is true, display link for going on the page forgotPassword
 	export let forgotPassword = false;
+	// Function for change the value of loginActivated
+	export let handleActivate = () => {};
+	// Form for get error or success
+	export let form: ActionData;
 
-	// Variable
+	// ! VARIABLE
+	// Get toast store for display
+	const toastStore = getToastStore();
+
+	// Captcha for use function
+	let captchaSubmit: Captcha;
+
+	// Variable for stock captcha token
+	let token = '';
+
+	// Screen widt
 	let innerWidth = 0;
+
+	// transition duration for component apparition
 	let duration = 500;
 
-	// Dynamic
+	// Function for disabled or able submitted button
+	let submitted = false;
+
+	// Toast
+	const t: ToastSettings = {
+		message: 'Votre compte à bien été crée',
+		background: 'bg-secondary-500',
+		classes: 'text-surface-500',
+		hideDismiss: true
+	};
+
+	// ! DYNAMIC
 	$: {
+		// If innerWidth is under 850px, set duration to 0
 		if (innerWidth < 850) {
 			duration = 0;
 		} else {
+			// Else, set duration to 500
 			duration = 500;
 		}
+
+		// If form is not null
+		if (form) {
+			// Reset submitted
+			submitted = false;
+			// If form.success is true
+			if (form.success) {
+				// Display toast
+				toastStore.trigger(t);
+
+				// Reset form
+				form.success = false;
+				// Call handleActivate
+				handleActivate();
+			}
+		}
 	}
+
 </script>
 
+<!-- Call Captcha component -->
+<Captcha bind:this={captchaSubmit} bind:token/>
+
+<!-- For innerwidth -->
 <svelte:window bind:innerWidth />
 
 <!-- Display Form -->
@@ -44,10 +97,19 @@
 >
 	<!-- Display Form -->
 	<form
-		use:enhance
+		use:enhance={() => {
+			return async ({ update }) => {
+				update({ reset: false });
+			};
+		}}
 		{action}
 		method="post"
-		on:submit={onSubmit}
+		on:submit|preventDefault={() => {
+			onSubmit();
+			submitted = true;
+			captchaSubmit.onSubmitCaptcha()
+
+		}}
 		class="column w-full gap-10 text max-w-[450px] mx-auto"
 	>
 		<!-- Display Title -->
@@ -65,19 +127,25 @@
 							name={subInput.name}
 							value={subInput.value}
 							onInputFunc={subInput.onInput}
+							error={subInput.error}
 						/>
 					{/each}
 				</div>
 			{:else}
+			<!-- Display input -->
 				<Input
 					type={input.type}
 					label={input.label}
 					name={input.name}
 					value={input.value}
 					onInputFunc={input.onInput}
+					error={input.error}
 				/>
 			{/if}
 		{/each}
+
+		<!-- Display secret input -->
+		<input class="hidden" type="text" name="secret" value="{token}">
 
 		<!-- If forgot password is activated display forgot password link -->
 		{#if forgotPassword}
@@ -86,6 +154,11 @@
 		{/if}
 
 		<!-- Need Two div for do the hover animation with gradient border and text gradient -->
-		<Submit {textSubmit} />
+		<Submit {textSubmit} bind:submitted />
+
+		<!-- Display error form -->
+		{#if form?.errors?.error}
+			<p in:fade={{ duration: 200 }} class="errorMessage">{form.errors.error}</p>
+		{/if}
 	</form>
 </div>
