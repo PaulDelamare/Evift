@@ -280,7 +280,7 @@ export const actions: Actions = {
 			// Set cookie
 			cookies.set('accessToken', token, { path: '/', httpOnly: true, maxAge: 5 * 60 * 60 });
 			// Redirect to event page
-			redirect(302, '/event');
+			redirect(302, '/auth/event');
 		}
 	}
 };
