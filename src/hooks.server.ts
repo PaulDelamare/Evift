@@ -14,7 +14,7 @@ import type { HandleFetch } from '@sveltejs/kit';
 export async function handle({ event, resolve }) {
 
      // Delete token for logout
-     event.cookies.delete('accessToken', { path: '/' });
+     // event.cookies.delete('accessToken', { path: '/' });
 
      // Get token
      const jwt = event.cookies.get('accessToken');
