@@ -5,9 +5,9 @@
 	import Submit from '$lib/components/form/Submit.svelte';
 	import type { FormInput } from '$lib/models/form/formLoginRegister.model';
 	import { fade } from 'svelte/transition';
-	import type { ActionData } from '../../../../routes/(public)/login/$types';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import Captcha from '$lib/components/extra/captcha/Captcha.svelte';
+	import type { ActionData } from '../../../../routes/evift/login/$types';
 
 	// ! Import variable
 	// Title
