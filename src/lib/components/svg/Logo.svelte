@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	// Imports
 	import LogoSvg from '../extra/logo/LogoSvg.svelte';
 
@@ -10,6 +12,8 @@
 	export let text = false;
 	export let link = false;
 	export let h1 = false;
+
+	$: user = $page.data.user
 </script>
 
 <!-- Logo bloc -->
@@ -17,7 +21,7 @@
 	<!-- If Logo need to be a link -->
 	{#if link}
 		<!-- Define Logo in Link -->
-		<a href="/" class="hover:scale-105 custom-transition">
+		<a href="{user ? '/auth/event' : '/'}" class="hover:scale-105 custom-transition">
 			<LogoSvg
 				{widthSvg}
 				fill={gradient
