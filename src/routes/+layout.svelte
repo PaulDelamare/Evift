@@ -9,9 +9,6 @@
 
 	initializeStores();
 
-	export let data : PageData;
-
-
 </script>
 
 <!-- Create Custom APP Shell for Element Position -->
