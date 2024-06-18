@@ -5,81 +5,99 @@ import { Api } from './api.server';
 import type { LoginResponse, User } from '../models/user.model';
 
 export default class AuthApi extends Api<LoginResponse> {
+	// Base url request for auth methods
+	private authUrl = `${API_URL}api/auth/`;
 
-     private authUrl = `${API_URL}api/auth/`;
-
-     register = async (user: User): Promise<{ status: number; message?: string; error?: string }> => {
-          try {
-               const response = await this.fetch(`${this.authUrl}register`, {
-                    method: 'POST',
-                    headers: {
-                         'Content-Type': 'application/json'
-                    },
-				credentials: 'include',
-                    body: JSON.stringify(user)
-               });
-               const data:{ status: number; message?: string; error?: string } = await response.json();
-               if ("error" in data) {
-                    throw new Error(data.error);
-               }
-               return data;
-          } catch (error) {
-               throw new Error('Error register : ' + error);
-
-          }
-     };
-
-	login = async (email: string, password: string): Promise<LoginResponse | ErrorApi> => {
+	// ? Register methods
+	register = async (user: User): Promise<{ status: number; message?: string; error?: string }> => {
+		// - Try Validation
 		try {
+			// Register request
+			const response = await this.fetch(`${this.authUrl}register`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				// Need to include credentials for have x-api-key in request with hooks
+				credentials: 'include',
+				// Pass user in body
+				body: JSON.stringify(user)
+			});
+			// Get data
+			const data: { status: number; message?: string; error?: string } = await response.json();
+			// If error in data
+			if ('error' in data) {
+				// Throw error
+				throw new Error(data.error);
+			}
+			return data;
+		} 
+		// - Catch Errors
+		catch (error) {
+			// Throw error
+			throw new Error('Error register : ' + error);
+		}
+	};
+
+	// ? Login methods
+	login = async (email: string, password: string): Promise<LoginResponse | ErrorApi> => {
+		// - Try Validation
+		try {
+			// Login request
 			const response = await this.fetch(`${this.authUrl}login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-                    credentials: 'include',
+				// Need to include credentials for have x-api-key in request with hooks
+				credentials: 'include',
+				// Pass user in body
 				body: JSON.stringify({ email, password })
 			});
 
+			// Get data
 			const data: LoginResponse | ErrorApi = await response.json();
+			// If error in data
 			return data;
-		} catch (error) {
+		} 
+		// - Catch Errors
+		catch (error) {
+			// Throw error
 			throw new Error('Error login : ' + error);
-		}
-	};
-
-	logout = async (): Promise<boolean> => {
-		try {
-			const response = await this.fetch(`${API_URL}auth/logout`, {
-				method: 'POST',
-				credentials: 'include'
-			});
-			return response.status === 204;
-		} catch (error) {
-			console.error('Logout : ' + error);
-			return false;
 		}
 	};
 
 	// Special method, only use for the hooks
 	getInfo = async (): Promise<User | ErrorApi> => {
+		// - Try Validation
 		try {
+
+			// Get user
 			const response = await this.fetch(`${this.authUrl}me`, {
 				method: 'GET',
+				// Need to include credentials for have x-api-key in request with hooks
 				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json'
 				}
 			});
+			// If error
 			if (response.status === 401) {
+				// Throw error
 				return { status: 401, error: 'Unauthorized' };
 			}
+			// If success
 			if (response.status === 200) {
+				// return data user
 				const data: User = await response.json();
 				return data;
 			}
 			return { status: 500, error: 'Error' };
-		} catch (error) {
+		} 
+		// - Catch Errors
+		catch (error) {
+			// Throw error
 			console.error('GetInfo : ' + error);
 			return { status: 500, error: 'Error' };
 		}
