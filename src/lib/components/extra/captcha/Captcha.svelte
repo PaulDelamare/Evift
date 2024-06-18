@@ -40,8 +40,10 @@
 
 	// Mount
 	onMount(() => {
-		// Execute
-		onSubmitCaptcha();
+		// Check if grecaptcha is already loaded
+		if (window.grecaptcha) {
+			onSubmitCaptcha();
+		}
 	});
 </script>
 
