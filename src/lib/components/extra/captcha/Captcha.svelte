@@ -25,7 +25,6 @@
 				token = t;				
 			});
 		});
-		console.log('token', token)
 	}
 	onMount(() => {
 		onSubmitCaptcha();
