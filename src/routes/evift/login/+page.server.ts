@@ -285,7 +285,6 @@ export const actions: Actions = {
 	},
 
 	logout: async ({ locals, cookies }) => {
-		console.log('here')
 		locals.user = undefined;
 		cookies.delete('accessToken', { path: '/' });
 	}
