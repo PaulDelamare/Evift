@@ -282,5 +282,11 @@ export const actions: Actions = {
 			// Redirect to event page
 			redirect(302, '/auth/event');
 		}
+	},
+
+	logout: async ({ locals, cookies }) => {
+		console.log('here')
+		locals.user = undefined;
+		cookies.delete('accessToken', { path: '/' });
 	}
 };
