@@ -6,7 +6,6 @@ export const load = (async ({ locals }) => {
 		redirect(303, '/evift/login');
 	}
 
-	console.log(locals.user)
 	return {
 		user : locals.user
 	};

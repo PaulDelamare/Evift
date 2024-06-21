@@ -13,17 +13,16 @@ import type { HandleFetch } from '@sveltejs/kit';
  */
 export async function handle({ event, resolve }) {
 
-     // Delete token for logout
-     // event.cookies.delete('accessToken', { path: '/' });
-
      // Get token
      const jwt = event.cookies.get('accessToken');
 
      // If no token, continue resolve
      if (!jwt) return await resolve(event);
-
+     
      // If jwt and user information
      if (event.locals.user) {
+          // Set user information
+          
           return await resolve(event);
      }
 
@@ -34,10 +33,11 @@ export async function handle({ event, resolve }) {
 
      // If error in request
      if ('error' in userInfo) {
+          // Delete user information
           // Delete token
           event.cookies.delete('accessToken', { path: '/' });
           // Delete user information
-          event.locals.user = null;
+          event.locals.user = undefined;
      } else {
           // Else set user information
           event.locals.user = userInfo;

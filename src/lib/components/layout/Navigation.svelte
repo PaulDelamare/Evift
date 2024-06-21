@@ -23,25 +23,54 @@
 	export let hover = false;
 	export let hoverFooter = false;
 
+	$: user = $page.data.user;
+
 	// Variable for the navigation
 	// Define text to display, path and start for know if the active need to start with this url or need to be the same
-	const nav = [
-		{
-			text: 'Accueil',
-			path: '/',
-			start: false
-		},
-		{
-			text: 'Qui Sommes-Nous ?',
-			path: '/evift/details',
-			start: true
-		},
-		{
-			text: 'Inscription/Connexion',
-			path: '/evift/login',
-			start: true
-		}
-	];
+	let nav: { text: string; path: string; start: boolean }[] = [];
+
+	$: if (!user) {
+		nav = [
+			{
+				text: 'Accueil',
+				path: '/',
+				start: false
+			},
+			{
+				text: 'Qui Sommes-Nous ?',
+				path: '/evift/details',
+				start: true
+			},
+			{
+				text: 'Inscription/Connexion',
+				path: '/evift/login',
+				start: true
+			}
+		];
+	} else {
+		nav = [
+			{
+				text: 'Evénements',
+				path: '/auth/event',
+				start: true
+			},
+			{
+				text: 'Liste des cadeaux',
+				path: '/auth/gift',
+				start: true
+			},
+			{
+				text: 'Invitation',
+				path: '/auth/invitation',
+				start: true
+			},
+			{
+				text: 'Amis',
+				path: '/auth/friends',
+				start: true
+			}
+		];
+	}
 
 	// Get Dispacth for create on:event
 	const dispatch = createEventDispatcher();
@@ -64,7 +93,6 @@
 	};
 
 	const modalStore: ModalStore = getModalStore();
-
 </script>
 
 <!-- Bloc Navigation -->
@@ -97,8 +125,11 @@
 				</a>
 			</li>
 		{/each}
-		<a href="/auth/logout">Déconnexion</a>
-
+		{#if user && !contact}
+			<form class={liC} action="/evift/login?/logout" method="POST">
+				<button class={aC} type="submit"> Déconnexion </button>
+			</form>
+		{/if}
 		<!-- TODO Create component for Contact in modal -->
 		<!-- If Contact is true, display contact link -->
 		{#if contact}
