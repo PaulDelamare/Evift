@@ -1,6 +1,7 @@
 // ! IMPORTS
 import { API_KEY, API_URL } from '$env/static/private';
 import AuthApi from '$lib/server/auth.server';
+import InvitationApi from '$lib/server/invitation.server';
 import type { HandleFetch } from '@sveltejs/kit';
 
 // ! HANDLE
@@ -39,6 +40,12 @@ export async function handle({ event, resolve }) {
           // Delete user information
           event.locals.user = undefined;
      } else {
+          // Instance Invitation Api
+          const notifApi = new InvitationApi(event.fetch);
+          // Get Notification number
+          const invitationCount = await notifApi.getCountFriendInvitation();
+          // Pass number in locals
+          event.locals.notification = invitationCount;
           // Else set user information
           event.locals.user = userInfo;
      }
