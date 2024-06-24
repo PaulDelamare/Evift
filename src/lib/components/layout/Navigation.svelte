@@ -24,6 +24,7 @@
 	export let hoverFooter = false;
 
 	$: user = $page.data.user;
+	$: notification = $page.data.notification;
 
 	// Variable for the navigation
 	// Define text to display, path and start for know if the active need to start with this url or need to be the same
@@ -101,7 +102,7 @@
 	<ul class={ulC}>
 		<!-- Display all link -->
 		{#each nav as item}
-			<li class={liC}>
+			<li class="{liC} {item.text === 'Invitation' && !contact ? 'relative' : ''}">
 				<!-- If start is true, display link as active -->
 				<!-- Define different active style for mobile and desktop -->
 				<a
@@ -123,6 +124,17 @@
 					<!-- Display text Link -->
 					{item.text}
 				</a>
+				<!-- If the navigation is Invitation, display notification -->
+				{#if item.text === 'Invitation' && !contact}
+					<div
+						class="absolute -z-10 -top-[10px] leading-none p-2 -right-[17px] text-surface-500 bg-secondary-500/80 size-6 flex justify-center items-center rounded-full"
+					>
+						<!-- Display number in circle -->
+						<span>
+							{notification < 9 ? notification : '9+'}
+						</span>
+					</div>
+				{/if}
 			</li>
 		{/each}
 		{#if user && !contact}
