@@ -1,6 +1,6 @@
 import { API_URL } from '$env/static/private';
 import { Api } from './api.server';
-import type { GetCountFriendInvitation } from '$lib/models/invitation.model';
+import type { GetCountFriendInvitation, InvitationData } from '$lib/models/invitation.model';
 
 export default class InvitationApi extends Api<GetCountFriendInvitation> {
     // Base url request for auth methods
@@ -15,7 +15,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
     getCountFriendInvitation = async (): Promise<number> => {
         // - Try Validation
         try {
-            // Login request
+            // Get Count Invitation
             const response = await this.fetch(`${this.authUrl}count`, {
                 method: 'GET',
                 headers: {
@@ -32,7 +32,65 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
         }
         // - Catch Errors
         catch (error) {
-            throw new Error('Error login : ' + error);
+            throw new Error('Error Get Count : ' + error);
         }
     };
+
+    /**
+     * Retrieves all invitations for the current user.
+     * 
+     * This function makes a GET request to the server to fetch all invitations.
+     * It returns a Promise that resolves to an object of type `GetCountFriendInvitation`.
+     * 
+     * @returns {Promise<GetCountFriendInvitation>} A Promise that resolves to the fetched invitations.
+     * @throws {Error} If there's an error during the request, it throws an Error with the error message.
+     */
+    getInvitations = async (): Promise<InvitationData> => {
+        // - Try Validation
+        try {
+            // get all invitation for this user
+            const response = await this.fetch(`${this.authUrl}findAll`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
+
+            // Get data
+            const data: InvitationData = await response.json();
+
+            // Return data
+            return data;
+        }
+        // - Catch Errors
+        catch (error) {
+            throw new Error('Error Get Invitation : ' + error);
+        }
+    };
+
+    responseInvitation = async (id: string, accept: boolean): Promise<{ status: number; message?: string; error?: string }> => {
+        // - Try Validation
+        try {
+            // Accept or refuse Invitation
+            const response = await this.fetch(`${this.authUrl}accept`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ id, response: accept })
+            });
+
+            // Get data
+            const data: GetCountFriendInvitation = await response.json();
+
+            // Return data
+            return data;
+        }
+        // - Catch Errors
+        catch (error) {
+            throw new Error('Error Response Invitation : ' + error);
+        }
+    }
 }
