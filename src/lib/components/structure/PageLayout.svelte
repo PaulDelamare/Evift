@@ -21,7 +21,7 @@
 <slot name="hero" />
 <!-- Place div whith flex display -->
 <div
-	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden"
+	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden min-h-[80svh]"
 >
 	<!-- If pink background is true display pink background -->
 	{#if pinkBackground}
