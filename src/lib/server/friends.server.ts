@@ -15,7 +15,7 @@ export default class FriendsApi extends Api<GetAllFriends> {
      getFriends = async (): Promise<Friends[]> => {
           // - Try Validation
           try {
-               // Get Count Invitation
+               // Do request
                const response = await this.fetch(`${this.authUrl}findAll`, {
                     method: 'GET',
                     headers: {
@@ -24,10 +24,12 @@ export default class FriendsApi extends Api<GetAllFriends> {
                     credentials: 'include'
                });
 
-               // Get data
+               // Get Friends
                const data: GetAllFriends | { error: string ; status: number} = await response.json();
 
+               // If error in data
                if ('error' in data) {
+                    // Throw error
                     throw new Error(data.error);
                }
 

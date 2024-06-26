@@ -1,7 +1,9 @@
+// ! IMPORTS
 import { API_URL } from '$env/static/private';
 import { Api } from './api.server';
 import type { GetCountFriendInvitation, InvitationData } from '$lib/models/invitation.model';
 
+// ! Class
 export default class InvitationApi extends Api<GetCountFriendInvitation> {
     // Base url request for auth methods
     private authUrl = `${API_URL}api/invitation/`;
@@ -15,7 +17,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
     getCountFriendInvitation = async (): Promise<number> => {
         // - Try Validation
         try {
-            // Get Count Invitation
+            // Do request
             const response = await this.fetch(`${this.authUrl}count`, {
                 method: 'GET',
                 headers: {
@@ -24,7 +26,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
                 credentials: 'include'
             });
 
-            // Get data
+            // Get Count Invitation
             const data: GetCountFriendInvitation = await response.json();
 
             // Return data
@@ -48,7 +50,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
     getInvitations = async (): Promise<InvitationData> => {
         // - Try Validation
         try {
-            // get all invitation for this user
+            // Do request
             const response = await this.fetch(`${this.authUrl}findAll`, {
                 method: 'GET',
                 headers: {
@@ -57,7 +59,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
                 credentials: 'include'
             });
 
-            // Get data
+            // Get all invitation for this user
             const data: InvitationData = await response.json();
 
             // Return data

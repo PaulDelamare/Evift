@@ -120,7 +120,7 @@ export const actions: Actions = {
 			// - Catch Errors
 			// If Error in ValidationError
 			if (error instanceof yup.ValidationError) {
-				// Check what error it is adn return this in errors instance
+				// Check what error it is and return this in errors instance
 				error.inner.forEach((err) => {
 					if (err.path === 'firstname') {
 						errors.firstname = err.message;
@@ -237,7 +237,7 @@ export const actions: Actions = {
 
 			// If Error in ValidationError
 			if (error instanceof yup.ValidationError) {
-				// Check what error it is adn return this in errors instance
+				// Check what error it is and return this in errors instance
 				error.inner.forEach((err) => {
 					if (err.path === 'email') {
 						errors.emailLogin = err.message;
@@ -257,8 +257,9 @@ export const actions: Actions = {
 			}
 		}
 
-		// Define user object
+		// Instance Auth Api
 		const api = new AuthApi(fetch);
+		// Do login
 		const res = await api.login(email, password);
 
 		// if an error occurs
@@ -284,7 +285,16 @@ export const actions: Actions = {
 		}
 	},
 
+	/**
+	 * Logs out the user by deleting the access token cookie and setting the user to undefined.
+	 *
+	 * @param options - An object containing the locals and cookies objects.
+	 * @param options.locals - The locals object.
+	 * @param options.cookies - The cookies object.
+	 * @return A promise that resolves when the logout process is complete.
+	 */
 	logout: async ({ locals, cookies }) => {
+		// Delete cookie and set user to undefined
 		locals.user = undefined;
 		cookies.delete('accessToken', { path: '/' });
 	}
