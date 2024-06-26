@@ -80,11 +80,10 @@
 			}
 		}
 	}
-
 </script>
 
 <!-- Call Captcha component -->
-<Captcha bind:this={captchaSubmit} bind:token/>
+<Captcha bind:this={captchaSubmit} bind:token />
 
 <!-- For innerwidth -->
 <svelte:window bind:innerWidth />
@@ -107,8 +106,7 @@
 		on:submit|preventDefault={() => {
 			onSubmit();
 			submitted = true;
-			captchaSubmit.onSubmitCaptcha()
-
+			captchaSubmit.onSubmitCaptcha();
 		}}
 		class="column w-full gap-10 text max-w-[450px] mx-auto"
 	>
@@ -132,7 +130,7 @@
 					{/each}
 				</div>
 			{:else}
-			<!-- Display input -->
+				<!-- Display input -->
 				<Input
 					type={input.type}
 					label={input.label}
@@ -145,7 +143,7 @@
 		{/each}
 
 		<!-- Display secret input -->
-		<input class="hidden" type="text" name="secret" value="{token}">
+		<input class="hidden" type="text" name="secret" value={token} />
 
 		<!-- If forgot password is activated display forgot password link -->
 		{#if forgotPassword}

@@ -50,7 +50,7 @@
 					label="Contenu du message"
 				/>
 				<!-- Display Submit -->
-				<Submit textSubmit="Envoyer" bind:submitted={submitted}/>
+				<Submit textSubmit="Envoyer" bind:submitted />
 			</form>
 		</div>
 	</div>

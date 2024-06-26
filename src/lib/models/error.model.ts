@@ -1,4 +1,4 @@
 export interface ErrorApi {
 	error: string;
-     status: number;
+	status: number;
 }

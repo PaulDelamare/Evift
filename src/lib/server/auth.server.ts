@@ -31,9 +31,8 @@ export default class AuthApi extends Api<LoginResponse> {
 				throw new Error(data.error);
 			}
 			return data;
-		} 
-		// - Catch Errors
-		catch (error) {
+		} catch (error) {
+			// - Catch Errors
 			// Throw error
 			throw new Error('Error register : ' + error);
 		}
@@ -59,9 +58,8 @@ export default class AuthApi extends Api<LoginResponse> {
 			const data: LoginResponse | ErrorApi = await response.json();
 			// If error in data
 			return data;
-		} 
-		// - Catch Errors
-		catch (error) {
+		} catch (error) {
+			// - Catch Errors
 			// Throw error
 			throw new Error('Error login : ' + error);
 		}
@@ -71,7 +69,6 @@ export default class AuthApi extends Api<LoginResponse> {
 	getInfo = async (): Promise<User | ErrorApi> => {
 		// - Try Validation
 		try {
-
 			// Get user
 			const response = await this.fetch(`${this.authUrl}me`, {
 				method: 'GET',
@@ -94,9 +91,8 @@ export default class AuthApi extends Api<LoginResponse> {
 				return data;
 			}
 			return { status: 500, error: 'Error' };
-		} 
-		// - Catch Errors
-		catch (error) {
+		} catch (error) {
+			// - Catch Errors
 			// Throw error
 			console.error('GetInfo : ' + error);
 			return { status: 500, error: 'Error' };

@@ -1,6 +1,6 @@
 <script lang="ts">
 	// ! IMPORT
-	import { fade } from "svelte/transition";
+	import { fade } from 'svelte/transition';
 
 	// ! VARIABLE
 	export let value = '';
@@ -114,15 +114,14 @@
 	}
 
 	input:-webkit-autofill,
-	input:-webkit-autofill:hover, 
-	input:-webkit-autofill:focus, 
-	input:-webkit-autofill:active{
-
-	@apply [box-shadow:_inset_0_0_20px_20px_rgb(var(--color-surface-500)_/_var(--tw-bg-opacity))] [-webkit-background-clip:_text]
+	input:-webkit-autofill:hover,
+	input:-webkit-autofill:focus,
+	input:-webkit-autofill:active {
+		@apply [box-shadow:_inset_0_0_20px_20px_rgb(var(--color-surface-500)_/_var(--tw-bg-opacity))] [-webkit-background-clip:_text];
 	}
 
 	/*Change text in autofill textbox*/
-	input:-webkit-autofill{
-		@apply ![-webkit-text-fill-color:_rgb(var(--color-tertiary-500)_/_var(--tw-text-opacity))]
+	input:-webkit-autofill {
+		@apply ![-webkit-text-fill-color:_rgb(var(--color-tertiary-500)_/_var(--tw-text-opacity))];
 	}
 </style>

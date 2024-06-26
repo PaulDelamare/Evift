@@ -41,8 +41,7 @@
 				error: form?.errors?.passwordLogin
 			}
 		]}
-		onSubmit={() => {
-		}}
+		onSubmit={() => {}}
 		textSubmit="Connexion"
 		forgotPassword
 	/>

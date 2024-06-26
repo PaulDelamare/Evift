@@ -230,11 +230,8 @@ export const actions: Actions = {
 		try {
 			// Validation register
 			await loginSchema.validate({ email, password }, { abortEarly: false });
-
-		}
-		// - Catch Errors
-		catch (error) {
-
+		} catch (error) {
+			// - Catch Errors
 			// If Error in ValidationError
 			if (error instanceof yup.ValidationError) {
 				// Check what error it is and return this in errors instance
@@ -251,7 +248,6 @@ export const actions: Actions = {
 				// Return errors
 				return { status: 400, errors };
 			} else {
-
 				// Else Throw custom Error
 				return { status: 400, error: 'Une erreur est survenue' };
 			}
