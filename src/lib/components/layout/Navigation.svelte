@@ -125,7 +125,7 @@
 					{item.text}
 				</a>
 				<!-- If the navigation is Invitation, display notification -->
-				{#if item.text === 'Invitation' && !contact}
+				{#if item.text === 'Invitation' && !contact && notification > 0}
 					<div
 						class="absolute -z-10 -top-[10px] leading-none p-2 -right-[17px] text-surface-500 bg-secondary-500/80 size-6 flex justify-center items-center rounded-full"
 					>
