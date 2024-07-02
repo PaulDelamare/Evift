@@ -5,7 +5,7 @@ export interface GetAllFriends {
 
 export interface Friends {
 	id: string;
-	created_at: string;
+	createdAt: Date;
 	userId: string;
 	user: {
 		id: string;
