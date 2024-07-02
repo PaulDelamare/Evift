@@ -34,7 +34,7 @@
 		<CloseModalButton {parent} classSVG="fill-secondary-500" />
 		<!-- Content in Modal -->
 		<div class="column gap-12 mini-tablet:gap-8 w-full mx-auto max-w-[565px]">
-			<!-- SVG With Titlte PosContact -->
+			<!-- Title -->
 			<div class="text-center text-gradient">
 				<h2 class="tablet:text-3xl tracking-normal">Contactez nous !</h2>
 			</div>
