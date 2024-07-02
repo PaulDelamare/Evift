@@ -8,17 +8,36 @@ export interface LoginResponse {
 }
 
 export interface User {
+	id: string;
+	firstname: string;
+	lastname: string;
+	email: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+	error?: string;
+}
+
+export interface DataUser {
+	data: User;
+	status: number;
+}
+
+export interface PostUser {
 	firstname: string;
 	lastname: string;
 	email: string;
 	password: string;
-	createdAt?: Date;
-	updatedAt?: Date;
 }
 
-export interface PostUser {
-	firstName: string;
-	lastname: string;
-	email: string;
-	password: string;
+
+export interface GetUser {
+	id: string;
+	userId: string;
+	createdAt: Date;
+	user: {
+		id: string;
+		email: string;
+		firstname: string;
+		lastname: string;
+	};
 }
