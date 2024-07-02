@@ -3,13 +3,18 @@
 	import FriendsInvitationList from '$lib/components/auth/invitation/FriendsInvitationList.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
-	import type { ActionData } from './$types';
+	import type { ActionData, PageData } from './$types';
+	import type { Invitation } from '$lib/models/invitation.model';
 
 	// ! VARIABLE
+	export let data: PageData;
 	// export let data: PageData;
 	export let form: ActionData;
 
 	const toastStore = getToastStore();
+	// event is variable know if we are in event invitation or friends invitation
+	let event = true;
+	let invitations: Invitation[] = data.invitations;
 
 	// DYNAMIC VARIABLE
 	// Check if form has errors
@@ -46,19 +51,16 @@
 		};
 		toastStore.trigger(t);
 	}
-
-	// event is variable know if we are in event invitation or friends invitation
-	let event = true;
 </script>
 
 <!-- Displau Page Layout for disposition -->
 <PageLayout padding="py-12" gap="gap-12">
 	<!-- Display event and friends button -->
-	<div class="flex gap-8 justify-between mx-auto">
+	<div class="flex gap-8 justify-between mx-auto px-4">
 		<!-- Button for event -->
 		<button
 			on:click={() => (event = true)}
-			class="max-w-[183px] w-[183px] text-center shadow-md cursor-pointer {event
+			class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {event
 				? 'bg-gradient text-surface-500'
 				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full"
 		>
@@ -67,7 +69,7 @@
 		<!-- Button for friends -->
 		<button
 			on:click={() => (event = false)}
-			class="max-w-[183px] w-[183px] text-center shadow-md cursor-pointer {!event
+			class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {!event
 				? 'bg-gradient text-surface-500'
 				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full text-surface-500"
 		>
@@ -75,11 +77,11 @@
 		</button>
 	</div>
 	<!-- Display event or friends invitation -->
-	<section class="wrap">
+	<section class="wrap px-4">
 		{#if event}
 			<h1>Evenement</h1>
 		{:else}
-			<FriendsInvitationList {form} />
+			<FriendsInvitationList dataArray={invitations} {form} nothingMessage="Aucune invitation"/>
 		{/if}
 	</section>
 </PageLayout>
