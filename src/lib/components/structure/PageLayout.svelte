@@ -12,9 +12,9 @@
 
 	// Imports
 	export let blueBackground = true;
-	export let blueWidth = 'w-[872px] mini-tablet:w-[600px]';
-	export let blueBottom = '-bottom-1/4 mini-tablet:bottom-52';
-	export let blueRight = 'right-0 mini-tablet:-right-52';
+	export let blueWidth = 'w-[872px] mini-desk:w-[600px]';
+	export let blueBottom = '-bottom-1/4 mini-deskt:bottom-52';
+	export let blueRight = 'right-0 mini-desk:-right-52';
 </script>
 
 <!-- Display Page Hero -->
