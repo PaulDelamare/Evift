@@ -1,13 +1,17 @@
 <script lang="ts">
 	// Imports
-	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { getModalStore, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import type { SvelteComponent } from 'svelte';
 	import CloseModalButton from './CloseModalButton.svelte';
 	import Input from '../form/Input.svelte';
 	import Submit from '../form/Submit.svelte';
+	import { page } from '$app/stores';
+	import { enhance } from '$app/forms';
+	import User from '../auth/invitation/User.svelte';
 
 	// Stores
 	const modalStore = getModalStore();
+	const toastStore = getToastStore();
 
 	// Props
 	/** Exposes parent props to this component. */
@@ -17,6 +21,30 @@
 	let innerWidth: number;
 	let innerHeight: number;
 	let submitted = false;
+
+     // Get form
+	$: form = $page.form;
+
+     // Stock user
+	let user = form?.user;
+
+     // If user is found
+	$: if (form?.user) {
+		user = form;
+	}
+
+     // If form is success
+	$: if (form?.success) {
+		modalStore.close();
+		const t: ToastSettings = {
+			message: "L'invitation a bien été envoyé",
+			background: 'bg-success-500',
+			classes: 'text-surface-500',
+			hideDismiss: true
+		};
+		user = null;
+		toastStore.trigger(t);
+	}
 
 	// Base Classes
 	const cBase =
@@ -34,24 +62,32 @@
 		<CloseModalButton {parent} classSVG="fill-secondary-500" />
 		<!-- Content in Modal -->
 		<div class="column gap-12 mini-tablet:gap-8 w-full mx-auto max-w-[565px]">
-			<!-- Title -->
+			<!-- Title-->
 			<div class="text-center text-gradient">
-				<h2 class="tablet:text-3xl tracking-normal">Contactez nous !</h2>
+				<h2 class="tablet:text-3xl tracking-normal">Trouver un utilisateur</h2>
 			</div>
-			<!--  Form Contact -->
-			<form class="column gap-8 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8">
+			<!--  Add user button -->
+			<form
+				use:enhance={() => {
+					return async ({ update }) => {
+						update({ reset: false });
+					};
+				}}
+				method="post"
+				action="?/findUserByEmail"
+				class="column gap-8 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8"
+			>
 				<Input value="" name="email" label="Email" />
-				<!-- Bloc with message -->
-				<Input
-					classInput="min-h-[180px] tablet:min-h-[130px]"
-					type="content"
-					value=""
-					name="message"
-					label="Contenu du message"
-				/>
 				<!-- Display Submit -->
-				<Submit textSubmit="Envoyer" bind:submitted />
+				<Submit textSubmit="Trouver" bind:submitted />
+				{#if form?.errors?.error}
+					<span class="errorMessage">{form.errors.error}</span>
+				{/if}
 			</form>
+               <!-- Display user -->
+			{#if user}
+				<User data={user} button={false} sizeImg="size-20" addButton />
+			{/if}
 		</div>
 	</div>
 {/if}

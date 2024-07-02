@@ -1,10 +1,11 @@
 <script lang="ts">
+	/* eslint-disable */
 	// ! IMPORTS
 	import { PUBLIC_CAPTCHA_KEY } from '$env/static/public';
 	import { onMount } from 'svelte';
 
 	// ! VARIABLE
-	// 
+	//
 	export let token: string;
 
 	// Define state captcha
@@ -28,9 +29,9 @@
 
 	// Get toke function
 	function doRecaptcha() {
-		// @ts-ignore
+		// @ts-expect-error
 		grecaptcha.ready(function () {
-			// @ts-ignore
+			// @ts-expect-error
 			grecaptcha.execute(PUBLIC_CAPTCHA_KEY, { action: 'submit' }).then(function (t) {
 				state = State.success;
 				token = t;
@@ -41,6 +42,7 @@
 	// Mount
 	onMount(() => {
 		// Check if grecaptcha is already loaded
+		// @ts-expect-error
 		if (window.grecaptcha) {
 			onSubmitCaptcha();
 		}

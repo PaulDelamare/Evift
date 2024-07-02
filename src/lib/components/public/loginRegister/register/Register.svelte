@@ -73,8 +73,7 @@
 				error: form?.errors?.passwordConfirmRegister
 			}
 		]}
-		onSubmit={() => {
-		}}
+		onSubmit={() => {}}
 		textSubmit="Inscription"
 	/>
 {/if}

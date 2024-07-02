@@ -12,16 +12,16 @@
 
 	// Imports
 	export let blueBackground = true;
-	export let blueWidth = 'w-[872px] mini-tablet:w-[600px]';
-	export let blueBottom = '-bottom-1/4 mini-tablet:bottom-52';
-	export let blueRight = 'right-0 mini-tablet:-right-52';
+	export let blueWidth = 'w-[872px] mini-desk:w-[600px]';
+	export let blueBottom = '-bottom-1/4 mini-deskt:bottom-52';
+	export let blueRight = 'right-0 mini-desk:-right-52';
 </script>
 
 <!-- Display Page Hero -->
 <slot name="hero" />
 <!-- Place div whith flex display -->
 <div
-	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden"
+	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden min-h-[80svh]"
 >
 	<!-- If pink background is true display pink background -->
 	{#if pinkBackground}

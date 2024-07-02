@@ -69,7 +69,7 @@
 			<!-- Display title with Textwritter animation -->
 			<!-- Display button -->
 			<a
-				href="/connexion"
+				href="/evift/login"
 				class="nav px-12 py-2 bg-secondary-500 rounded-xl shadow-custom hover:bg-secondary-600 custom-transition !duration-300"
 			>
 				Je commence
