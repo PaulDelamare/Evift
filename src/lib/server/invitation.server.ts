@@ -95,4 +95,30 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 			throw new Error('Error Response Invitation : ' + error);
 		}
 	};
+
+	sendFriendsInvitation = async (
+		id: string
+	): Promise<{ status: number; error: string; } | { status: number; message: string; }> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}request`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include',
+				body: JSON.stringify({ id })
+			});
+
+			// Get data
+			const data: { status: number; error: string; } | { status: number; message: string; } = await response.json();
+
+			// Return data
+			return data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error in Friends Invitation : ' + error);
+		}
+	};
 }
