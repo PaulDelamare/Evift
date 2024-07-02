@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	// Imports
 	import Burger from '../extra/header/Burger.svelte';
 	import Logo from '../svg/Logo.svelte';
 	import Navigation from './Navigation.svelte';
+
+	$: user = $page.data.user;
 </script>
 
 <!-- Bloc for Header -->
@@ -12,8 +16,8 @@
 
 	<!-- TODO Add condition for Loged Nav -->
 	<!-- For Desktop Display Navigation -->
-	<Navigation navClass="tablet:hidden" ulClass="gap-12 pb-2" hover />
+	<Navigation navClass="{!user ? 'tablet:hidden' : 'mini-desk:hidden'}" ulClass="gap-12 pb-2" hover />
 
 	<!-- For Responsive Display Burger Menu -->
-	<Burger divClass="hidden tablet:block" />
+	<Burger divClass="hidden {!user ? 'tablet:block' : 'mini-desk:block'}" />
 </div>
