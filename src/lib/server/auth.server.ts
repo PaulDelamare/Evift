@@ -2,14 +2,14 @@ import { API_URL } from '$env/static/private';
 import type { ErrorApi } from '../models/error.model';
 // import type {  User } from '../models/user.model';
 import { Api } from './api.server';
-import type { LoginResponse, User } from '../models/user.model';
+import type { LoginResponse, PostUser, User } from '../models/user.model';
 
 export default class AuthApi extends Api<LoginResponse> {
 	// Base url request for auth methods
 	private authUrl = `${API_URL}api/auth/`;
 
 	// ? Register methods
-	register = async (user: User): Promise<{ status: number; message?: string; error?: string }> => {
+	register = async (user: PostUser): Promise<{ status: number; message?: string; error?: string }> => {
 		// - Try Validation
 		try {
 			// Register request
