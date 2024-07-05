@@ -22,18 +22,18 @@
 	let innerHeight: number;
 	let submitted = false;
 
-     // Get form
+	// Get form
 	$: form = $page.form;
 
-     // Stock user
+	// Stock user
 	let user = form?.user;
 
-     // If user is found
+	// If user is found
 	$: if (form?.user) {
 		user = form;
 	}
 
-     // If form is success
+	// If form is success
 	$: if (form?.success) {
 		modalStore.close();
 		const t: ToastSettings = {
@@ -84,7 +84,7 @@
 					<span class="errorMessage">{form.errors.error}</span>
 				{/if}
 			</form>
-               <!-- Display user -->
+			<!-- Display user -->
 			{#if user}
 				<User data={user} button={false} sizeImg="size-20" addButton />
 			{/if}

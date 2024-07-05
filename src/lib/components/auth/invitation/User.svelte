@@ -14,7 +14,11 @@
 </script>
 
 <!-- Display data in li -->
-<li class="w-full flex p-4 bg-surface-500 gap-12 rounded-xl {shadow} {friends ? 'items-center gap-8 mini-tablet:gap-4' : 'mini-tablet:flex-col mini-tablet:items-center mini-tablet:gap-4'}">
+<li
+	class="w-full flex p-4 bg-surface-500 gap-12 rounded-xl {shadow} {friends
+		? 'items-center gap-8 mini-tablet:gap-4'
+		: 'mini-tablet:flex-col mini-tablet:items-center mini-tablet:gap-4'}"
+>
 	<!-- Display user image (for start, the progil picture isn't available, so we display a default image) -->
 	<div>
 		<div class="{sizeImg} rounded-full overflow-hidden box-border bg-surface-500 shadow-md">
@@ -23,7 +27,11 @@
 	</div>
 
 	<!-- Display user infos -->
-	<div class="w-full flex flex-col items-end justify-between {friends ? '' : 'mini-tablet:gap-4 mini-tablet:items-center'} ">
+	<div
+		class="w-full flex flex-col items-end justify-between {friends
+			? ''
+			: 'mini-tablet:gap-4 mini-tablet:items-center'} "
+	>
 		<div class="w-full flex flex-col gap-3 {friends ? '' : 'mini-tablet:text-center'} ">
 			<!-- Display user name and email -->
 			<h4 class="{friends ? 'text-base' : ''} ">
@@ -93,7 +101,7 @@
 				}}
 				action="?/sendFriendsInvitation"
 			>
-			<input type="hidden" name="id" value={data.user.id} />
+				<input type="hidden" name="id" value={data.user.id} />
 				<div
 					class="shadow-md w-full !max-w-[153px] group bg-gradient p-[2px] active:scale-95 custom-transition !duration-300 rounded-xl"
 				>

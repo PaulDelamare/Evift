@@ -4,7 +4,8 @@
 declare namespace App {
 	interface Locals {
 		user: import('$lib/models/user.model').User | undefined;
-		notification: number;
+		notificationFriends: number;
+		notificationEvents: number;
 	}
 	// interface PageData {}
 	// interface Error {}

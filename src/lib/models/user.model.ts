@@ -29,7 +29,6 @@ export interface PostUser {
 	password: string;
 }
 
-
 export interface GetUser {
 	id: string;
 	userId: string;
