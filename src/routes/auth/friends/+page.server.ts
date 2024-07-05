@@ -99,7 +99,6 @@ export const actions: Actions = {
 					if (err.path === 'id') {
 						errors.id = err.message;
 					}
-					console.log(err)
 				});
 
 				
