@@ -1,13 +1,15 @@
 <script lang="ts">
+	// ! Import
 	import { enhance } from '$app/forms';
 
+	// ! Props
 	export let id;
-     export let action: string;
+	export let action: string;
 </script>
 
 <form
 	class="w-full !max-w-[153px]"
-	action="{action}"
+	{action}
 	method="post"
 	use:enhance={() => {
 		return async ({ update }) => {
@@ -35,7 +37,7 @@
 	</div>
 </form>
 <form
-	action="{action}"
+	{action}
 	use:enhance={() => {
 		return async ({ update }) => {
 			update({ reset: false });
