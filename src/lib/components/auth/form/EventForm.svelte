@@ -1,18 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import FileInput from '$lib/components/form/FileInput.svelte';
-	import {
-		getToastStore,
-		ProgressRadial,
-		type ToastSettings,
-		type ToastStore
-	} from '@skeletonlabs/skeleton';
+	import { getToastStore, type ToastSettings, type ToastStore } from '@skeletonlabs/skeleton';
 	import { goto } from '$app/navigation';
 	import type { ActionData } from '../../../../routes/auth/event/create/$types';
 	import { page } from '$app/stores';
 	import Submit from '$lib/components/form/Submit.svelte';
 	import type { Friends } from '$lib/models/friends.model';
-	import FriendsInvitationList from '../invitation/FriendsInvitationList.svelte';
 	import InviteFriends from './InviteFriends.svelte';
 
 	export let action: string;
@@ -20,12 +14,8 @@
 	const toastStore: ToastStore = getToastStore();
 
 	let imageLogo: HTMLImageElement;
-	let imageImage: HTMLImageElement;
 
 	let resultLogo: string;
-	let resultImage: string;
-
-	let inviteFriends: string[] = [];
 
 	let name: string;
 	let description: string;

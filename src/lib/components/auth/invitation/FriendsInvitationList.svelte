@@ -21,7 +21,7 @@
 	// If it's friends page
 	export let friends = false;
 	// When there is no data
-	export let nothingMessage = 'Vous ne possèder pour l\'instant aucun ami';
+	export let nothingMessage = "Vous ne possèder pour l'instant aucun ami";
 </script>
 
 <!-- @component
@@ -33,10 +33,10 @@ The component get invitation from the server
 <!-- Start of component -->
 <ul class="column gap-12 {friends ? 'gap-4' : ''}">
 	{#if dataArray.length > 0}
-	<!-- For each invitation -->
-	{#each dataArray as data}
-		<User {friends} {data} {button} {shadow} {sizeImg} />
-	{/each}
+		<!-- For each invitation -->
+		{#each dataArray as data}
+			<User {friends} {data} {button} {shadow} {sizeImg} />
+		{/each}
 	{:else}
 		<h4>{nothingMessage}</h4>
 	{/if}

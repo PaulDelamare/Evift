@@ -46,7 +46,7 @@
 			on:click={() => {
 				if (selected) {
 					inviteList = inviteList.filter((id) => id !== friend.id);
-				}else {
+				} else {
 					inviteList = [...inviteList, friend.userId];
 				}
 				selected = !selected;

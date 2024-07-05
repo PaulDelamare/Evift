@@ -16,7 +16,7 @@
 
 	<!-- TODO Add condition for Loged Nav -->
 	<!-- For Desktop Display Navigation -->
-	<Navigation navClass="{!user ? 'tablet:hidden' : 'mini-desk:hidden'}" ulClass="gap-12 pb-2" hover />
+	<Navigation navClass={!user ? 'tablet:hidden' : 'mini-desk:hidden'} ulClass="gap-12 pb-2" hover />
 
 	<!-- For Responsive Display Burger Menu -->
 	<Burger divClass="hidden {!user ? 'tablet:block' : 'mini-desk:block'}" />

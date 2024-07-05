@@ -13,7 +13,7 @@ export const load = (async ({ fetch }) => {
 	const invitations = await notifApi.getInvitations();
 	const invitationsEvent = await notifApi.getEventInvitation();
 
-	const imgUrl = API_URL
+	const imgUrl = API_URL;
 
 	// Return data
 	return {
@@ -144,7 +144,7 @@ export const actions: Actions = {
 		const api = new InvitationApi(fetch);
 		// Call responseInvitation
 		const res = await api.responseEventInvitation(invitationId, accept);
-		console.log(res)
+		console.log(res);
 
 		// if an error occurs
 		if ('error' in res) {
@@ -156,7 +156,7 @@ export const actions: Actions = {
 		return {
 			successEvent: true,
 			acceptEvent: accept,
-			idRemoveEvent : invitationId
+			idRemoveEvent: invitationId
 		};
 	}
 };

@@ -7,7 +7,12 @@ import { type ModalSettings, type ModalStore } from '@skeletonlabs/skeleton';
  * @param toastStore store from skeleton
  *
  */
-export default function renderModal(modalStore: ModalStore, component: string, title: string, body: string) {
+export default function renderModal(
+	modalStore: ModalStore,
+	component: string,
+	title: string,
+	body: string
+) {
 	const modal: ModalSettings = {
 		// Provide arbitrary classes to the backdrop and modal elements:
 		type: 'component',

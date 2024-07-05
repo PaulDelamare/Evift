@@ -3,14 +3,11 @@
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
 
-	import { getModalStore, type ModalStore, type PaginationSettings } from '@skeletonlabs/skeleton';
+	import { type PaginationSettings } from '@skeletonlabs/skeleton';
 	import Event from '$lib/components/auth/event/Event.svelte';
 	import { Paginator } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
-
-	// const friends = data.friends;
-	const modalStore: ModalStore = getModalStore();
 
 	let search = '';
 	const events = data.allEvent.data;

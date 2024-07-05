@@ -19,9 +19,7 @@ export const load = (async ({ fetch }) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-
 	findUserByEmail: async ({ request, fetch }) => {
-
 		// Get form data
 		const data = await request.formData();
 		const email = data.get('email') as string;
@@ -83,7 +81,7 @@ export const actions: Actions = {
 		const id = data.get('id') as string;
 		// Must have invitationId and accept
 		const schema = yup.object().shape({
-			id: yup.string().uuid("Id invalide*").required("Id requis*"),
+			id: yup.string().uuid('Id invalide*').required('Id requis*')
 		});
 		const errors: { error?: string; id?: string } = {};
 		// ? Validation
@@ -101,7 +99,6 @@ export const actions: Actions = {
 					}
 				});
 
-				
 				// Return errors
 				return { status: 400, errors };
 			} else {
@@ -111,7 +108,7 @@ export const actions: Actions = {
 		}
 
 		if (locals.user?.id === id) {
-			errors.error = "Vous ne pouvez pas vous inviter vous même !";
+			errors.error = 'Vous ne pouvez pas vous inviter vous même !';
 			return { status: 400, errors };
 		}
 
@@ -121,16 +118,15 @@ export const actions: Actions = {
 		const res = await api.sendFriendsInvitation(id);
 
 		// if an error occurs
-		if ("error" in res) {
-			
+		if ('error' in res) {
 			// Return error
 			errors.error = res.error;
 			return { status: 400, errors };
 		}
-		
+
 		// Return data
 		return {
 			success: true
 		};
 	}
-}
+};

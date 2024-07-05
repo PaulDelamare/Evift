@@ -9,7 +9,9 @@ export default class AuthApi extends Api<LoginResponse> {
 	private authUrl = `${API_URL}api/auth/`;
 
 	// ? Register methods
-	register = async (user: PostUser): Promise<{ status: number; message?: string; error?: string }> => {
+	register = async (
+		user: PostUser
+	): Promise<{ status: number; message?: string; error?: string }> => {
 		// - Try Validation
 		try {
 			// Register request

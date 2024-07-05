@@ -15,7 +15,10 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 	 * @return {Promise<number>} A promise that resolves to the count of friend invitations.
 	 * @throws {Error} If there is an error retrieving the count of friend invitations.
 	 */
-	getCountFriendInvitation = async (): Promise<{ countFriendsInvitation: number; countEventInvitation: number; }> => {
+	getCountFriendInvitation = async (): Promise<{
+		countFriendsInvitation: number;
+		countEventInvitation: number;
+	}> => {
 		// - Try Validation
 		try {
 			// Do request
@@ -99,7 +102,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 
 	sendFriendsInvitation = async (
 		id: string
-	): Promise<{ status: number; error: string; } | { status: number; message: string; }> => {
+	): Promise<{ status: number; error: string } | { status: number; message: string }> => {
 		// - Try Validation
 		try {
 			// Accept or refuse Invitation
@@ -113,7 +116,8 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 			});
 
 			// Get data
-			const data: { status: number; error: string; } | { status: number; message: string; } = await response.json();
+			const data: { status: number; error: string } | { status: number; message: string } =
+				await response.json();
 
 			// Return data
 			return data;
@@ -123,7 +127,10 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 		}
 	};
 
-	eventInvitation = async (eventId: string, invitationId: string[]): Promise<{ status: number; error: string; } | { status: number; message: string; }> => {
+	eventInvitation = async (
+		eventId: string,
+		invitationId: string[]
+	): Promise<{ status: number; error: string } | { status: number; message: string }> => {
 		// - Try Validation
 		try {
 			// Accept or refuse Invitation
@@ -137,7 +144,8 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 			});
 
 			// Get data
-			const data: { status: number; error: string; } | { status: number; message: string; } = await response.json();
+			const data: { status: number; error: string } | { status: number; message: string } =
+				await response.json();
 
 			// Return data
 			return data;
@@ -160,9 +168,9 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 			});
 
 			// Get data
-			const data: EventInvitation | { status: number; error: string; } = await response.json();
+			const data: EventInvitation | { status: number; error: string } = await response.json();
 
-			if ("error" in data) {
+			if ('error' in data) {
 				throw new Error(data.error);
 			}
 
@@ -172,7 +180,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 			// - Catch Errors
 			throw new Error('Error in Event Invitation : ' + error);
 		}
-	}
+	};
 
 	responseEventInvitation = async (
 		invitationId: string,

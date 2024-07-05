@@ -61,11 +61,14 @@
 </div>
 
 {#if preview}
-	<div
-		class="h-44 w-52 overflow-hidden box-border bg-surface-500 shadow-md rounded-lg"
-	>
+	<div class="h-44 w-52 overflow-hidden box-border bg-surface-500 shadow-md rounded-lg">
 		{#if showImage}
-			<img class="object-cover object-center w-full h-full" bind:this={image} src="" alt="Preview" />
+			<img
+				class="object-cover object-center w-full h-full"
+				bind:this={image}
+				src=""
+				alt="Preview"
+			/>
 		{:else}
 			<!-- <span>Visualisation de l'image</span> -->
 			<div class="bg-gradient w-full h-full flex items-center justify-center">

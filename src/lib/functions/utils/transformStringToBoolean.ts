@@ -6,11 +6,11 @@
  * @throws If the input string is not a valid boolean representation.
  */
 export function convertStringToBoolean(string: string) {
-     if (string === 'true') {
-          return true;
-     } else if (string === 'false') {
-          return false;
-     } else {
-          throw new Error("La chaîne n'est pas un booléen valide");
-     }
+	if (string === 'true') {
+		return true;
+	} else if (string === 'false') {
+		return false;
+	} else {
+		throw new Error("La chaîne n'est pas un booléen valide");
+	}
 }
