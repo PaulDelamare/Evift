@@ -13,7 +13,7 @@
 		'shadow-[31px_31px_82px_0_rgba(190,190,190,1),-31px_-31px_82px_0_rgba(255,255,255,1)]';
 
 	// If form is succes (accept or refuse invitation)
-	$: if (form?.success) {
+	$: if (form?.successFriend) {
 		// Remove invitation from list
 		dataArray = dataArray.filter((invitation) => invitation.id !== form.idRemove);
 	}
