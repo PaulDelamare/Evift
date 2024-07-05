@@ -42,9 +42,10 @@ export async function handle({ event, resolve }) {
 		// Instance Invitation Api
 		const notifApi = new InvitationApi(event.fetch);
 		// Get Notification number
-		const invitationCount = await notifApi.getCountFriendInvitation();
+		const notifications = await notifApi.getCountFriendInvitation();
 		// Pass number in locals
-		event.locals.notification = invitationCount;
+		event.locals.notificationFriends = notifications.countFriendsInvitation;
+		event.locals.notificationEvents = notifications.countEventInvitation;
 		// Else set user information
 		event.locals.user = userInfo;
 	}
