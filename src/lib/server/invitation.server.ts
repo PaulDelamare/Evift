@@ -2,6 +2,7 @@
 import { API_URL } from '$env/static/private';
 import { Api } from './api.server';
 import type { GetCountFriendInvitation, InvitationData } from '$lib/models/invitation.model';
+import type { EventInvitation } from '$lib/models/event.model';
 
 // ! Class
 export default class InvitationApi extends Api<GetCountFriendInvitation> {
@@ -14,7 +15,7 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 	 * @return {Promise<number>} A promise that resolves to the count of friend invitations.
 	 * @throws {Error} If there is an error retrieving the count of friend invitations.
 	 */
-	getCountFriendInvitation = async (): Promise<number> => {
+	getCountFriendInvitation = async (): Promise<{ countFriendsInvitation: number; countEventInvitation: number; }> => {
 		// - Try Validation
 		try {
 			// Do request
@@ -119,6 +120,84 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 		} catch (error) {
 			// - Catch Errors
 			throw new Error('Error in Friends Invitation : ' + error);
+		}
+	};
+
+	eventInvitation = async (eventId: string, invitationId: string[]): Promise<{ status: number; error: string; } | { status: number; message: string; }> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}requestEvent`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include',
+				body: JSON.stringify({ eventId, invitationId })
+			});
+
+			// Get data
+			const data: { status: number; error: string; } | { status: number; message: string; } = await response.json();
+
+			// Return data
+			return data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error in Event Invitation : ' + error);
+		}
+	};
+
+	getEventInvitation = async (): Promise<EventInvitation> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}eventInvitation`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
+
+			// Get data
+			const data: EventInvitation | { status: number; error: string; } = await response.json();
+
+			if ("error" in data) {
+				throw new Error(data.error);
+			}
+
+			// Return data
+			return data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error in Event Invitation : ' + error);
+		}
+	}
+
+	responseEventInvitation = async (
+		invitationId: string,
+		accept: boolean
+	): Promise<{ status: number; message?: string; error?: string }> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}responseEventInvitation`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include',
+				body: JSON.stringify({ invitationId, response: accept })
+			});
+
+			// Get data
+			const data: GetCountFriendInvitation = await response.json();
+
+			// Return data
+			return data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error Response Invitation : ' + error);
 		}
 	};
 }
