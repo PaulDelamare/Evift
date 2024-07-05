@@ -1,5 +1,8 @@
 export interface GetCountFriendInvitation {
-	data: number;
+	data: {
+		countFriendsInvitation: number;
+		countEventInvitation: number;
+	};
 	status: number;
 }
 
