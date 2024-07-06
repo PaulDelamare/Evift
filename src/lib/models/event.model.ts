@@ -1,5 +1,19 @@
 import type { User } from './user.model';
 
+export interface getOneEvent {
+	data: {
+		id: string;
+		id_event: string;
+		id_role: string;
+		id_user: string;
+		createdAt: Date;
+		updatedAt: Date;
+		user: User;
+		event: Event;
+	};
+	status: number;
+}
+
 export interface GetAllEvent {
 	data: {
 		id: string;
