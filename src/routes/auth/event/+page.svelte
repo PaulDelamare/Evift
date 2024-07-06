@@ -75,7 +75,7 @@
 								class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] 0 nav rounded-xl nav group-hover:text-gradient text-surface-500 custom-transition !duration-300 between justify-center gap-8"
 								type="submit"
 							>
-								<a href="/auth/event/event-{event.id}">Accéder</a>
+								<a href="/auth/event/event-{event.id_event}">Accéder</a>
 							</button>
 						</div>
 					</div>
