@@ -1,6 +1,6 @@
 import { API_URL } from '$env/static/private';
 import { Api } from './api.server';
-import type { GetAllEvent } from '$lib/models/event.model';
+import type { GetAllEvent, getOneEvent } from '$lib/models/event.model';
 
 export default class EventApi extends Api<GetAllEvent> {
 	// Base url request for auth methods
@@ -63,5 +63,32 @@ export default class EventApi extends Api<GetAllEvent> {
 			// - Catch Errors
 			throw new Error('Error in Event Invitation : ' + error);
 		}
-	};
+	}
+
+     getOneEvent = async (id: string): Promise<getOneEvent> => {
+          // - Try Validation
+          try {
+               // Accept or refuse Invitation
+               const response = await this.fetch(`${this.authUrl}getOneEvent/${id}`, {
+                    method: 'GET',
+                    headers: {
+                         'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+               });
+
+               // Get data
+               const data: getOneEvent | { status: number; error: string } = await response.json();
+
+               if ('error' in data) {
+                    throw new Error(data.error);
+               }
+
+               // Return data
+               return data;
+          } catch (error) {
+               // - Catch Errors
+               throw new Error('Error in Event Invitation : ' + error);
+          }
+     }
 }
