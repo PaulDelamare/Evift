@@ -17,7 +17,7 @@
 	const sticky = 'sticky top-0 z-50';
 
 	// Create class
-	const headerC = `${headerClass} ${headerSticky ? sticky : ''} ${headerFixe ? 'fixed top-0 w-full' : ''} bg-surface-500`;
+	const headerC = `${headerClass} ${headerSticky ? sticky : ''} ${headerFixe ? 'fixed top-0 w-full' : ''} bg-surface-500 max-h-[79px]`;
 	const mainC = `flex-auto ${mainClass}`;
 	const footerC = `${footerClass} ${footerFixe ? 'fixed bottom-0 w-full' : ''}`;
 </script>
