@@ -22,7 +22,6 @@
 	}[] = [];
 
 	afterUpdate(() => {
-		console.log('afterUpdate');
 		if (messages) scrollToBottom(element);
 	});
 
