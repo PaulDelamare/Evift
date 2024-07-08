@@ -108,8 +108,6 @@ export const actions: Actions = {
 		let accept = data.get('accept') as string | boolean;
 		const errors: Errors = {};
 
-		console.log(invitationId, accept);
-
 		// ? Validation
 		try {
 			// Validation schema
@@ -144,7 +142,6 @@ export const actions: Actions = {
 		const api = new InvitationApi(fetch);
 		// Call responseInvitation
 		const res = await api.responseEventInvitation(invitationId, accept);
-		console.log(res);
 
 		// if an error occurs
 		if ('error' in res) {
