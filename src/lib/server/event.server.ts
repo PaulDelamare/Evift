@@ -1,6 +1,7 @@
 import { API_URL } from '$env/static/private';
 import { Api } from './api.server';
 import type { GetAllEvent, getOneEvent } from '$lib/models/event.model';
+import type { Participant, DataAllParticipants } from '$lib/models/participant.model';
 
 export default class EventApi extends Api<GetAllEvent> {
 	// Base url request for auth methods
@@ -91,4 +92,60 @@ export default class EventApi extends Api<GetAllEvent> {
                throw new Error('Error in Event Invitation : ' + error);
           }
      }
+
+     getParticipants = async (id: string): Promise<Participant[]> => {
+          // - Try Validation
+          try {
+               // Accept or refuse Invitation
+               const response = await this.fetch(`${this.authUrl}getAllParticipantsForEvent/${id}`, {
+                    method: 'GET',
+                    headers: {
+                         'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+               });
+
+               // Get data
+               const data: DataAllParticipants | { status: number; error: string } = await response.json();
+
+               if ('error' in data) {
+                    throw new Error(data.error);
+               }
+
+               // Return data
+               return data.data;
+          } catch (error) {
+               // - Catch Errors
+               throw new Error('Error in Event Invitation : ' + error);
+          }
+     }
+
+	changeRoleParticipant = async (
+		id_event: string,
+		id_user: string,
+		id_role: string
+	): Promise<{ status: number; error: string } | { status: number; message: string }> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}updateParticipant`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include',
+				body: JSON.stringify({ id_event, id_user, id_role })
+			});
+
+			// Get data
+			const data: { status: number; error: string } | { status: number; message: string } =
+				await response.json();
+
+			// Return data
+			return data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error in Event Invitation : ' + error);
+		}
+	}
 }

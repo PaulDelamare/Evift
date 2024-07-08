@@ -1,3 +1,4 @@
+import type { Role } from './role.model';
 import type { User } from './user.model';
 
 export interface getOneEvent {
@@ -10,6 +11,7 @@ export interface getOneEvent {
 		updatedAt: Date;
 		user: User;
 		event: Event;
+		roleRef: Role
 	};
 	status: number;
 }
