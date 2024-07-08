@@ -12,7 +12,7 @@ export const load = (async ({params, fetch}) => {
     const imgUrl = API_URL;
 
     if (event.status !== 200) {
-        console.log(event)
+    
         throw error(401, 'Vous n\'êtes pas autorisé à accéder à cet événement');
     }
 
