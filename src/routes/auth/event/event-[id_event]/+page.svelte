@@ -8,6 +8,7 @@
 	export let data: PageData;
 	const event = data.event.event;
 	const imgUrl = data.imgUrl;
+    const id_event = data.event.id_event;
 </script>
 
 <PageLayout>
@@ -52,7 +53,7 @@
 				<MessageSvg classSvg="fill-surface-500 w-24"/>
 				<!-- </div> -->
 				<h3>Conversation</h3>
-				<a href="/">
+				<a href="/auth/event/event-{id_event}/conversation">
 					<SlideButton text="Accéder" />
 				</a>
 			</div>
