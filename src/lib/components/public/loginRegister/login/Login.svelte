@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ActionData } from '../../../../../routes/(public)/login/$types';
+	import type { ActionData } from '../../../../../routes/evift/login/$types';
 	import FormLoginRegister from '../FormLoginRegister.svelte';
 
 	// Import Variable
