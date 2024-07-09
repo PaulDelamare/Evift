@@ -21,7 +21,7 @@
 	// If it's friends page
 	export let friends = false;
 	// When there is no data
-	export let nothingMessage = "Vous ne possèder pour l'instant aucun ami";
+	export let nothingMessage = "Vous ne possédez pour l'instant aucun ami.";
 </script>
 
 <!-- @component

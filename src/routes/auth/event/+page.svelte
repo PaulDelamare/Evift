@@ -58,35 +58,40 @@
 			Ajouter
 		</a>
 	</div>
-	<!-- Display event or friends invitation -->
-	<section class="wrap px-4 flex flex-col gap-12">
-		<ul class="flex flex-col gap-12">
-			{#each filteredEvents as event}
-				<Event event={event.event} {imgUrl} user={event.event.user}>
-					<div
-						class="shadow-md w-full !max-w-[153px] mini-tablet:!max-w-[100px] group bg-gradient p-[2px] active:scale-95 custom-transition !duration-300 rounded-xl"
-					>
-						<!-- Second div for animation -->
+
+	{#if filteredEvents.length > 0}
+		<!-- Display event or friends invitation -->
+		<section class="wrap px-4 flex flex-col gap-12">
+			<ul class="flex flex-col gap-12">
+				{#each filteredEvents as event}
+					<Event event={event.event} {imgUrl} user={event.event.user}>
 						<div
-							class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] group-hover:bg-surface-500 custom-transition rounded-[10px] !duration-300"
+							class="shadow-md w-full !max-w-[153px] mini-tablet:!max-w-[100px] group bg-gradient p-[2px] active:scale-95 custom-transition !duration-300 rounded-xl"
 						>
-							<!-- Submit button -->
-							<button
-								class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] 0 nav rounded-xl nav group-hover:text-gradient text-surface-500 custom-transition !duration-300 between justify-center gap-8"
-								type="submit"
+							<!-- Second div for animation -->
+							<div
+								class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] group-hover:bg-surface-500 custom-transition rounded-[10px] !duration-300"
 							>
-								<a href="/auth/event/event-{event.id_event}">Accéder</a>
-							</button>
+								<!-- Submit button -->
+								<button
+									class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] 0 nav rounded-xl nav group-hover:text-gradient text-surface-500 custom-transition !duration-300 between justify-center gap-8"
+									type="submit"
+								>
+									<a href="/auth/event/event-{event.id_event}">Accéder</a>
+								</button>
+							</div>
 						</div>
-					</div>
-				</Event>
-			{/each}
-		</ul>
-		<Paginator
-			controlVariant="bg-gradient text-surface-500"
-			bind:settings={paginationSettings}
-			showFirstLastButtons={false}
-			showPreviousNextButtons={true}
-		/>
-	</section>
+					</Event>
+				{/each}
+			</ul>
+			<Paginator
+				controlVariant="bg-gradient text-surface-500"
+				bind:settings={paginationSettings}
+				showFirstLastButtons={false}
+				showPreviousNextButtons={true}
+			/>
+		</section>
+	{:else}
+		<h4 class="text-center">Aucun événement trouvé...</h4>
+	{/if}
 </PageLayout>

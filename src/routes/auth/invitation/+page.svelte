@@ -126,7 +126,12 @@
 				</ul>
 			</section>
 		{:else}
-			<FriendsInvitationList dataArray={invitations} {form} nothingMessage="Aucune invitation" />
+			<FriendsInvitationList
+				dataArray={invitations}
+				{form}
+				nothingMessage="Aucune invitation en ce moment...
+"
+			/>
 		{/if}
 	</section>
 </PageLayout>
