@@ -80,7 +80,6 @@
 	$: filteredLists = lists.filter((list) => {
 		return list.name.toLowerCase().includes(search.toLowerCase());
 	});
-
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -91,11 +90,7 @@
 	<div class={cBase}>
 		<!-- Background style  -->
 		<!-- Close Button -->
-		<CloseModalButton
-			fn={() => location.reload()}
-			{parent}
-			classSVG="fill-secondary-500"
-		/>
+		<CloseModalButton fn={() => location.reload()} {parent} classSVG="fill-secondary-500" />
 		<!-- Content in Modal -->
 		<div class="column gap-12 mini-tablet:gap-8 w-full mx-auto max-w-[1000px]">
 			<div class="column gap-4 items-start w-full">
@@ -109,7 +104,10 @@
 					placeholder="Rechercher..."
 				/>
 				<ul class="h-[300px] w-full rounded-md overflow-y-auto bg-surface-400">
-					{#each filteredLists as list}
+					{#each filteredLists as list, index}
+						{#if index !== 0}
+							<li class="bar bg-tertiary-50"></li>
+						{/if}
 						<li
 							class="items-center flex justify-between shadow-md px-8 py-2 w-full bg-surface-400 overflow-hidde mobile-large:flex-col mobile-large:gap-2"
 						>
