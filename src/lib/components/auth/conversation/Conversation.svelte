@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ChevronToLeft from '$lib/components/svg/ChevronToLeft.svelte';
+	import BackButton from '$lib/components/extra/BackButton.svelte';
 	import { getYoutubeData, linkify, matchYoutubeUrl } from '$lib/functions/utils/cleanHtml';
 	import type { User } from '$lib/models/user.model';
-	import { afterUpdate, onMount } from 'svelte';
+	import { afterUpdate } from 'svelte';
 
 	export let functionSendMessage: (message: string) => void;
 	export let user: User;
@@ -52,12 +52,7 @@
 	<div class="flex-1 flex flex-col justify-between">
 		<!-- Chat Header -->
 		<section class="bg-gradient px-8 py-2 text-surface-500 flex items-center gap-4">
-			<a
-				class="hover:scale-105 active:scale-95 custom-transition"
-				href={`/auth/event/event-${event.event.id}`}
-			>
-				<ChevronToLeft classSvg="fill-surface-500 w-8" />
-			</a>
+			<BackButton url={`/auth/event/event-${event.event.id}`} fillSvg="fill-surface-500" />
 			<h3 class="text-2xl font-semibold">{event.event.name}</h3>
 		</section>
 
