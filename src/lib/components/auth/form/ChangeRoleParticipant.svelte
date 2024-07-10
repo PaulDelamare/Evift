@@ -42,10 +42,17 @@
 	>
 		<div class="w-full flex flex-col gap-3 mini-tablet:text-center">
 			<!-- Display user name and email -->
-			<h4 class=" text-base">
-				{participant.user.firstname.charAt(0).toUpperCase() + participant.user.firstname.slice(1)}
-				{participant.user.lastname.charAt(0).toUpperCase() + participant.user.lastname.slice(1)}
-			</h4>
+			<div>
+				<h4 class="text-base {user.id === participant.user.id ? 'text-gradient' : ''}">
+					{#if user.id !== participant.user.id}
+						{participant.user.firstname.charAt(0).toUpperCase() +
+							participant.user.firstname.slice(1)}
+						{participant.user.lastname.charAt(0).toUpperCase() + participant.user.lastname.slice(1)}
+					{:else}
+						Vous
+					{/if}
+				</h4>
+			</div>
 		</div>
 	</div>
 	{#if userRole.name === 'admin' && user.id !== participant.user.id && participant.roleRef.name !== 'admin'}
@@ -77,7 +84,7 @@
 		</form>
 	{:else}
 		<div class="">
-               <span>{participant.roleRef.name}</span>
-          </div>
+			<span>{participant.roleRef.name}</span>
+		</div>
 	{/if}
 </li>
