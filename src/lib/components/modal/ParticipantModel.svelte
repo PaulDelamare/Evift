@@ -86,7 +86,7 @@
 		<div class="column gap-12 mini-tablet:gap-8 w-full mx-auto max-w-[565px]">
 			<div class="column gap-4 items-start w-full">
 				<div class="flex justify-center w-full">
-					<h2 class="text-center uppercase text-gradient">Participants</h2>
+					<h2 class="text-center uppercase text-gradient mobile-large:text-3xl">Participants</h2>
 				</div>
 				<input
 					bind:value={search}
@@ -99,7 +99,7 @@
 						{#if index !== 0}
 							<li class="bar bg-tertiary-50"></li>
 						{/if}
-						<ChangeRoleParticipant {imgUrl} {user} {roles} {userRole} {participant} />
+						<ChangeRoleParticipant {user} {roles} {userRole} {participant} />
 					{/each}
 				</ul>
 				<!-- {#if form?.errors}
