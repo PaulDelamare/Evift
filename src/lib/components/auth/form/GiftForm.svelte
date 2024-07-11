@@ -68,7 +68,7 @@
 				bind:value={name}
 				class="bg-surface-400 border-none rounded shadow-md w-full"
 				name="name"
-				placeholder="Nom de l'évenement"
+				placeholder="Nom de la liste"
 			/>
 
 			{#if form?.errors?.name}
