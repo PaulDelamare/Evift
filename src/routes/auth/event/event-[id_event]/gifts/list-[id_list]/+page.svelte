@@ -54,9 +54,9 @@
 										</div>
 									{/if}
 								</div>
-								<!-- {#if user.id !== gift.id_user} -->
+								{#if user.id !== gift.id_user}
 									<CheckGift eventId={list.id_event} takenId={gift.id_userTaken} giftId={gift.id} taken={gift.taken} userId={user.id} />
-								<!-- {/if} -->
+								{/if}
 							</li>
 						{/each}
 					</ul>
