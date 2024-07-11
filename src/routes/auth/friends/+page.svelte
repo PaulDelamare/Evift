@@ -5,7 +5,7 @@
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
 
 	import renderModal from '$lib/functions/modal/renderModal';
-	import { getModalStore, type ModalStore } from '@skeletonlabs/skeleton';
+	import { getModalStore, Paginator, type ModalStore, type PaginationSettings } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
 
@@ -13,6 +13,13 @@
 	const modalStore: ModalStore = getModalStore();
 
 	let search = '';
+
+	let paginationSettings = {
+		page: 0,
+		limit: 30,
+		size: friends.length,
+		amounts: [1, 2, 5, 10, 20, 30]
+	} satisfies PaginationSettings;
 
 	$: filteredFriends = friends.filter((friend) => {
 		const searchParts = search.trim().split(' ').filter(Boolean);
@@ -27,6 +34,11 @@
 			friend.user.email.toLowerCase().includes(search.toLowerCase())
 		);
 	});
+
+	$: paginatedSource = filteredFriends.slice(
+		paginationSettings.page * paginationSettings.limit,
+		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
+	);
 </script>
 
 <PageLayout padding="py-12" gap="gap-12">
@@ -47,13 +59,22 @@
 		</button>
 	</div>
 	<!-- Display event or friends invitation -->
-	<section class="wrap px-4">
+	<section class="wrap px-4 flex flex-col gap-8">
 		<FriendsInvitationList
 			friends
 			shadow="shadow-[15px_15px_60px_0_rgba(190,190,190,1),-15px_-15px_60px_0_rgba(255,255,255,1)]"
 			sizeImg="size-12"
-			dataArray={filteredFriends}
+			dataArray={paginatedSource}
 			button={false}
 		/>
+		{#if paginatedSource.length > 0}
+			<Paginator
+			controlVariant="bg-gradient text-surface-500"
+			bind:settings={paginationSettings}
+			showFirstLastButtons={false}
+			showPreviousNextButtons={true}
+		/>
+		{/if}
+		
 	</section>
 </PageLayout>
