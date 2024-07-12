@@ -16,7 +16,7 @@
 	<section>
 		<div class="flex px-4 middle-wrap items-center justify-center">
 			<div
-				class=" flex flex-col gap-4 text-center max-w-[700px] text-xl !font-medium items-center text-primary-700"
+				class=" flex flex-col gap-4 text-center max-w-[700px] text-xl !font-medium items-center text-primary-700 mobile-large:!text-base"
 			>
 				<div class="flex flex-col gap-4 items-center">
 					<LogoSvg fill="fill-[url(#paint0_linear_2)]" widthSvg={75} />
@@ -41,11 +41,11 @@
 		<div class="middle-wrap px-4 flex flex-col items-center gap-4">
 			<h2 class="text-center text-primary-500">Pourquoi Evift ?</h2>
 			<div class="bar bg-primary-500"></div>
-			<div class="flex gap-8 items-center !font-medium text-primary-700">
-				<div class="w-2/4">
+			<div class="flex gap-8 items-center !font-medium text-primary-700 mini-desk:flex-col mobile-large:!text-base">
+				<div class="w-2/4 mini-desk:w-4/5 mobile-large:w-full">
 					<img class="w-full" src="/img/famille.jpeg" alt="Famille" />
 				</div>
-				<div class="w-2/4 !font-slab flex flex-col gap-4 text-justify">
+				<div class="w-2/4 !font-slab flex flex-col gap-4 text-justify mini-desk:w-4/5 mini-desk:text-center mobile-large:w-full">
 					<p>
 						Evift, tout d'abord, vient de deux mots Event (événement en français) et Gift (cadeau en
 						français). Mais pourquoi ce nom ?
@@ -69,11 +69,11 @@
 		<div class="middle-wrap px-4 flex flex-col items-center gap-4">
 			<h2 class="text-center text-primary-500">Le futur d'Evift</h2>
 			<div class="bar bg-primary-500"></div>
-			<div class="flex gap-8 flex-row-reverse items-center !font-medium text-primary-700">
-				<div class="w-1/4">
+			<div class="flex gap-8 flex-row-reverse items-center !font-medium text-primary-700 mini-desk:flex-col">
+				<div class="w-1/4 mobile-large:w-full">
 					<img class="w-full" src="/img/futur.jpg" alt="Famille" />
 				</div>
-				<div class="w-3/4 !font-slab flex flex-col gap-4 text-justify">
+				<div class="w-3/4 !font-slab flex flex-col gap-4 text-justify  mini-desk:text-center mobile-large:!text-base mobile-large:w-full">
 					<p>J'aimerais vous faire part de ma vision du futur d'Evift.</p>
 					<p>
 						Evift est une application fonctionnelle qui permet la création d’événements et le
@@ -97,7 +97,7 @@
 	<section>
 		<div class="flex px-4 middle-wrap items-center justify-center">
 			<div
-				class=" flex flex-col gap-4 text-center max-w-[700px] text-xl !font-medium items-center text-primary-700"
+				class=" flex flex-col gap-4 text-center max-w-[700px] text-xl !font-medium items-center text-primary-700 mobile-large:!text-base"
 			>
 				<div class="bar bg-primary-500"></div>
 
