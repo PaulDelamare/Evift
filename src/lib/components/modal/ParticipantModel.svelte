@@ -21,7 +21,6 @@
 	// Variable
 	let innerWidth: number;
 	let innerHeight: number;
-	let submitted = false;
 
 	// Base Classes
 	const cBase =
@@ -31,7 +30,6 @@
 	const roles: Role[] = $page.data.roles;
 	const userRole: Role = $page.data.roleUser.role;
 	const user: User = $page.data.roleUser.user;
-	const imgUrl: string = $page.data.imgUrl;
 
 	// $: form = $page.form;
 

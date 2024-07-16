@@ -3,19 +3,11 @@
 	import type { Participant } from '$lib/models/participant.model';
 	import type { Role } from '$lib/models/role.model';
 	import type { User } from '$lib/models/user.model';
-	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
 	export let participant: Participant;
 	export let roles: Role[];
 	export let userRole: Role;
 	export let user: User;
-
-	const toastStore = getToastStore();
-
-	let toast: ToastSettings = {
-		message: 'Le rôle a bien été modifié',
-		background: 'bg-success-500'
-	};
 
 	let form: HTMLFormElement;
 </script>
@@ -68,7 +60,7 @@
 		>
 			<div>
 				<select
-					on:change={(event) => form.requestSubmit()}
+					on:change={() => form.requestSubmit()}
 					class="rounded-full focus:outline-none focus:border-none cursor-pointer"
 					name="id_role"
 				>

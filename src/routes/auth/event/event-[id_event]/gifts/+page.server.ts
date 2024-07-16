@@ -5,108 +5,103 @@ import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
 
 export const load = (async ({ fetch, params, parent }) => {
+	const api = new GiftApi(fetch);
+	const id_event = params.id_event;
+	const listsEvent = await api.findForEvent(id_event);
 
-    const api = new GiftApi(fetch);
-    const id_event = params.id_event;
-    const listsEvent = await api.findForEvent(id_event);
+	const roleUser = (await parent()).roleUser;
 
-    const roleUser = (await parent()).roleUser;
+	let lists: List[] = [];
 
-    let lists: List[] = []
+	if (roleUser.role.name === 'admin' || roleUser.role.name === 'gift') {
+		lists = (await api.findAll()).data;
+	}
 
-    if (roleUser.role.name === 'admin' || roleUser.role.name === 'gift') {
-        lists = (await api.findAll()).data;
-    }
-
-    return {
-        listsEvent: listsEvent.data,
-        lists
-    };
+	return {
+		listsEvent: listsEvent.data,
+		lists
+	};
 }) satisfies PageServerLoad;
 
 const schema = yup.object().shape({
-    eventId: yup.string().uuid().required('L\'event id est requis*'),
-    listId: yup.string().uuid().required('La liste id est requise*'),
+	eventId: yup.string().uuid().required("L'event id est requis*"),
+	listId: yup.string().uuid().required('La liste id est requise*')
 });
 
 export const actions: Actions = {
-    addGift: async ({ request, fetch }) => {
+	addGift: async ({ request, fetch }) => {
+		const data = await request.formData();
+		const eventId = data.get('eventId') as string;
+		const listId = data.get('listId') as string;
 
-        const data = await request.formData();
-        const eventId = data.get('eventId') as string;
-        const listId = data.get('listId') as string;
+		const errors: { error?: string } | undefined = {};
 
+		try {
+			// Validation schema
+			await schema.validate({ eventId, listId }, { abortEarly: false });
+		} catch (error) {
+			// - Catch Errors
+			// If Error in ValidationError
+			if (error instanceof yup.ValidationError) {
+				// Check what error it is and return this in errors instance
+				error.inner.forEach((err) => {
+					errors.error = err.message;
+				});
 
-        const errors: { error?: string; } | undefined = {};
+				// Return errors
+				return { status: 400, errors };
+			} else {
+				// Else Throw custom Error
+				return { status: 400, errors: 'Une erreur est survenue' };
+			}
+		}
 
-        try {
-            // Validation schema
-            await schema.validate({ eventId, listId }, { abortEarly: false });
-        } catch (error) {
-            // - Catch Errors
-            // If Error in ValidationError
-            if (error instanceof yup.ValidationError) {
-                // Check what error it is and return this in errors instance
-                error.inner.forEach((err) => {
-                    errors.error = err.message;
-                });
+		const api = new GiftApi(fetch);
 
-                // Return errors
-                return { status: 400, errors };
-            } else {
-                // Else Throw custom Error
-                return { status: 400, errors: 'Une erreur est survenue' };
-            }
-        }
+		const res = await api.addListEvent(eventId, listId);
 
-        const api = new GiftApi(fetch);
+		if ('error' in res) {
+			errors.error = res.error;
+			return { status: 400, errors };
+		}
 
-        const res = await api.addListEvent(eventId, listId);
+		return { status: 200, success: true, idList: listId };
+	},
 
-        if ("error" in res) {
-            errors.error = res.error;
-            return { status: 400, errors };
-        }
+	deleteListEvent: async ({ request, fetch }) => {
+		const data = await request.formData();
+		const eventId = data.get('eventId') as string;
+		const listId = data.get('listId') as string;
 
-        return { status: 200, success: true, idList: listId };
-    },
+		const errorsDelete: { error?: string } = {};
 
-    deleteListEvent: async ({ request, fetch }) => {
-        const data = await request.formData();
-        const eventId = data.get('eventId') as string;
-        const listId = data.get('listId') as string;
+		try {
+			// Validation schema
+			await schema.validate({ eventId, listId }, { abortEarly: false });
+		} catch (error) {
+			// - Catch ErrorsDelete
+			// If Error in ValidationError
+			if (error instanceof yup.ValidationError) {
+				// Check what error it is and return this in errorsDelete instance
+				error.inner.forEach((err) => {
+					errorsDelete.error = err.message;
+				});
 
-        const errorsDelete: { error?: string; } = {};
+				// Return errorsDelete
+				return { status: 400, errorsDelete };
+			} else {
+				// Else Throw custom Error
+				return { status: 400, errorsDelete: 'Une erreur est survenue' };
+			}
+		}
 
-        try {
-            // Validation schema
-            await schema.validate({ eventId, listId }, { abortEarly: false });
-        } catch (error) {
-            // - Catch ErrorsDelete
-            // If Error in ValidationError
-            if (error instanceof yup.ValidationError) {
-                // Check what error it is and return this in errorsDelete instance
-                error.inner.forEach((err) => {
-                    errorsDelete.error = err.message;
-                });
+		const api = new GiftApi(fetch);
+		const res = await api.deleteListEvent(eventId, listId);
 
-                // Return errorsDelete
-                return { status: 400, errorsDelete };
-            } else {
-                // Else Throw custom Error
-                return { status: 400, errorsDelete: 'Une erreur est survenue' };
-            }
-        }
+		if ('error' in res) {
+			return { status: 400, error: res.error };
+		}
 
-        const api = new GiftApi(fetch);
-        const res = await api.deleteListEvent(eventId, listId);
-
-        if ("error" in res) {
-            return { status: 400, error: res.error };
-        }
-
-        return { status: 200, successDelete: true };
-    }
-
-
-}
+		return { status: 200, successDelete: true };
+	}
+};

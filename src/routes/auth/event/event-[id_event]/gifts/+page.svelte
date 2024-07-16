@@ -4,7 +4,6 @@
 	import renderModal from '$lib/functions/modal/renderModal';
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
-	import ChevronToLeft from '$lib/components/svg/ChevronToLeft.svelte';
 	import BackButton from '$lib/components/extra/BackButton.svelte';
 
 	export let data: PageData;

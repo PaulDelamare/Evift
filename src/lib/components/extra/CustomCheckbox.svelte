@@ -11,7 +11,7 @@
 	// Name if it's a form
 	export let name = '';
 
-     export let classCheck = '';
+	export let classCheck = '';
 
 	// ! FUNCTION
 	// Create Custom Event for use in parent
@@ -82,7 +82,7 @@
 		@apply ![-moz-appearance:none] ![-webkit-appearance:none] ![-o-transition:all_0.3s] ![-webkit-transition:all_0.3s];
 	}
 
-	.ui-checkbox:disabled{
+	.ui-checkbox:disabled {
 		@apply !border-red-300 !bg-red-500;
 	}
 

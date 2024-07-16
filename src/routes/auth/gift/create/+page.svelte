@@ -1,10 +1,9 @@
 <script lang="ts">
 	import GiftForm from '$lib/components/auth/form/GiftForm.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
-    import type { ActionData, PageData } from './$types';
-    
-    export let data: PageData;
-    export let form: ActionData;
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 </script>
 
 <PageLayout gap="gap-8" padding="py-8">

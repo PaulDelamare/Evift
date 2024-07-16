@@ -4,7 +4,7 @@ export interface DataRole {
 }
 
 export interface Role {
-     id: string;
-     name: string;
-     createdAt: Date
+	id: string;
+	name: string;
+	createdAt: Date;
 }
