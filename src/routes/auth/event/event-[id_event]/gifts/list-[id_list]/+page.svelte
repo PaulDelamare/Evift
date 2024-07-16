@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import CheckGift from '$lib/components/auth/event/gift/CheckGift.svelte';
 	import BackButton from '$lib/components/extra/BackButton.svelte';
-	import CustomCheckbox from '$lib/components/extra/CustomCheckbox.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 	import type { PageData } from './$types';
 
@@ -55,7 +53,13 @@
 									{/if}
 								</div>
 								{#if user.id !== gift.id_user}
-									<CheckGift eventId={list.id_event} takenId={gift.id_userTaken} giftId={gift.id} taken={gift.taken} userId={user.id} />
+									<CheckGift
+										eventId={list.id_event}
+										takenId={gift.id_userTaken}
+										giftId={gift.id}
+										taken={gift.taken}
+										userId={user.id}
+									/>
 								{/if}
 							</li>
 						{/each}

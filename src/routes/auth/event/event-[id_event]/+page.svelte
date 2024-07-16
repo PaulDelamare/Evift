@@ -12,7 +12,7 @@
 	const event = data.event.event;
 	const imgUrl = data.imgUrl;
 	const id_event = data.event.id_event;
-    const modalStore = getModalStore();
+	const modalStore = getModalStore();
 </script>
 
 <PageLayout>
@@ -33,15 +33,14 @@
 					{/if}
 				</div>
 				<div class="min-w-80 flex flex-col gap-2 mini-tablet:text-center px-4">
-					<address class="text-surface-500 ">{event.address}</address>
+					<address class="text-surface-500">{event.address}</address>
 					<time class="text-surface-500">{event.time}</time>
 					<h3>{event.name}</h3>
 					<p class="break-all max-w-[280px]">{event.description}</p>
 				</div>
 			</div>
 			<button
-				on:click={() =>
-					renderModal(modalStore, 'ParticipantModel', 'Participants', 'Participants')}
+				on:click={() => renderModal(modalStore, 'ParticipantModel', 'Participants', 'Participants')}
 				class="bg-surface-500 mini-tablet:self-center self-end rounded-lg flex items-center gap-4 py-2 px-3 text-secondary-500 uppercase font-bold hover:scale-[1.02] custom-transition active:scale-90"
 			>
 				<div class="w-4">
@@ -53,7 +52,9 @@
 		</div>
 	</section>
 	<section>
-		<div class=" wrap gap-8 grid grid-cols-[repeat(auto-fit,_minmax(360px,_1fr))] mini-tablet:grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))] px-4">
+		<div
+			class=" wrap gap-8 grid grid-cols-[repeat(auto-fit,_minmax(360px,_1fr))] mini-tablet:grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))] px-4"
+		>
 			<div
 				class="w-full min-h-96 bg-gradient rounded-3xl flex flex-col justify-center items-center gap-8 text-surface-500"
 			>

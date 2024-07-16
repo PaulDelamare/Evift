@@ -16,7 +16,11 @@
 
 						<p>{$page.error?.message}</p>
 
-						<a href="/" class="link_404 !font-slab uppercase !font-bold bg-gradient px-4 py-2 text-surface-500">Retour à l'accueil</a>
+						<a
+							href="/"
+							class="link_404 !font-slab uppercase !font-bold bg-gradient px-4 py-2 text-surface-500"
+							>Retour à l'accueil</a
+						>
 					</div>
 				</div>
 			</div>
@@ -28,27 +32,19 @@
 	.page_404 {
 		padding: 40px 0;
 		background: #fff;
-        background-repeat: no-repeat;
+		background-repeat: no-repeat;
 	}
 
 	.page_404 img {
 		width: 100%;
-        background-repeat: no-repeat;
+		background-repeat: no-repeat;
 	}
 
 	.four_zero_four_bg {
 		background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
 		height: 400px;
 		background-position: center;
-        background-repeat: no-repeat;
-	}
-
-	.four_zero_four_bg h1 {
-		font-size: 80px;
-	}
-
-	.four_zero_four_bg h3 {
-		font-size: 80px;
+		background-repeat: no-repeat;
 	}
 
 	.contant_box_404 {

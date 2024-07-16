@@ -5,7 +5,12 @@
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
 
 	import renderModal from '$lib/functions/modal/renderModal';
-	import { getModalStore, Paginator, type ModalStore, type PaginationSettings } from '@skeletonlabs/skeleton';
+	import {
+		getModalStore,
+		Paginator,
+		type ModalStore,
+		type PaginationSettings
+	} from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
 
@@ -69,12 +74,11 @@
 		/>
 		{#if paginatedSource.length > 0}
 			<Paginator
-			controlVariant="bg-gradient text-surface-500"
-			bind:settings={paginationSettings}
-			showFirstLastButtons={false}
-			showPreviousNextButtons={true}
-		/>
+				controlVariant="bg-gradient text-surface-500"
+				bind:settings={paginationSettings}
+				showFirstLastButtons={false}
+				showPreviousNextButtons={true}
+			/>
 		{/if}
-		
 	</section>
 </PageLayout>

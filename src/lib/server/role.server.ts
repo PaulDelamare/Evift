@@ -6,30 +6,30 @@ export default class RoleApi extends Api<DataRole> {
 	// Base url request for auth methods
 	private authUrl = `${API_URL}api/rolesEvent/`;
 
-     getRoles = async (): Promise<Role[]> => {
-          // - Try Validation
-          try {
-               // Accept or refuse Invitation
-               const response = await this.fetch(`${this.authUrl}findAll`, {
-                    method: 'GET',
-                    headers: {
-                         'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-               });
+	getRoles = async (): Promise<Role[]> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}findAll`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
 
-               // Get data
-               const data: DataRole | { status: number; error: string } = await response.json();
+			// Get data
+			const data: DataRole | { status: number; error: string } = await response.json();
 
-               if ('error' in data) {
-                    throw new Error(data.error);
-               }
+			if ('error' in data) {
+				throw new Error(data.error);
+			}
 
-               // Return data
-               return data.data;
-          } catch (error) {
-               // - Catch Errors
-               throw new Error('Error in Event Invitation : ' + error);
-          }
-     }
+			// Return data
+			return data.data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error in Event Invitation : ' + error);
+		}
+	};
 }

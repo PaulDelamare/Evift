@@ -5,11 +5,11 @@
 	let form: HTMLFormElement;
 
 	export let giftId: string;
-     export let taken: boolean;
-     export let takenId: string | null;
-     export let userId: string;
-     export let eventId: string;
-	console.log(takenId)
+	export let taken: boolean;
+	export let takenId: string | null;
+	export let userId: string;
+	export let eventId: string;
+	console.log(takenId);
 </script>
 
 <form
@@ -24,5 +24,11 @@
 >
 	<input type="hidden" value={giftId} name="giftId" />
 	<input type="hidden" value={eventId} name="eventId" />
-	<CustomCheckbox on:change={() => form.requestSubmit()} name="taken" disabled={takenId !== null ? (userId === takenId ? false : true) : false} checked= {taken} classCheck="!w-[50px] !h-[50px] !rounded-lg" />
+	<CustomCheckbox
+		on:change={() => form.requestSubmit()}
+		name="taken"
+		disabled={takenId !== null ? (userId === takenId ? false : true) : false}
+		checked={taken}
+		classCheck="!w-[50px] !h-[50px] !rounded-lg"
+	/>
 </form>

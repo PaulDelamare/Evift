@@ -11,7 +11,7 @@ export interface getOneEvent {
 		updatedAt: Date;
 		user: User;
 		event: Event;
-		roleRef: Role
+		roleRef: Role;
 	};
 	status: number;
 }

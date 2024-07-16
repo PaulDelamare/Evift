@@ -25,7 +25,7 @@
 			message: 'La liste de cadeaux a été créée avec succès',
 			background: 'bg-success-500 text-surface-500',
 			classes: 'text-surface-500'
-		};   
+		};
 		toastStore.trigger(t);
 
 		goto('/auth/gift');

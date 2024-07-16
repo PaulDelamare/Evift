@@ -64,61 +64,61 @@ export default class EventApi extends Api<GetAllEvent> {
 			// - Catch Errors
 			throw new Error('Error in Event Invitation : ' + error);
 		}
-	}
+	};
 
-     getOneEvent = async (id: string): Promise<getOneEvent> => {
-          // - Try Validation
-          try {
-               // Accept or refuse Invitation
-               const response = await this.fetch(`${this.authUrl}getOneEvent/${id}`, {
-                    method: 'GET',
-                    headers: {
-                         'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-               });
+	getOneEvent = async (id: string): Promise<getOneEvent> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}getOneEvent/${id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
 
-               // Get data
-               const data: getOneEvent | { status: number; error: string } = await response.json();
+			// Get data
+			const data: getOneEvent | { status: number; error: string } = await response.json();
 
-               if ('error' in data) {
-                    throw new Error(data.error);
-               }
+			if ('error' in data) {
+				throw new Error(data.error);
+			}
 
-               // Return data
-               return data;
-          } catch (error) {
-               // - Catch Errors
-               throw new Error('Error in Event Invitation : ' + error);
-          }
-     }
+			// Return data
+			return data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error in Event Invitation : ' + error);
+		}
+	};
 
-     getParticipants = async (id: string): Promise<Participant[]> => {
-          // - Try Validation
-          try {
-               // Accept or refuse Invitation
-               const response = await this.fetch(`${this.authUrl}getAllParticipantsForEvent/${id}`, {
-                    method: 'GET',
-                    headers: {
-                         'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-               });
+	getParticipants = async (id: string): Promise<Participant[]> => {
+		// - Try Validation
+		try {
+			// Accept or refuse Invitation
+			const response = await this.fetch(`${this.authUrl}getAllParticipantsForEvent/${id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
 
-               // Get data
-               const data: DataAllParticipants | { status: number; error: string } = await response.json();
+			// Get data
+			const data: DataAllParticipants | { status: number; error: string } = await response.json();
 
-               if ('error' in data) {
-                    throw new Error(data.error);
-               }
+			if ('error' in data) {
+				throw new Error(data.error);
+			}
 
-               // Return data
-               return data.data;
-          } catch (error) {
-               // - Catch Errors
-               throw new Error('Error in Event Invitation : ' + error);
-          }
-     }
+			// Return data
+			return data.data;
+		} catch (error) {
+			// - Catch Errors
+			throw new Error('Error in Event Invitation : ' + error);
+		}
+	};
 
 	changeRoleParticipant = async (
 		id_event: string,
@@ -147,5 +147,5 @@ export default class EventApi extends Api<GetAllEvent> {
 			// - Catch Errors
 			throw new Error('Error in Event Invitation : ' + error);
 		}
-	}
+	};
 }
