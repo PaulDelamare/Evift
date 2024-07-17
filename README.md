@@ -10,7 +10,7 @@ Ce projet a été réalisé dans le cadre d'un projet scolaire.
 
 - Posséder git pour récupérer le projet
 
-- Posséder node pour avoir accès à la commande npm
+- Posséder node pour avoir accès à la commande npm (version 9.8.1)
 
 ## Récupérer le projet
 
