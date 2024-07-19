@@ -28,9 +28,9 @@
 		<div>
 			<!-- text with Link for going on Legal page -->
 			<p class="text-surface-500 text-center tablet:text-sm">
-				© 2024 Evift. Tous droits réservés. <a href="/evift/legal">Mentions Légales</a> |
-				<a href="/evift/cgu">Conditions Générales d'Utilisation</a>
-				| <a href="/evift/privacy">Politique de Confidentialité</a>
+				© 2024 Evift. Tous droits réservés. <a href="/legal">Mentions Légales</a> |
+				<a href="/cgu">Conditions Générales d'Utilisation</a>
+				| <a href="/privacy">Politique de Confidentialité</a>
 			</p>
 		</div>
 	</div>
