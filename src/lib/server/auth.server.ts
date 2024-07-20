@@ -27,11 +27,7 @@ export default class AuthApi extends Api<LoginResponse> {
 			});
 			// Get data
 			const data: { status: number; message?: string; error?: string } = await response.json();
-			// If error in data
-			if ('error' in data) {
-				// Throw error
-				throw new Error(data.error);
-			}
+
 			return data;
 		} catch (error) {
 			// - Catch Errors
