@@ -8,7 +8,6 @@
 
 	const list = data.list;
 	const user = data.user;
-	// console.log(list)
 </script>
 
 <PageLayout padding="py-8">

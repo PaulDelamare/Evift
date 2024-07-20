@@ -74,8 +74,6 @@ export const actions: Actions = {
 		const api = new GiftApi(fetch);
 		const res = await api.checkGift(eventId, giftId, taken);
 
-		console.log(res);
-
 		if ('error' in res) {
 			errors.error = res.error;
 			return { status: 400, errors };

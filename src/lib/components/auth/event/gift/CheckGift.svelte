@@ -9,7 +9,6 @@
 	export let takenId: string | null;
 	export let userId: string;
 	export let eventId: string;
-	console.log(takenId);
 </script>
 
 <form
