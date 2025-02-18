@@ -4,6 +4,7 @@ import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
 import AuthApi from '$lib/server/auth.server';
 import CaptchaApi from '$lib/server/recaptcha.server';
+import { env } from '$env/dynamic/private';
 
 // ! VERIFICATION
 // Schema for verification
@@ -69,7 +70,11 @@ interface Errors {
 
 // Data to return on page load
 export const load = (async () => {
-	return {};
+	const captchaKey = env.CAPTCHA_KEY
+
+	return {
+		captchaKey
+	};
 }) satisfies PageServerLoad;
 
 // ! ACTIONS

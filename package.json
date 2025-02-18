@@ -12,7 +12,9 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"docker:linux": "docker build -t evift . --platform=linux/amd64",
+		"docker:tar": "docker save evift > image-linux.tar"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -45,6 +47,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-node": "^5.2.12",
 		"svelte-typewriter": "^3.2.3",
 		"yup": "^1.4.0"
 	}

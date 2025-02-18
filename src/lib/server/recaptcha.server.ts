@@ -1,5 +1,5 @@
 // ! IMPORTS
-import { SERVER_CAPTCHA_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 
 // ! Class
@@ -25,7 +25,7 @@ export default class CaptchaApi extends Api<{
 			// Define request
 			// Pass recapctah validator key and captcha token
 			const response = await this.fetch(
-				`https://www.google.com/recaptcha/api/siteverify?secret=${SERVER_CAPTCHA_KEY}&response=${captcha}`,
+				`https://www.google.com/recaptcha/api/siteverify?secret=${env.SERVER_CAPTCHA_KEY}&response=${captcha}`,
 				{
 					method: 'POST',
 					headers: {

@@ -1,5 +1,5 @@
 // ! IMPORTS
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { GetCountFriendInvitation } from '$lib/models/invitation.model';
 import type { DataUser, User } from '$lib/models/user.model';
@@ -7,7 +7,7 @@ import type { DataUser, User } from '$lib/models/user.model';
 // ! Class
 export default class UserApi extends Api<GetCountFriendInvitation> {
 	// Base url request for auth methods
-	private authUrl = `${API_URL}api/user/`;
+	private authUrl = `${env.API_URL}api/user/`;
 
 	/**
 	 * Get user by email

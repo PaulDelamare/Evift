@@ -1,10 +1,10 @@
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { GetAllLists, GetEventList, GetEventListDetail } from '$lib/models/gift.model';
 
 export default class GiftApi extends Api<GetAllLists> {
 	// Base url request for auth methods
-	private authUrl = `${API_URL}api/gift/`;
+	private authUrl = `${env.API_URL}api/gift/`;
 
 	/**
 	 * Creates a list.

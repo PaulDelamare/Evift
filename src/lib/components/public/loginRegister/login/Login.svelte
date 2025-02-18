@@ -10,7 +10,11 @@
 	// Function for stock email in variable do on on:input email
 	export let handleEmailChange: (event: Event) => void;
 
+	// Form
 	export let form: ActionData;
+
+	// Import Key
+	export let PUBLIC_CAPTCHA_KEY: string;
 </script>
 
 <!-- If login Activated, display form Login -->
@@ -18,6 +22,7 @@
 	<!-- Send information to form -->
 	<!-- Send Title/Action/Inputs/onSubmit Function/textSubmit/forgotPassword -->
 	<FormLoginRegister
+		{PUBLIC_CAPTCHA_KEY}
 		{form}
 		title="Connexion"
 		action="?/login"

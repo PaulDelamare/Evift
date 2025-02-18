@@ -1,5 +1,5 @@
 // ! IMPORTS
-import { API_KEY, API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import AuthApi from '$lib/server/auth.server';
 import InvitationApi from '$lib/server/invitation.server';
 import type { HandleFetch } from '@sveltejs/kit';
@@ -66,9 +66,9 @@ export async function handle({ event, resolve }) {
  */
 export const handleFetch = (async ({ request, fetch }) => {
 	// If the request URL starts with the API_URL
-	if (request.url.startsWith(API_URL)) {
+	if (request.url.startsWith(env.API_URL)) {
 		// Set the 'x-api-key' header
-		request.headers.set('x-api-key', API_KEY);
+		request.headers.set('x-api-key', env.API_KEY);
 	}
 
 	// Return the fetch request
