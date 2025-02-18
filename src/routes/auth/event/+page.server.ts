@@ -1,7 +1,7 @@
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import EventApi from '$lib/server/event.server';
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const load = (async ({ fetch }) => {
 	// Instance EVent Api
@@ -10,7 +10,7 @@ export const load = (async ({ fetch }) => {
 	const allEvent = await api.getEvent();
 
 	// Get image path url
-	const imgUrl = API_URL;
+	const imgUrl = env.API_URL;
 	return {
 		allEvent,
 		imgUrl

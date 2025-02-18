@@ -1,12 +1,13 @@
 <script lang="ts">
 	/* eslint-disable */
 	// ! IMPORTS
-	import { PUBLIC_CAPTCHA_KEY } from '$env/static/public';
+
 	import { onMount } from 'svelte';
 
 	// ! VARIABLE
 	//
 	export let token: string;
+	export let PUBLIC_CAPTCHA_KEY: string;
 
 	// Define state captcha
 	let State = {
@@ -47,6 +48,7 @@
 			onSubmitCaptcha();
 		}
 	});
+
 </script>
 
 <!-- Define in header the captcha -->

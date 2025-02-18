@@ -1,5 +1,5 @@
 // ! IMPORTS
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { GetCountFriendInvitation, InvitationData } from '$lib/models/invitation.model';
 import type { EventInvitation } from '$lib/models/event.model';
@@ -7,7 +7,7 @@ import type { EventInvitation } from '$lib/models/event.model';
 // ! Class
 export default class InvitationApi extends Api<GetCountFriendInvitation> {
 	// Base url request for auth methods
-	private authUrl = `${API_URL}api/invitation/`;
+	private authUrl = `${env.API_URL}api/invitation/`;
 
 	/**
 	 * Retrieves the count of friend invitations from the server.

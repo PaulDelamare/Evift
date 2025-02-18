@@ -1,10 +1,10 @@
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { Friends, GetAllFriends } from '$lib/models/friends.model';
 
 export default class FriendsApi extends Api<GetAllFriends> {
 	// Base url request for auth methods
-	private authUrl = `${API_URL}api/friends/`;
+	private authUrl = `${env.API_URL}api/friends/`;
 
 	/**
 	 * Get all User Friends

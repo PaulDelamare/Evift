@@ -1,4 +1,6 @@
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+
+
 import type { ErrorApi } from '../models/error.model';
 // import type {  User } from '../models/user.model';
 import { Api } from './api.server';
@@ -6,7 +8,7 @@ import type { LoginResponse, PostUser, User } from '../models/user.model';
 
 export default class AuthApi extends Api<LoginResponse> {
 	// Base url request for auth methods
-	private authUrl = `${API_URL}api/auth/`;
+	private authUrl = `${env.API_URL}api/auth/`;
 
 	// ? Register methods
 	register = async (
@@ -104,7 +106,7 @@ export default class AuthApi extends Api<LoginResponse> {
 	 */
 	forgotPassword = async (email: string): Promise<boolean> => {
 		try {
-			const response = await this.fetch(`${API_URL}auth/password/email`, {
+			const response = await this.fetch(`${env.API_URL}auth/password/email`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -133,7 +135,7 @@ export default class AuthApi extends Api<LoginResponse> {
 		confirmPassword: string
 	): Promise<boolean> => {
 		try {
-			const response = await this.fetch(`${API_URL}auth/password/reset`, {
+			const response = await this.fetch(`${env.API_URL}auth/password/reset`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

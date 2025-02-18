@@ -27,6 +27,8 @@
 	// Form for get error or success
 	export let form: ActionData;
 
+	export let PUBLIC_CAPTCHA_KEY: string;
+
 	// ! VARIABLE
 	// Get toast store for display
 	const toastStore = getToastStore();
@@ -83,7 +85,7 @@
 </script>
 
 <!-- Call Captcha component -->
-<Captcha bind:this={captchaSubmit} bind:token />
+<Captcha {PUBLIC_CAPTCHA_KEY} bind:this={captchaSubmit} bind:token />
 
 <!-- For innerwidth -->
 <svelte:window bind:innerWidth />

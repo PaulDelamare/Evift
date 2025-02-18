@@ -1,11 +1,11 @@
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { GetAllEvent, getOneEvent } from '$lib/models/event.model';
 import type { Participant, DataAllParticipants } from '$lib/models/participant.model';
 
 export default class EventApi extends Api<GetAllEvent> {
 	// Base url request for auth methods
-	private authUrl = `${API_URL}api/event/`;
+	private authUrl = `${env.API_URL}api/event/`;
 
 	/**
 	 * Asynchronously creates an event.

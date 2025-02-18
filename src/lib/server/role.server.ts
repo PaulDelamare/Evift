@@ -1,10 +1,10 @@
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { DataRole, Role } from '$lib/models/role.model';
 
 export default class RoleApi extends Api<DataRole> {
 	// Base url request for auth methods
-	private authUrl = `${API_URL}api/rolesEvent/`;
+	private authUrl = `${env.API_URL}api/rolesEvent/`;
 
 	getRoles = async (): Promise<Role[]> => {
 		// - Try Validation

@@ -4,7 +4,7 @@ import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
 import { convertStringToBoolean } from '$lib/functions/utils/transformStringToBoolean';
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const load = (async ({ fetch }) => {
 	// Instance Invitation Api
@@ -13,7 +13,7 @@ export const load = (async ({ fetch }) => {
 	const invitations = await notifApi.getInvitations();
 	const invitationsEvent = await notifApi.getEventInvitation();
 
-	const imgUrl = API_URL;
+	const imgUrl = env.API_URL;
 
 	// Return data
 	return {

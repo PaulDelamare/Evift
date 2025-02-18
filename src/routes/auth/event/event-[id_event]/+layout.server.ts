@@ -1,7 +1,7 @@
 import EventApi from '$lib/server/event.server';
 import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import RoleApi from '$lib/server/role.server';
 
 export const load = (async ({ params, fetch, locals }) => {
@@ -14,7 +14,7 @@ export const load = (async ({ params, fetch, locals }) => {
 	const apiRole = new RoleApi(fetch);
 	const roles = await apiRole.getRoles();
 
-	const imgUrl = API_URL;
+	const imgUrl = env.API_URL;
 
 	if (event.status !== 200) {
 		throw error(401, "Vous n'êtes pas autorisé à accéder à cet événement");

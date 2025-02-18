@@ -4,9 +4,11 @@
 	import Login from '$lib/components/public/loginRegister/login/Login.svelte';
 	import Register from '$lib/components/public/loginRegister/register/Register.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
-	import type { ActionData } from './$types';
+	import type { ActionData, PageData } from './$types';
 
+	export let data: PageData;
 	export let form: ActionData;
+	const PUBLIC_CAPTCHA_KEY = data.captchaKey!;
 
 	// Variables
 	// Login variable for know if user is Activated
@@ -77,9 +79,16 @@
 		>
 			<!-- Add Login and Register component -->
 			<!-- Login with Form -->
-			<Login {form} {loginActivated} {email} {handleEmailChange} />
+			<Login {PUBLIC_CAPTCHA_KEY} {form} {loginActivated} {email} {handleEmailChange} />
 			<!-- Register with Form -->
-			<Register {form} {loginActivated} {email} {handleEmailChange} {handleActivate} />
+			<Register
+				{PUBLIC_CAPTCHA_KEY}
+				{form}
+				{loginActivated}
+				{email}
+				{handleEmailChange}
+				{handleActivate}
+			/>
 
 			<!-- Add Layer component for change into login or register -->
 			<Layer {loginActivated} {handleActivate} />
