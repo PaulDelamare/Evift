@@ -29,7 +29,7 @@
 	}
 
 	// Get toke function
-	function doRecaptcha() {
+	const doRecaptcha = () => {
 		// @ts-expect-error
 		grecaptcha.ready(function () {
 			// @ts-expect-error
@@ -38,7 +38,7 @@
 				token = t;
 			});
 		});
-	}
+	};
 
 	// Mount
 	onMount(() => {
@@ -48,7 +48,6 @@
 			onSubmitCaptcha();
 		}
 	});
-
 </script>
 
 <!-- Define in header the captcha -->
