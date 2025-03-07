@@ -9,18 +9,6 @@
 
 	// Variables
 	let burger = false;
-
-	// Functions
-	/**
-	 * Change the value of the `burger` variable to `false`.
-	 *
-	 * This function is used to close the burger menu when the user clicks on a page.
-	 *
-	 * @return {void} This function returns nothing.
-	 */
-	const changePage = (): void => {
-		burger = false;
-	};
 </script>
 
 <!-- Burger Bouton -->
@@ -65,7 +53,7 @@
 		class="fixed top-0 left-0 right-0 bottom-0 bg-gradient z-40"
 	>
 		<Navigation
-			on:changePage={changePage}
+			on:changePage={() => (burger = false)}
 			ulClass="column justify-center h-screen"
 			navClass="w-screen h-screen"
 			liClass="w-full text-center"
