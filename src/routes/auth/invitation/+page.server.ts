@@ -3,7 +3,7 @@ import InvitationApi from '$lib/server/invitation.server';
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
-import { convertStringToBoolean } from '$lib/functions/utils/transformStringToBoolean';
+import { convertStringToBoolean } from '$lib/functions/utils/transformStringToBoolean/transformStringToBoolean';
 import { env } from '$env/dynamic/private';
 
 export const load = (async ({ fetch }) => {
