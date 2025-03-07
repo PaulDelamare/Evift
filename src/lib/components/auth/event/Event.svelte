@@ -2,7 +2,7 @@
 	// ! IMPORTS
 	import LogoSvg from '$lib/components/extra/logo/LogoSvg.svelte';
 	import DotSvg from '$lib/components/svg/DotSvg.svelte';
-	import { formatDate } from '$lib/functions/utils/formatDate';
+	import { formatDate } from '$lib/functions/utils/formatDate/formatDate';
 	import type { Event } from '$lib/models/event.model';
 	import type { User } from '$lib/models/user.model';
 
