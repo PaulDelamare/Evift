@@ -12,7 +12,9 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"docker:linux": "docker build -t evift-front . --platform=linux/amd64",
+		"docker:tar": "docker save evift-front > image-linux.tar"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
