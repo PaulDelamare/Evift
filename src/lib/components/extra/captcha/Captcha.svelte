@@ -48,6 +48,7 @@
 			onSubmitCaptcha();
 		}
 	});
+
 </script>
 
 <!-- Define in header the captcha -->
