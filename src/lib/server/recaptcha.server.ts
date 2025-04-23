@@ -22,6 +22,7 @@ export default class CaptchaApi extends Api<{
 	}> => {
 		// ? Try request
 		try {
+
 			// Define request
 			// Pass recapctah validator key and captcha token
 			const response = await this.fetch(
