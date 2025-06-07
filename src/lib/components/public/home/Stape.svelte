@@ -37,7 +37,7 @@
 			{#each stapes as stape}
 				<!-- Display Stape -->
 				<!-- First div for border linear graident -->
-				<div class="bg-gradient p-[2px] w-full rounded-lg hover:scale-105 custom-transition">
+				<div class="bg-gradient p-[2px] w-full rounded-lg hover:scale-[1.03] custom-transition">
 					<!-- Second for the content -->
 					<div
 						class="w-full flex items-center gap-6 bg-surface-500 px-8 py-4 rounded-[calc(0.5rem_-_2px)] min-h-24 mini-tablet:px-4"
