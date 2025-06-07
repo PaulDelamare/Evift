@@ -6,6 +6,7 @@
 	import { Modal, initializeStores, Toast, getModalStore } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
 	import { modalComponentRegistry } from '$lib/components/modal/allModal';
+	import InstallButton from '$lib/components/utils/InstallButton.svelte';
 
 	initializeStores();
 	const modalStore = getModalStore();
@@ -33,3 +34,4 @@
 
 <Modal components={modalComponentRegistry} regionBackdrop="!bg-black/50" />
 <Toast />
+<InstallButton />
