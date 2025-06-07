@@ -143,9 +143,7 @@ export const actions: Actions = {
 		formData.append('date', date);
 		formData.append('time', time);
 		formData.append('address', address);
-		// if (image.size > 0) {
-		// 	formData.append('img', image);
-		// }
+// Removed commented-out code related to image validation and processing.
 
 		// Instance Event Api
 		const api = new EventApi(fetch);
