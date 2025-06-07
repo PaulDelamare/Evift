@@ -68,7 +68,7 @@
 <svelte:window bind:innerWidth />
 
 <!-- Page Layout for Display Element -->
-<PageLayout padding="py-12">
+<PageLayout padding="py-12 flex flex-col justify-center">
 	<!-- Wrap container -->
 	<section class="wrap px-8 mobile-large:px-4">
 		<!-- Login Register comoponen -->
