@@ -109,7 +109,7 @@
 			>
 				<div class="bar bg-primary-500"></div>
 
-				<p class="!font-slab">J'espère sincèrement que le site Evift vous convient.</p>
+				<p class="!font-slab">J'espère sincèrement que le site Evift vous conviendra.</p>
 				<p class="!font-slab">
 					Il est possible qu'il y ait des bugs et des problèmes de temps en temps, je vous remercie
 					de votre compréhension concernant ceux-ci. Je ferai de mon mieux pour y remédier.
