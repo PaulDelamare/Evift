@@ -1,6 +1,11 @@
 <script lang="ts">
 	import BackButton from '$lib/components/extra/BackButton.svelte';
-	import { getYoutubeData, linkify, matchYoutubeUrl } from '$lib/functions/utils/cleanHtml';
+	import {
+		getYoutubeData,
+		linkify,
+		matchYoutubeUrl
+	} from '$lib/functions/utils/cleanHtml/cleanHtml';
+	import { formatDate, formatTime } from '$lib/functions/utils/formatDate/formatDate';
 	import type { User } from '$lib/models/user.model';
 	import { afterUpdate } from 'svelte';
 
@@ -29,20 +34,6 @@
 	const scrollToBottom = async (node: HTMLElement) => {
 		node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
 	};
-
-	function formatDate(date: Date) {
-		const options: Intl.DateTimeFormatOptions = {
-			day: '2-digit',
-			month: '2-digit',
-			year: 'numeric'
-		};
-		return new Date(date).toLocaleDateString('fr-FR', options);
-	}
-
-	function formatTime(date: Date) {
-		const options: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit' };
-		return new Date(date).toLocaleTimeString('fr-FR', options);
-	}
 </script>
 
 <svelte:window bind:innerHeight />

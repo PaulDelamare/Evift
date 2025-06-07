@@ -145,7 +145,7 @@
 				<p class="errorMessage">{form?.errors?.address}</p>
 			{/if}
 		</div>
-
+<!-- 
 		<div class="flex gap-8 w-full items-end mini-tablet:flex-col mini-tablet:items-center">
 			<FileInput
 				label="Image pour illustrer l'événement (optionnel)"
@@ -156,7 +156,7 @@
 			{#if form?.errors?.image}
 				<p class="errorMessage">{form?.errors?.image}</p>
 			{/if}
-		</div>
+		</div> -->
 
 		<div class="column gap-4 items-start">
 			<input

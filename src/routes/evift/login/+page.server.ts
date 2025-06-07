@@ -70,7 +70,7 @@ interface Errors {
 
 // Data to return on page load
 export const load = (async () => {
-	const captchaKey = env.CAPTCHA_KEY
+	const captchaKey = env.CAPTCHA_KEY;
 
 	return {
 		captchaKey

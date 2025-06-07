@@ -82,6 +82,7 @@
 			}
 		}
 	}
+
 </script>
 
 <!-- Call Captcha component -->

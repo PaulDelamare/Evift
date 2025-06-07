@@ -49,28 +49,28 @@ const createSchema = yup.object().shape({
 		.string()
 		.matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, "L'heure doit être au format HH:mm")
 		.required("L'heure est requise"),
-	image: yup
-		.mixed()
-		.optional()
-		.transform((value, originalValue: File) => {
-			if (!originalValue || originalValue.size === 0) {
-				return undefined;
-			}
-			return originalValue;
-		})
-		.test('is-image', 'Le fichier doit être une image valide', (value) => {
-			if (!value) {
-				return true;
-			}
-			return value.type.startsWith('image/');
-		})
-		.test('file-size', 'Le fichier est trop volumineux', (value) => {
-			if (!value) {
-				return true;
-			}
-			// 5 Mo maximum (change the first number to change the maximum size)
-			return value.size <= 5 * 1024 * 1024;
-		}),
+	// image: yup
+	// 	.mixed()
+	// 	.optional()
+	// 	.transform((value, originalValue: File) => {
+	// 		if (!originalValue || originalValue.size === 0) {
+	// 			return undefined;
+	// 		}
+	// 		return originalValue;
+	// 	})
+	// 	.test('is-image', 'Le fichier doit être une image valide', (value) => {
+	// 		if (!value) {
+	// 			return true;
+	// 		}
+	// 		return value.type.startsWith('image/');
+	// 	})
+	// 	.test('file-size', 'Le fichier est trop volumineux', (value) => {
+	// 		if (!value) {
+	// 			return true;
+	// 		}
+	// 		// 5 Mo maximum (change the first number to change the maximum size)
+	// 		return value.size <= 5 * 1024 * 1024;
+	// 	}),
 	arrayInviteList: yup.array().of(yup.string().uuid()).required("La liste d'invités est requise*")
 });
 
@@ -81,7 +81,6 @@ export const actions: Actions = {
 		const description = data.get('description') as string;
 		const date = data.get('date') as string;
 		const address = data.get('address') as string;
-		const image = data.get('image') as File;
 		const time = data.get('time') as File;
 		const inviteList = data.get('inviteList') as string;
 
@@ -93,7 +92,6 @@ export const actions: Actions = {
 			description?: string;
 			date?: string;
 			address?: string;
-			image?: string;
 			inviteList?: string;
 			time?: string;
 		} = {};
@@ -101,7 +99,7 @@ export const actions: Actions = {
 		try {
 			// Validation schema
 			await createSchema.validate(
-				{ name, description, date, time, address, image, arrayInviteList },
+				{ name, description, date, time, address, arrayInviteList },
 				{ abortEarly: false }
 			);
 		} catch (error) {
@@ -125,9 +123,6 @@ export const actions: Actions = {
 					if (err.path === 'address') {
 						errors.address = err.message;
 					}
-					if (err.path === 'image') {
-						errors.image = err.message;
-					}
 					if (err.path?.includes('arrayInviteList')) {
 						errors.inviteList = "La liste d'invitations n'est pas valide";
 					}
@@ -148,9 +143,7 @@ export const actions: Actions = {
 		formData.append('date', date);
 		formData.append('time', time);
 		formData.append('address', address);
-		if (image.size > 0) {
-			formData.append('img', image);
-		}
+// Removed commented-out code related to image validation and processing.
 
 		// Instance Event Api
 		const api = new EventApi(fetch);
