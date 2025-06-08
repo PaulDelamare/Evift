@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { GetAllLists, GetEventList, GetEventListDetail } from '$lib/models/gift.model';
 
-export default class GiftApi extends Api<GetAllLists> {
+export default class GiftApi extends Api {
 	// Base url request for auth methods
 	private authUrl = `${env.API_URL}api/gift/`;
 
@@ -25,9 +25,9 @@ export default class GiftApi extends Api<GetAllLists> {
 		name: string;
 		gifts: { name: string; quantity: number; url: string }[];
 	}): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}create`, {
 				method: 'POST',
 				headers: {
@@ -37,22 +37,17 @@ export default class GiftApi extends Api<GetAllLists> {
 				body: JSON.stringify(body)
 			});
 
-			// Get Friends
 			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Get Friends By EMAIL : ' + error);
 		}
 	};
 
-	// Find all gift
 	findAll = async (): Promise<GetAllLists> => {
-		// - Try Validation
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
 				headers: {
@@ -61,21 +56,19 @@ export default class GiftApi extends Api<GetAllLists> {
 				credentials: 'include'
 			});
 
-			// Get Gift
 			const data: GetAllLists = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Get Friends By EMAIL : ' + error);
 		}
 	};
 
 	findForEvent = async (id_event: string): Promise<GetEventList> => {
-		// - Try Validation
+
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}findListEvent/${id_event}`, {
 				method: 'GET',
 				headers: {
@@ -84,13 +77,11 @@ export default class GiftApi extends Api<GetAllLists> {
 				credentials: 'include'
 			});
 
-			// Get Gift
 			const data: GetEventList = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Get Gift : ' + error);
 		}
 	};
@@ -99,9 +90,9 @@ export default class GiftApi extends Api<GetAllLists> {
 		idEvent: string,
 		idList: string
 	): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}listEvent`, {
 				method: 'POST',
 				headers: {
@@ -111,13 +102,11 @@ export default class GiftApi extends Api<GetAllLists> {
 				body: JSON.stringify({ idEvent, idList })
 			});
 
-			// Get Friends
 			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Add List To Event : ' + error);
 		}
 	};
@@ -126,9 +115,9 @@ export default class GiftApi extends Api<GetAllLists> {
 		idEvent: string,
 		idList: string
 	): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}deleteListEvent`, {
 				method: 'DELETE',
 				headers: {
@@ -138,21 +127,18 @@ export default class GiftApi extends Api<GetAllLists> {
 				body: JSON.stringify({ idEvent, idList })
 			});
 
-			// Get Friends
 			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Add List To Event : ' + error);
 		}
 	};
 
 	findList = async (idList: string): Promise<GetEventListDetail> => {
-		// - Try Validation
+
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}findList/${idList}`, {
 				method: 'GET',
 				headers: {
@@ -161,13 +147,11 @@ export default class GiftApi extends Api<GetAllLists> {
 				credentials: 'include'
 			});
 
-			// Get Gift
 			const data: GetEventListDetail = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Get Gift : ' + error);
 		}
 	};
@@ -177,9 +161,9 @@ export default class GiftApi extends Api<GetAllLists> {
 		idGift: string,
 		checked: boolean
 	): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}checkGift`, {
 				method: 'POST',
 				headers: {
@@ -189,13 +173,11 @@ export default class GiftApi extends Api<GetAllLists> {
 				body: JSON.stringify({ idEvent, idGift, checked })
 			});
 
-			// Get Friends
 			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Add List To Event : ' + error);
 		}
 	};
