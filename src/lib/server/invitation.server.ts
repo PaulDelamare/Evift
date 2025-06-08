@@ -5,8 +5,7 @@ import type { GetCountFriendInvitation, InvitationData } from '$lib/models/invit
 import type { EventInvitation } from '$lib/models/event.model';
 
 // ! Class
-export default class InvitationApi extends Api<GetCountFriendInvitation> {
-	// Base url request for auth methods
+export default class InvitationApi extends Api {
 	private authUrl = `${env.API_URL}api/invitation/`;
 
 	/**
@@ -19,9 +18,9 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 		countFriendsInvitation: number;
 		countEventInvitation: number;
 	}> => {
-		// - Try Validation
+
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}count`, {
 				method: 'GET',
 				headers: {
@@ -30,13 +29,11 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 				credentials: 'include'
 			});
 
-			// Get Count Invitation
 			const data: GetCountFriendInvitation = await response.json();
-
-			// Return data
 			return data.data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Get Count : ' + error);
 		}
 	};
@@ -51,9 +48,9 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 	 * @throws {Error} If there's an error during the request, it throws an Error with the error message.
 	 */
 	getInvitations = async (): Promise<InvitationData> => {
-		// - Try Validation
+
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
 				headers: {
@@ -62,13 +59,10 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 				credentials: 'include'
 			});
 
-			// Get all invitation for this user
 			const data: InvitationData = await response.json();
-
-			// Return data
 			return data;
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Get Invitation : ' + error);
 		}
 	};
@@ -77,9 +71,9 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 		id: string,
 		accept: boolean
 	): Promise<{ status: number; message?: string; error?: string }> => {
-		// - Try Validation
+
 		try {
-			// Accept or refuse Invitation
+
 			const response = await this.fetch(`${this.authUrl}accept`, {
 				method: 'POST',
 				headers: {
@@ -89,13 +83,10 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 				body: JSON.stringify({ id, response: accept })
 			});
 
-			// Get data
 			const data: GetCountFriendInvitation = await response.json();
-
-			// Return data
 			return data;
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Response Invitation : ' + error);
 		}
 	};
@@ -103,9 +94,9 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 	sendFriendsInvitation = async (
 		id: string
 	): Promise<{ status: number; error: string } | { status: number; message: string }> => {
-		// - Try Validation
+
 		try {
-			// Accept or refuse Invitation
+
 			const response = await this.fetch(`${this.authUrl}request`, {
 				method: 'POST',
 				headers: {
@@ -115,14 +106,11 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 				body: JSON.stringify({ id })
 			});
 
-			// Get data
-			const data: { status: number; error: string } | { status: number; message: string } =
-				await response.json();
-
-			// Return data
+			const data: { status: number; error: string } | { status: number; message: string } = await response.json();
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error in Friends Invitation : ' + error);
 		}
 	};
@@ -131,9 +119,9 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 		eventId: string,
 		invitationId: string[]
 	): Promise<{ status: number; error: string } | { status: number; message: string }> => {
-		// - Try Validation
+
 		try {
-			// Accept or refuse Invitation
+
 			const response = await this.fetch(`${this.authUrl}requestEvent`, {
 				method: 'POST',
 				headers: {
@@ -143,22 +131,18 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 				body: JSON.stringify({ eventId, invitationId })
 			});
 
-			// Get data
-			const data: { status: number; error: string } | { status: number; message: string } =
-				await response.json();
-
-			// Return data
+			const data: { status: number; error: string } | { status: number; message: string } = await response.json();
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error in Event Invitation : ' + error);
 		}
 	};
 
 	getEventInvitation = async (): Promise<EventInvitation> => {
-		// - Try Validation
+
 		try {
-			// Accept or refuse Invitation
 			const response = await this.fetch(`${this.authUrl}eventInvitation`, {
 				method: 'GET',
 				headers: {
@@ -167,17 +151,15 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 				credentials: 'include'
 			});
 
-			// Get data
 			const data: EventInvitation | { status: number; error: string } = await response.json();
 
 			if ('error' in data) {
 				throw new Error(data.error);
 			}
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error in Event Invitation : ' + error);
 		}
 	};
@@ -186,9 +168,9 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 		invitationId: string,
 		accept: boolean
 	): Promise<{ status: number; message?: string; error?: string }> => {
-		// - Try Validation
+
 		try {
-			// Accept or refuse Invitation
+
 			const response = await this.fetch(`${this.authUrl}responseEventInvitation`, {
 				method: 'POST',
 				headers: {
@@ -198,13 +180,11 @@ export default class InvitationApi extends Api<GetCountFriendInvitation> {
 				body: JSON.stringify({ invitationId, response: accept })
 			});
 
-			// Get data
 			const data: GetCountFriendInvitation = await response.json();
-
-			// Return data
 			return data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Response Invitation : ' + error);
 		}
 	};
