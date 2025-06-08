@@ -2,14 +2,12 @@ import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { DataRole, Role } from '$lib/models/role.model';
 
-export default class RoleApi extends Api<DataRole> {
-	// Base url request for auth methods
+export default class RoleApi extends Api {
 	private authUrl = `${env.API_URL}api/rolesEvent/`;
 
 	getRoles = async (): Promise<Role[]> => {
-		// - Try Validation
+
 		try {
-			// Accept or refuse Invitation
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
 				headers: {
@@ -18,17 +16,16 @@ export default class RoleApi extends Api<DataRole> {
 				credentials: 'include'
 			});
 
-			// Get data
 			const data: DataRole | { status: number; error: string } = await response.json();
 
 			if ('error' in data) {
 				throw new Error(data.error);
 			}
 
-			// Return data
 			return data.data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error in Event Invitation : ' + error);
 		}
 	};
