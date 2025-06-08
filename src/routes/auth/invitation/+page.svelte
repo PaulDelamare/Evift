@@ -89,7 +89,7 @@
 <!-- Displau Page Layout for disposition -->
 <PageLayout padding="py-12" gap="gap-12">
 	<!-- Display event and friends button -->
-	<div class="flex gap-8 justify-between mx-auto px-4">
+	<div id="test" class="flex gap-8 justify-between mx-auto px-4">
 		<!-- Button for event -->
 		<button
 			on:click={() => (event = true)}
