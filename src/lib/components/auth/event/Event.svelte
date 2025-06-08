@@ -10,7 +10,7 @@
 	export let shadow =
 		'shadow-[31px_31px_82px_0_rgba(190,190,190,1),-31px_-31px_82px_0_rgba(255,255,255,1)]';
 
-	export let event: Event;
+	export let event: Event & {idDriver?: string};
 	export let user: User;
 
 	export let imgUrl = '';
@@ -27,7 +27,7 @@
  -->
 <!-- Display event in li -->
 <li
-	class="w-full flex bg-surface-500 gap-12 rounded-xl overflow-hidden {shadow} tablet:flex-col tablet:items-center tablet:gap-4"
+	class="w-full flex bg-surface-500 gap-12 rounded-xl overflow-hidden {shadow} tablet:flex-col tablet:items-center tablet:gap-4" id="{event.idDriver}"
 >
 	<!-- Display user image (for start, the progil picture isn't available, so we display a default image) -->
 	<div class="tablet:w-full">
