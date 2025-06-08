@@ -2,8 +2,7 @@ import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { Friends, GetAllFriends } from '$lib/models/friends.model';
 
-export default class FriendsApi extends Api<GetAllFriends> {
-	// Base url request for auth methods
+export default class FriendsApi extends Api {
 	private authUrl = `${env.API_URL}api/friends/`;
 
 	/**
@@ -13,9 +12,8 @@ export default class FriendsApi extends Api<GetAllFriends> {
 	 * @throws {Error} If there is an error retrieving the count of friend invitations.
 	 */
 	getFriends = async (): Promise<Friends[]> => {
-		// - Try Validation
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
 				headers: {
@@ -24,19 +22,15 @@ export default class FriendsApi extends Api<GetAllFriends> {
 				credentials: 'include'
 			});
 
-			// Get Friends
 			const data: GetAllFriends | { error: string; status: number } = await response.json();
 
-			// If error in data
 			if ('error' in data) {
-				// Throw error
 				throw new Error(data.error);
 			}
-
-			// Return data
 			return data.data;
+
 		} catch (error) {
-			// - Catch Errors
+
 			throw new Error('Error Get Friends By EMAIL : ' + error);
 		}
 	};
