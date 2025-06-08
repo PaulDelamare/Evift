@@ -2,7 +2,7 @@
 import { env } from '$env/dynamic/private';
 import AuthApi from '$lib/server/auth.server';
 import InvitationApi from '$lib/server/invitation.server';
-import type { HandleFetch } from '@sveltejs/kit';
+import type { Handle, HandleFetch } from '@sveltejs/kit';
 
 // ! HANDLE
 /**
@@ -12,48 +12,35 @@ import type { HandleFetch } from '@sveltejs/kit';
  * @param resolve - The resolve function to continue processing the request.
  * @return The response from resolving the request.
  */
-export async function handle({ event, resolve }) {
-	// Get token
-	const jwt = event.cookies.get('accessToken');
+export const handle = (async ({ event, resolve }) => {
 
-	// If no token, continue resolve
+	const jwt = event.cookies.get('accessToken');
 	if (!jwt) return await resolve(event);
 
-	// If jwt and user information
 	if (event.locals.user) {
-		// Set user information
 
 		return await resolve(event);
 	}
 
-	// If jwt and not user information
-	// Get user information in api
 	const api = new AuthApi(event.fetch);
 	const userInfo = await api.getInfo();
 
-	// If error in request
 	if ('error' in userInfo) {
-		// Delete user information
-		// Delete token
+
 		event.cookies.delete('accessToken', { path: '/' });
-		// Delete user information
 		event.locals.user = undefined;
+
 	} else {
-		// Instance Invitation Api
 		const notifApi = new InvitationApi(event.fetch);
-		// Get Notification number
 		const notifications = await notifApi.getCountFriendInvitation();
-		// Pass number in locals
 		event.locals.notificationFriends = notifications.countFriendsInvitation;
 		event.locals.notificationEvents = notifications.countEventInvitation;
-		// Else set user information
 		event.locals.user = userInfo;
 	}
 
-	// Continue resolve
 	const response = await resolve(event);
 	return response;
-}
+}) satisfies Handle;
 
 // ! HANDLE FETCH
 /**
@@ -65,12 +52,9 @@ export async function handle({ event, resolve }) {
  * @return  The response from the fetch request.
  */
 export const handleFetch = (async ({ request, fetch }) => {
-	// If the request URL starts with the API_URL
 	if (request.url.startsWith(env.API_URL)) {
-		// Set the 'x-api-key' header
 		request.headers.set('x-api-key', env.API_KEY);
 	}
 
-	// Return the fetch request
 	return fetch(request);
 }) satisfies HandleFetch;
