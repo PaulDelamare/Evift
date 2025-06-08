@@ -15,6 +15,7 @@ export interface User {
 	createdAt?: Date;
 	updatedAt?: Date;
 	error?: string;
+	firstLogin?: boolean;
 }
 
 export interface DataUser {
