@@ -6,12 +6,14 @@
 	import { type PaginationSettings } from '@skeletonlabs/skeleton';
 	import Event from '$lib/components/auth/event/Event.svelte';
 	import { Paginator } from '@skeletonlabs/skeleton';
+	import { fakeUserEventRelation } from '$lib/driver/fakeEventData';
 
 	export let data: PageData;
 
 	let search = '';
-	const events = data.allEvent.data;
+	let events = data.allEvent.data;
 	const imgUrl = data.imgUrl;
+	const user = data.user;
 
 	let paginationSettings = {
 		page: 0,
@@ -19,6 +21,10 @@
 		size: events.length,
 		amounts: [1, 2, 5, 10]
 	} satisfies PaginationSettings;
+
+	if (user.firstLogin) {
+		events = [fakeUserEventRelation];
+	}
 
 	$: paginatedSource = events.slice(
 		paginationSettings.page * paginationSettings.limit,
@@ -75,7 +81,8 @@
 								<!-- Submit button -->
 								<button
 									class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] 0 nav rounded-xl nav group-hover:text-gradient text-surface-500 custom-transition !duration-300 between justify-center gap-8"
-									type="submit"
+									type="button"
+									id="{event.idDriver}2"
 								>
 									<a href="/auth/event/event-{event.id_event}">Accéder</a>
 								</button>
