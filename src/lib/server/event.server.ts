@@ -3,7 +3,7 @@ import { Api } from './api.server';
 import type { GetAllEvent, getOneEvent } from '$lib/models/event.model';
 import type { Participant, DataAllParticipants } from '$lib/models/participant.model';
 
-export default class EventApi extends Api<GetAllEvent> {
+export default class EventApi extends Api {
 	// Base url request for auth methods
 	private authUrl = `${env.API_URL}api/event/`;
 
