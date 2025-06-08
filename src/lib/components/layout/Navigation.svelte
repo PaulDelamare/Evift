@@ -31,24 +31,27 @@
 
 	// Variable for the navigation
 	// Define text to display, path and start for know if the active need to start with this url or need to be the same
-	let nav: { text: string; path: string; start: boolean }[] = [];
+	let nav: { text: string; path: string; start: boolean; id: string }[] = [];
 
 	$: if (!user) {
 		nav = [
 			{
 				text: 'Accueil',
 				path: '/',
-				start: false
+				start: false,
+				id: 'home-unauth'
 			},
 			{
 				text: 'Qui Sommes-Nous ?',
 				path: '/evift/details',
-				start: true
+				start: true,
+				id: 'about-unauth'
 			},
 			{
 				text: 'Inscription/Connexion',
 				path: '/evift/login',
-				start: true
+				start: true,
+				id: 'login-unauth'
 			}
 		];
 	} else {
@@ -56,22 +59,26 @@
 			{
 				text: 'Evénements',
 				path: '/auth/event',
-				start: true
+				start: true,
+				id: 'event-auth'
 			},
 			{
 				text: 'Liste des cadeaux',
 				path: '/auth/gift',
-				start: true
+				start: true,
+				id: 'gift-auth'
 			},
 			{
 				text: 'Invitation',
 				path: '/auth/invitation',
-				start: true
+				start: true,
+				id: 'invitation-auth'
 			},
 			{
 				text: 'Amis',
 				path: '/auth/friends',
-				start: true
+				start: true,
+				id: 'friends-auth'
 			}
 		];
 	}
@@ -105,7 +112,7 @@
 	<ul class={ulC}>
 		<!-- Display all link -->
 		{#each nav as item}
-			<li class="{liC} {item.text === 'Invitation' && !contact ? 'relative' : ''}">
+			<li id="{item.id}" class="{liC} {item.text === 'Invitation' && !contact ? 'relative' : ''}">
 				<!-- If start is true, display link as active -->
 				<!-- Define different active style for mobile and desktop -->
 				<a
