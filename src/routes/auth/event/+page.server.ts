@@ -4,7 +4,7 @@ import EventApi from '$lib/server/event.server';
 import { env } from '$env/dynamic/private';
 
 export const load = (async ({ fetch }) => {
-	// Instance EVent Api
+	// Instance Event Api
 	const api = new EventApi(fetch);
 	// Get all Event
 	const allEvent = await api.getEvent();
