@@ -16,7 +16,7 @@ export default class EventApi extends Api {
 	 */
 	createEvent = async (
 		body: FormData
-	): Promise<{ data: string; status: number } | { error: string; status: number }> => {
+	): Promise<{ data: { eventId: string; }; status: number } | { error: string; status: number }> => {
 		// - Try Validation
 		try {
 			// Do request
@@ -28,7 +28,7 @@ export default class EventApi extends Api {
 			});
 
 			// Create Event
-			const data: { data: string; status: number } | { error: string; status: number } =
+			const data: { data: { eventId: string; }; status: number } | { error: string; status: number } =
 				await response.json();
 
 			// Return data
