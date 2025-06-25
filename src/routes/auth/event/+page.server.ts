@@ -4,13 +4,13 @@ import EventApi from '$lib/server/event.server';
 import { env } from '$env/dynamic/private';
 
 export const load = (async ({ fetch }) => {
-	// Instance Event Api
-	const api = new EventApi(fetch);
-	// Get all Event
-	const allEvent = await api.getEvent();
 
-	// Get image path url
+	const api = new EventApi(fetch);
+	const allEvent = await api.getEvent();
+	
+
 	const imgUrl = env.API_URL;
+
 	return {
 		allEvent,
 		imgUrl
