@@ -15,7 +15,7 @@
 
 <!-- Display data in li -->
 <li
-	class="w-full flex p-4 bg-surface-500 gap-12 rounded-xl {shadow} {friends
+	class="w-full flex p-4 bg-surface-300 gap-12 rounded-xl {shadow} {friends
 		? 'items-center gap-8 mini-tablet:gap-4'
 		: 'mini-tablet:flex-col mini-tablet:items-center mini-tablet:gap-4'}"
 >
