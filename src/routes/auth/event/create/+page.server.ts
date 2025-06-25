@@ -7,10 +7,9 @@ import EventApi from '$lib/server/event.server';
 import InvitationApi from '$lib/server/invitation.server';
 
 export const load = (async ({ fetch }) => {
-	// Instance Friends Api
 	const api = new FriendsApi(fetch);
-	// Get Friends
 	const friends = await api.getFriends();
+
 	return {
 		friends
 	};
@@ -49,28 +48,7 @@ const createSchema = yup.object().shape({
 		.string()
 		.matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, "L'heure doit être au format HH:mm")
 		.required("L'heure est requise"),
-	// image: yup
-	// 	.mixed()
-	// 	.optional()
-	// 	.transform((value, originalValue: File) => {
-	// 		if (!originalValue || originalValue.size === 0) {
-	// 			return undefined;
-	// 		}
-	// 		return originalValue;
-	// 	})
-	// 	.test('is-image', 'Le fichier doit être une image valide', (value) => {
-	// 		if (!value) {
-	// 			return true;
-	// 		}
-	// 		return value.type.startsWith('image/');
-	// 	})
-	// 	.test('file-size', 'Le fichier est trop volumineux', (value) => {
-	// 		if (!value) {
-	// 			return true;
-	// 		}
-	// 		// 5 Mo maximum (change the first number to change the maximum size)
-	// 		return value.size <= 5 * 1024 * 1024;
-	// 	}),
+
 	arrayInviteList: yup.array().of(yup.string().uuid()).required("La liste d'invités est requise*")
 });
 
@@ -97,16 +75,13 @@ export const actions: Actions = {
 		} = {};
 
 		try {
-			// Validation schema
 			await createSchema.validate(
 				{ name, description, date, time, address, arrayInviteList },
 				{ abortEarly: false }
 			);
 		} catch (error) {
 			// - Catch Errors
-			// If Error in ValidationError
 			if (error instanceof yup.ValidationError) {
-				// Check what error it is and return this in errors instance
 				error.inner.forEach((err) => {
 					if (err.path === 'name') {
 						errors.name = err.message;
@@ -128,11 +103,9 @@ export const actions: Actions = {
 					}
 				});
 
-				// Return errors
 				return { status: 400, errors };
 			} else {
 				errors.error = 'Une erreur est survenue';
-				// Else Throw custom Error
 				return { status: 400, errors };
 			}
 		}
@@ -143,33 +116,24 @@ export const actions: Actions = {
 		formData.append('date', date);
 		formData.append('time', time);
 		formData.append('address', address);
-// Removed commented-out code related to image validation and processing.
 
-		// Instance Event Api
 		const api = new EventApi(fetch);
-		// Call Create Event
 		const res = await api.createEvent(formData);
 
-		// If error in response
 		if ('error' in res) {
-			// Return error
 			errors.error = res.error;
 			return { status: 400, errors };
 		}
 
-		// Instance Invitation Api
 		const invitationApi = new InvitationApi(fetch);
 
-		// Call eventInvitation
-		const resInvitation = await invitationApi.eventInvitation(res.data, arrayInviteList);
+		const resInvitation = await invitationApi.eventInvitation(res.data.eventId, arrayInviteList);
 
 		if ('error' in resInvitation) {
-			// Return error
 			errors.error = resInvitation.error;
 			return { status: 400, errors };
 		}
 
-		// Return success
 		return { success: true };
 	}
 };
