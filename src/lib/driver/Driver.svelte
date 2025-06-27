@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import 'driver.js/dist/driver.css';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	onMount(async () => {
 		if (!browser) return;
@@ -85,15 +85,22 @@
 					onHighlightStarted: () => {
 						goto('/auth/friends');
 					},
-					onDeselected: () => {
-						// alert('Modifier pour signaler que firstLogin est false');
-						fetch('/auth/?/completeFirstLogin', {
+					onDeselected: async () => {
+						const response = await fetch('?/completeFirstLogin', {
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/x-www-form-urlencoded'
 							},
 							body: ''
 						});
+						const json = await response.json();
+						const data = JSON.parse(JSON.parse(json.data));
+						console.log(data);
+						if (data.success) {
+							invalidateAll().then(() => {
+								return goto('/auth/event');
+							});
+						}
 					}
 				}
 			]
