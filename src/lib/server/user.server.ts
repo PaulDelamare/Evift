@@ -2,6 +2,7 @@
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
 import type { DataUser, User } from '$lib/models/user.model';
+import type { ApiResponse } from '$lib/models/response.model';
 
 // ! Class
 export default class UserApi extends Api {
@@ -31,4 +32,21 @@ export default class UserApi extends Api {
 			throw new Error('Error Get Count : ' + error);
 		}
 	};
+
+	completeFirstLogin = async () => {
+		try {
+			const response = await this.fetch(`${this.authUrl}firstLogin`, {
+				method: 'PATCH',
+				credentials: 'include'
+			});
+
+
+			const data: ApiResponse = await response.json();
+			return { ...data };
+
+		} catch (error) {
+
+			throw new Error('Error Complete FirstLogin : ' + error);
+		}
+	}
 }
