@@ -1,6 +1,6 @@
 // ! IMPORTS
 import FriendsApi from '$lib/server/friends.server';
-import type { Actions } from '@sveltejs/kit';
+import { error, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
 import UserApi from '$lib/server/user.server';
@@ -76,33 +76,24 @@ export const actions: Actions = {
 	},
 
 	sendFriendsInvitation: async ({ request, fetch, locals }) => {
-		// Get form data
 		const data = await request.formData();
 		const id = data.get('id') as string;
-		// Must have invitationId and accept
 		const schema = yup.object().shape({
 			id: yup.string().uuid('Id invalide*').required('Id requis*')
 		});
 		const errors: { error?: string; id?: string } = {};
-		// ? Validation
 		try {
-			// Validation schema
 			await schema.validate({ id }, { abortEarly: false });
 		} catch (error) {
-			// - Catch Errors
-			// If Error in ValidationError
 			if (error instanceof yup.ValidationError) {
-				// Check what error it is and return this in errors instance
 				error.inner.forEach((err) => {
 					if (err.path === 'id') {
 						errors.id = err.message;
 					}
 				});
 
-				// Return errors
 				return { status: 400, errors };
 			} else {
-				// Else Throw custom Error
 				return { status: 400, errors: 'Une erreur est survenue' };
 			}
 		}
@@ -112,21 +103,33 @@ export const actions: Actions = {
 			return { status: 400, errors };
 		}
 
-		// Instance Friends Api
 		const api = new InvitationApi(fetch);
-		// Call sendFriendsInvitation
 		const res = await api.sendFriendsInvitation(id);
 
-		// if an error occurs
 		if ('error' in res) {
-			// Return error
 			errors.error = res.error;
 			return { status: 400, errors };
 		}
 
-		// Return data
 		return {
 			success: true
 		};
+	},
+
+	completeFirstLogin: async ({ fetch }) => {
+
+		const apiUser = new UserApi(fetch);
+		const res = await apiUser.completeFirstLogin();
+
+		if ("error" in res) {
+			return JSON.stringify({
+				error: res.error.error
+			});
+
+		}
+
+		return JSON.stringify({
+			success: true
+		})
 	}
 };
