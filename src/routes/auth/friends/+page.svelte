@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 	import FriendsInvitationList from '$lib/components/auth/invitation/FriendsInvitationList.svelte';
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
@@ -13,6 +13,9 @@
 	} from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
+	export let form: ActionData;
+
+	$: console.log(form);
 
 	const friends = data.friends;
 	const modalStore: ModalStore = getModalStore();
