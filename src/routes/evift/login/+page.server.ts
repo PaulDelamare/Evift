@@ -116,7 +116,6 @@ export const actions: Actions = {
 
 		// - Try Validation
 		try {
-			// Validation register
 			await registerSchema.validate(
 				{ firstname, lastname, email, password, passwordConfirm },
 				{ abortEarly: false }
@@ -263,10 +262,11 @@ export const actions: Actions = {
 		// Do login
 		const res = await api.login(email, password);
 
+		console.log(res)
 		// if an error occurs
 		if ('error' in res) {
 			// Return error
-			errors.error = res?.error;
+			errors.error = res?.error.error;
 			return { status: 400, errors };
 		}
 
