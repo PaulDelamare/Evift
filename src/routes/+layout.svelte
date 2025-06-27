@@ -7,6 +7,7 @@
 	import '../app.postcss';
 	import { modalComponentRegistry } from '$lib/components/modal/allModal';
 	import InstallButton from '$lib/components/utils/InstallButton.svelte';
+	import { Toaster } from 'svelte-french-toast';
 
 	initializeStores();
 	const modalStore = getModalStore();
@@ -34,4 +35,5 @@
 
 <Modal components={modalComponentRegistry} regionBackdrop="!bg-black/50" />
 <Toast />
+<Toaster position="bottom-center" />
 <InstallButton />
