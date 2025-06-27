@@ -4,7 +4,7 @@
 
 	export let data: LayoutData;
 
-	const user = data.user;
+	let user = data.user;
 
 	const firstLogin = user.firstLogin;
 </script>
