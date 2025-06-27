@@ -85,9 +85,16 @@
 					onHighlightStarted: () => {
 						goto('/auth/friends');
 					},
-                         onDeselected: () => {
-                              alert('Modifier pour signaler que firstLogin est false')
-                         }
+					onDeselected: () => {
+						// alert('Modifier pour signaler que firstLogin est false');
+						fetch('/auth/?/completeFirstLogin', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							},
+							body: ''
+						});
+					}
 				}
 			]
 		});
