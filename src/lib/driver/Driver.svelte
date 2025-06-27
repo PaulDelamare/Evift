@@ -3,6 +3,7 @@
 	import { browser } from '$app/environment';
 	import 'driver.js/dist/driver.css';
 	import { goto, invalidateAll } from '$app/navigation';
+	import toast from 'svelte-french-toast';
 
 	onMount(async () => {
 		if (!browser) return;
@@ -98,8 +99,11 @@
 						console.log(data);
 						if (data.success) {
 							invalidateAll().then(() => {
+								toast.success('Tutoriel complété !');
 								return goto('/auth/event');
 							});
+						} else if ('error' in data) {
+							toast.error("Une erreur c'est produite");
 						}
 					}
 				}
