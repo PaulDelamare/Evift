@@ -3,14 +3,14 @@
 	import LogoSvg from '$lib/components/extra/logo/LogoSvg.svelte';
 	import DotSvg from '$lib/components/svg/DotSvg.svelte';
 	import { formatDate } from '$lib/functions/utils/formatDate/formatDate';
-	import type { Event } from '$lib/models/event.model';
+	import type { Event, EventDetail } from '$lib/models/event.model';
 	import type { User } from '$lib/models/user.model';
 
 	// ! PROPS
 	export let shadow =
 		'shadow-[31px_31px_82px_0_rgba(190,190,190,1),-31px_-31px_82px_0_rgba(255,255,255,1)]';
 
-	export let event: Event & {idDriver?: string};
+	export let event: EventDetail & {idDriver?: string};
 	export let user: User;
 
 	export let imgUrl = '';
