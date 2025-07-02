@@ -87,29 +87,22 @@ export const actions: Actions = {
 	 * @return Object indicating success or error.
 	 */
 	register: async ({ request, fetch }) => {
-		// Get form data
 		const data = await request.formData();
 
-		// Get form data values
 		const firstname = data.get('firstName') as string;
 		const lastname = data.get('name') as string;
 		const email = data.get('email') as string;
 		const password = data.get('password') as string;
 		const passwordConfirm = data.get('passwordConfirmation') as string;
 
-		// Get Capctcha secret for check
 		const captcha = data.get('secret') as string;
 
-		// Instance errors
 		const errors: Errors = {};
 
-		// Do Request for valide capctha
 		const captchaApi = new CaptchaApi(fetch);
 		const resCaptcha = await captchaApi.captcha(captcha);
 
-		// If score is under 0.4 or not success
 		if (resCaptcha.score < 0.4 || !resCaptcha.success) {
-			// Return error for safety
 			errors.error = "Une erreur c'est produite lors de la connexion";
 			return { status: 400, errors };
 		}
@@ -122,9 +115,7 @@ export const actions: Actions = {
 			);
 		} catch (error) {
 			// - Catch Errors
-			// If Error in ValidationError
 			if (error instanceof yup.ValidationError) {
-				// Check what error it is and return this in errors instance
 				error.inner.forEach((err) => {
 					if (err.path === 'firstname') {
 						errors.firstname = err.message;
@@ -147,27 +138,20 @@ export const actions: Actions = {
 					}
 				});
 
-				// Return errors
 				return { status: 400, errors };
 			} else {
-				// Else Throw custom Error
 				return { status: 400, error: 'Une erreur est survenue' };
 			}
 		}
 
-		// If Password not same
 		if (password !== passwordConfirm) {
-			// Add errors
 			errors.passwordConfirmRegister = 'Les mots de passe ne sont pas identiques';
 		}
 
-		// If there are errors
 		if (Object.keys(errors).length > 0) {
-			// Return errors
 			return { status: 400, errors };
 		}
 
-		// Define user object
 		const user = {
 			firstname,
 			lastname,
@@ -175,19 +159,14 @@ export const actions: Actions = {
 			password
 		};
 
-		// Create user in api
 		const api = new AuthApi(fetch);
-		// Do register
 		const res = await api.register(user);
 
-		// if an error occurs
 		if ('error' in res) {
-			// Return error
-			errors.error = res?.error;
+			errors.error = res?.error.error;
 			return { status: 400, errors };
 		}
 
-		// Else return success
 		return {
 			success: true
 		};
@@ -207,38 +186,26 @@ export const actions: Actions = {
 	 * @return An object with the appropriate status code and error messages
 	 */
 	login: async ({ request, fetch, locals, cookies }) => {
-		// Get form data
 		const data = await request.formData();
 
-		// Get information from form
 		const email = data.get('email') as string;
 		const password = data.get('password') as string;
-		// Get Capctha secret for check
 		const captcha = data.get('secret') as string;
 
-		// Instance errors
 		const errors: Errors = {};
 
-		// Do Request for valide capctha
 		const captchaApi = new CaptchaApi(fetch);
 		const resCaptcha = await captchaApi.captcha(captcha);
 
-		// If score is under 0.4 or not success
 		if (resCaptcha.score < 0.4 || !resCaptcha.success) {
-			// Return error for safety
 			errors.error = "Une erreur c'est produite lors de la connexion";
 			return { status: 400, errors };
 		}
 
-		// - Try Validation
 		try {
-			// Validation register
 			await loginSchema.validate({ email, password }, { abortEarly: false });
 		} catch (error) {
-			// - Catch Errors
-			// If Error in ValidationError
 			if (error instanceof yup.ValidationError) {
-				// Check what error it is and return this in errors instance
 				error.inner.forEach((err) => {
 					if (err.path === 'email') {
 						errors.emailLogin = err.message;
@@ -249,39 +216,26 @@ export const actions: Actions = {
 					}
 				});
 
-				// Return errors
 				return { status: 400, errors };
 			} else {
-				// Else Throw custom Error
 				return { status: 400, error: 'Une erreur est survenue' };
 			}
 		}
 
-		// Instance Auth Api
 		const api = new AuthApi(fetch);
-		// Do login
 		const res = await api.login(email, password);
 
-		console.log(res)
-		// if an error occurs
 		if ('error' in res) {
-			// Return error
 			errors.error = res?.error.error;
 			return { status: 400, errors };
 		}
 
-		// Else return success
 		const user = res?.data?.user;
-		// Get access token
 		const token = res?.data?.accessToken;
 
-		// If token
 		if (token) {
-			// Set user and token
 			locals.user = user;
-			// Set cookie
 			cookies.set('accessToken', token, { path: '/', httpOnly: true, maxAge: 5 * 60 * 60 });
-			// Redirect to event page
 			redirect(302, '/auth/event');
 		}
 	},
