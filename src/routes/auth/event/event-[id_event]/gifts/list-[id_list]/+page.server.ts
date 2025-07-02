@@ -2,12 +2,13 @@ import GiftApi from '$lib/server/gift.server';
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
+import { executeOrThrow } from '$lib/functions/utils/execRequest/execRequest';
 
 export const load = (async ({ fetch, params, locals }) => {
 	const id_list = params.id_list;
 
 	const api = new GiftApi(fetch);
-	const list = await api.findList(id_list);
+	const list = await executeOrThrow(api.findList(id_list));
 
 	const user = locals.user;
 
@@ -75,7 +76,7 @@ export const actions: Actions = {
 		const res = await api.checkGift(eventId, giftId, taken);
 
 		if ('error' in res) {
-			errors.error = res.error;
+			errors.error = res.error.error;
 			return { status: 400, errors };
 		}
 
