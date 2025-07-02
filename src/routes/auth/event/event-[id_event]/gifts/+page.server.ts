@@ -3,18 +3,19 @@ import GiftApi from '$lib/server/gift.server';
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
+import { executeOrThrow } from '$lib/functions/utils/execRequest/execRequest';
 
 export const load = (async ({ fetch, params, parent }) => {
 	const api = new GiftApi(fetch);
 	const id_event = params.id_event;
-	const listsEvent = await api.findForEvent(id_event);
+	const listsEvent = await executeOrThrow(api.findForEvent(id_event));
 
 	const roleUser = (await parent()).roleUser;
 
 	let lists: List[] = [];
 
-	if (roleUser.role.name === 'admin' || roleUser.role.name === 'gift') {
-		lists = (await api.findAll()).data;
+	if (roleUser.role?.name === 'admin' || roleUser.role?.name === 'gift') {
+		lists = (await executeOrThrow(api.findAll())).data;
 	}
 
 	return {
@@ -61,7 +62,7 @@ export const actions: Actions = {
 		const res = await api.addListEvent(eventId, listId);
 
 		if ('error' in res) {
-			errors.error = res.error;
+			errors.error = res.error.error;
 			return { status: 400, errors };
 		}
 
@@ -99,7 +100,7 @@ export const actions: Actions = {
 		const res = await api.deleteListEvent(eventId, listId);
 
 		if ('error' in res) {
-			return { status: 400, error: res.error };
+			return { status: 400, error: res.error.error };
 		}
 
 		return { status: 200, successDelete: true };
