@@ -11,7 +11,7 @@
 	export let data: PageData;
 
 	let search = '';
-	let events = data.allEvent.data;
+	let events = data.allEvent;
 	const imgUrl = data.imgUrl;
 	const user = data.user;
 
@@ -42,7 +42,7 @@
 			(event.event.user.firstname.toLowerCase().includes(searchLastName) &&
 				event.event.user.lastname.toLowerCase().includes(searchFirstName)) ||
 			event.event.user.email.toLowerCase().includes(search.toLowerCase()) ||
-			event.event.name.toLowerCase().includes(search.toLowerCase())
+			event.event.name?.toLowerCase().includes(search.toLowerCase())
 		);
 	});
 </script>
