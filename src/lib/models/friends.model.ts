@@ -1,8 +1,3 @@
-export interface GetAllFriends {
-	data: Friends[];
-	status: number;
-}
-
 export interface Friends {
 	id: string;
 	createdAt: Date;
