@@ -1,18 +1,19 @@
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
-import type { Friends, GetAllFriends } from '$lib/models/friends.model';
+import type { Friends } from '$lib/models/friends.model';
+import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
+import type { ApiResponse } from '$lib/models/response.model';
 
 export default class FriendsApi extends Api {
+
 	private authUrl = `${env.API_URL}api/friends/`;
 
 	/**
-	 * Get all User Friends
-	 *
-	 * @return {Promise<number>} A promise that resolves to the count of friend invitations.
-	 * @throws {Error} If there is an error retrieving the count of friend invitations.
+	 * Retrieves the list of friends for the authenticated user.
+	 * @returns {Promise<ApiResponse<Friends[]>>} A promise that resolves to the API response containing an array of friends.
+	 * @throws Will throw an error if the request fails.
 	 */
-	getFriends = async (): Promise<Friends[]> => {
-		// - Try Validation
+	async getFriends(): Promise<ApiResponse<Friends[]>> {
 		try {
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
@@ -22,18 +23,10 @@ export default class FriendsApi extends Api {
 				credentials: 'include'
 			});
 
-			const data: GetAllFriends | { error: string; status: number } = await response.json();
-
-			if ('error' in data) {
-
-				throw new Error(data.error);
-			}
-
-			// Return data
-			return data.data;
+			return await response.json() as ApiResponse<Friends[]>;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Error Get Friends By EMAIL : ' + error);
+			catchErrorRequest(error, 'FriendsApi.getFriends');
+			throw error;
 		}
-	};
+	}
 }
