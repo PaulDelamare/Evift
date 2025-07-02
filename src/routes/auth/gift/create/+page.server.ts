@@ -75,7 +75,7 @@ export const actions: Actions = {
 		const response = await api.createList({ name, gifts: giftsJson });
 
 		if ('error' in response) {
-			errors.error = response.error;
+			errors.error = response.error.error;
 			return { status: 401, errors };
 		}
 
