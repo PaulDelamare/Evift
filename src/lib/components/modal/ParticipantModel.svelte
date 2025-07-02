@@ -27,6 +27,7 @@
 		'card p-4 py-12 w-[75%] max-h-[95svh] shadow-xl space-y-4 column justify-center bg-surface-500 rounded-2xl relative mini-tablet:w-11/12 z-0  overflow-hidden';
 
 	const participants: Participant[] = $page.data.participants;
+	console.log(participants)
 	const roles: Role[] = $page.data.roles;
 	const userRole: Role = $page.data.roleUser.role;
 	const user: User = $page.data.roleUser.user;
