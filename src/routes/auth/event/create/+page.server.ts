@@ -5,13 +5,15 @@ import type { PageServerLoad } from './$types';
 import * as yup from 'yup';
 import EventApi from '$lib/server/event.server';
 import InvitationApi from '$lib/server/invitation.server';
+import { executeOrThrow } from '$lib/functions/utils/execRequest/execRequest';
 
 export const load = (async ({ fetch }) => {
+
 	const api = new FriendsApi(fetch);
-	const friends = await api.getFriends();
+	const friends = await executeOrThrow(api.getFriends());
 
 	return {
-		friends
+		friends : friends.data,
 	};
 }) satisfies PageServerLoad;
 
@@ -121,7 +123,7 @@ export const actions: Actions = {
 		const res = await api.createEvent(formData);
 
 		if ('error' in res) {
-			errors.error = res.error;
+			errors.error = res.error.error;
 			return { status: 400, errors };
 		}
 
@@ -130,7 +132,7 @@ export const actions: Actions = {
 		const resInvitation = await invitationApi.eventInvitation(res.data.eventId, arrayInviteList);
 
 		if ('error' in resInvitation) {
-			errors.error = resInvitation.error;
+			errors.error = resInvitation.error.error;
 			return { status: 400, errors };
 		}
 
