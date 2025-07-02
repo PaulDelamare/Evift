@@ -49,11 +49,12 @@ export const actions: Actions = {
 
 		// Instance Invitation in api
 		const api = new EventApi(fetch);
+
 		// Call responseInvitation
 		const res = await api.changeRoleParticipant(id_event, id_user, id_role);
 
 		if ('error' in res) {
-			return { status: 400, errors: res.error };
+			return { status: 400, errors: res.error.error };
 		}
 
 		return { status: 200, success: true };
