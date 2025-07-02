@@ -1,3 +1,5 @@
+import type { Event } from "$lib/models/event.model";
+
 export const fakeUserEventRelation = {
      id: 'uer_12345',
      id_event: 'evt_67890',
@@ -34,5 +36,5 @@ export const fakeUserEventRelation = {
                updatedAt: new Date('2024-12-05T12:45:00Z')
           },
           time: '09:00'
-     }
-};
+     } 
+} as unknown as Event;
