@@ -1,5 +1,6 @@
 // ! IMPORTS
 import { env } from '$env/dynamic/private';
+import { executeOrThrow } from '$lib/functions/utils/execRequest/execRequest';
 import AuthApi from '$lib/server/auth.server';
 import InvitationApi from '$lib/server/invitation.server';
 import type { Handle, HandleFetch } from '@sveltejs/kit';
@@ -32,10 +33,10 @@ export const handle = (async ({ event, resolve }) => {
 
 	} else {
 		const notifApi = new InvitationApi(event.fetch);
-		const notifications = await notifApi.getCountFriendInvitation();
+		const notifications = (await executeOrThrow(notifApi.getCountFriendInvitation())).data;
 		event.locals.notificationFriends = notifications.countFriendsInvitation;
 		event.locals.notificationEvents = notifications.countEventInvitation;
-		event.locals.user = userInfo;
+		event.locals.user = userInfo.data;
 	}
 
 	const response = await resolve(event);
