@@ -1,47 +1,45 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import FileInput from '$lib/components/form/FileInput.svelte';
-	import { getToastStore, type ToastSettings, type ToastStore } from '@skeletonlabs/skeleton';
 	import { goto } from '$app/navigation';
-	import type { ActionData } from '../../../../routes/auth/event/create/$types';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Submit from '$lib/components/form/Submit.svelte';
 	import type { Friends } from '$lib/models/friends.model';
 	import InviteFriends from './InviteFriends.svelte';
+	import { superForm } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { createEventSchema } from '$lib/validationSchema/event.schema';
+	import toast from 'svelte-french-toast';
 
 	export let action: string;
-
-	const toastStore: ToastStore = getToastStore();
-
-	let imageLogo: HTMLImageElement;
-
-	let resultLogo: string;
-
-	let name: string;
-	let description: string;
 
 	let submitted = false;
 	let inviteList: string[] = [];
 
 	$: inviteListString = inviteList.join(',');
 
-	$: form = $page.form as ActionData;
-	const friends: Friends[] = $page.data.friends;
+	const {
+		form: formEvent,
+		errors,
+		message,
+		enhance
+	} = superForm(page.data.form, {
+		validators: zodClient(createEventSchema),
+		validationMethod: 'oninput'
+	});
 
-	$: if (form) {
+	$: if ($message) {
 		submitted = false;
 	}
 
-	$: if (form?.success) {
-		const t: ToastSettings = {
-			message: 'La marque a bien été enregistrée',
-			background: 'bg-success-500',
-			classes: 'text-surface-500'
-		};
-		toastStore.trigger(t);
-
+	$: if ($message && $message.success) {
+		toast.success("L'événement a bien été créé");
 		goto('/auth/event');
 	}
+
+	$: if ($message && $message.error) {
+		toast.error($message.error);
+	}
+
+	const friends: Friends[] = page.data.friends;
 
 	let search = '';
 
@@ -70,38 +68,33 @@
 <section class="flex flex-col gap-8">
 	<form
 		on:submit={() => (submitted = true)}
-		use:enhance={() => {
-			return async ({ update }) => {
-				update({ reset: false });
-			};
-		}}
 		method="post"
 		{action}
 		class=" w-full mr-auto flex flex-col px-4 gap-8 wrap"
-		enctype="multipart/form-data"
+		use:enhance
 	>
 		<div class="w-full">
 			<input
-				bind:value={name}
+				bind:value={$formEvent.name}
 				class="bg-surface-400 border-none rounded shadow-md w-full"
 				name="name"
 				placeholder="Nom de l'évenement"
 			/>
 
-			{#if form?.errors?.name}
-				<p class="errorMessage">{form?.errors?.name}</p>
+			{#if $errors?.name}
+				<p class="errorMessage">{$errors?.name}</p>
 			{/if}
 		</div>
 
 		<div class="w-full">
 			<textarea
-				bind:value={description}
+				bind:value={$formEvent.description}
 				class="bg-surface-400 border-none rounded shadow-md max-h-56 min-h-10 w-full"
 				placeholder="Description"
 				name="description"
 			></textarea>
-			{#if form?.errors?.description}
-				<p class="errorMessage">{form?.errors?.description}</p>
+			{#if $errors?.description}
+				<p class="errorMessage">{$errors?.description}</p>
 			{/if}
 		</div>
 
@@ -114,10 +107,11 @@
 					placeholder="date"
 					name="date"
 					min={now}
+					bind:value={$formEvent.date}
 				/>
 			</label>
-			{#if form?.errors?.date}
-				<p class="errorMessage">{form?.errors?.date}</p>
+			{#if $errors?.date}
+				<p class="errorMessage">{$errors?.date}</p>
 			{/if}
 		</div>
 		<div class="w-full">
@@ -128,10 +122,11 @@
 					class="bg-surface-400 border-none rounded shadow-md max-h-56 min-h-10 w-full"
 					placeholder="time"
 					name="time"
+					bind:value={$formEvent.time}
 				/>
 			</label>
-			{#if form?.errors?.time}
-				<p class="errorMessage">{form?.errors?.time}</p>
+			{#if $errors?.time}
+				<p class="errorMessage">{$errors?.time}</p>
 			{/if}
 		</div>
 		<div class="w-full">
@@ -140,23 +135,12 @@
 				class="bg-surface-400 border-none rounded shadow-md max-h-56 min-h-10 w-full"
 				placeholder="Adresse"
 				name="address"
+				bind:value={$formEvent.address}
 			/>
-			{#if form?.errors?.address}
-				<p class="errorMessage">{form?.errors?.address}</p>
+			{#if $errors?.address}
+				<p class="errorMessage">{$errors?.address}</p>
 			{/if}
 		</div>
-<!-- 
-		<div class="flex gap-8 w-full items-end mini-tablet:flex-col mini-tablet:items-center">
-			<FileInput
-				label="Image pour illustrer l'événement (optionnel)"
-				bind:image={imageLogo}
-				bind:result={resultLogo}
-				name="image"
-			/>
-			{#if form?.errors?.image}
-				<p class="errorMessage">{form?.errors?.image}</p>
-			{/if}
-		</div> -->
 
 		<div class="column gap-4 items-start">
 			<input
@@ -173,16 +157,16 @@
 					<InviteFriends bind:inviteList {friend} friends />
 				{/each}
 			</ul>
-			{#if form?.errors?.inviteList}
-				<p class="errorMessage">{form?.errors?.inviteList}</p>
+			{#if $errors?.inviteList}
+				<p class="errorMessage">{$errors?.inviteList}</p>
 			{/if}
 			<input type="hidden" value={inviteListString} name="inviteList" />
 		</div>
 		<div>
 			<div class="max-w-[300px] mx-auto">
 				<Submit {submitted} textSubmit="Créer" />
-				{#if form?.errors?.error}
-					<p class="errorMessage">{form?.errors?.error}</p>
+				{#if $errors?.error}
+					<p class="errorMessage">{$errors?.error}</p>
 				{/if}
 			</div>
 		</div>

@@ -11,7 +11,7 @@
 	export let data: PageData;
 
 	let search = '';
-	let events = data.allEvent.data;
+	let events = data.allEvent;
 	const imgUrl = data.imgUrl;
 	const user = data.user;
 
@@ -42,13 +42,12 @@
 			(event.event.user.firstname.toLowerCase().includes(searchLastName) &&
 				event.event.user.lastname.toLowerCase().includes(searchFirstName)) ||
 			event.event.user.email.toLowerCase().includes(search.toLowerCase()) ||
-			event.event.name.toLowerCase().includes(search.toLowerCase())
+			event.event.name?.toLowerCase().includes(search.toLowerCase())
 		);
 	});
 </script>
 
 <PageLayout padding="py-12" gap="gap-12">
-	<!-- Display event and friends button -->
 	<div class="wrap px-4 flex w-full gap-8 justify-between mx-auto mobile-large:flex-col">
 		<input
 			bind:value={search}
@@ -57,6 +56,7 @@
 			placeholder="Rechercher..."
 		/>
 		<a
+			id="createEventButton"
 			href="/auth/event/create"
 			class="mobile-large:justify-center px-4 py-2 rounded-xl bg-gradient text-surface-500 flex gap-2 items-center custom-transition hover:scale-[.97] active:scale-90"
 		>
@@ -66,19 +66,18 @@
 	</div>
 
 	{#if filteredEvents.length > 0}
-		<!-- Display event or friends invitation -->
 		<section class="wrap px-4 flex flex-col gap-12">
-			<ul class="flex flex-col gap-12">
+			<ul
+				class="grid gap-12 grid-cols-[repeat(auto-fit,minmax(400px,1fr))] mobile-large:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]"
+			>
 				{#each filteredEvents as event}
-					<Event event={event.event} {imgUrl} user={event.event.user}>
+					<Event event={event.event} user={event.event.user}>
 						<div
 							class="shadow-md w-full !max-w-[153px] mini-tablet:!max-w-[100px] group bg-gradient p-[2px] active:scale-95 custom-transition !duration-300 rounded-xl"
 						>
-							<!-- Second div for animation -->
 							<div
 								class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] group-hover:bg-surface-500 custom-transition rounded-[10px] !duration-300"
 							>
-								<!-- Submit button -->
 								<button
 									class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] 0 nav rounded-xl nav group-hover:text-gradient text-surface-500 custom-transition !duration-300 between justify-center gap-8"
 									type="button"

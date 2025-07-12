@@ -1,52 +1,54 @@
-// ! IMPORTS
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
-import type { DataUser, User } from '$lib/models/user.model';
+import type { User } from '$lib/models/user.model';
 import type { ApiResponse } from '$lib/models/response.model';
+import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
 
-// ! Class
 export default class UserApi extends Api {
+
 	private authUrl = `${env.API_URL}api/user/`;
 
 	/**
-	 * Get user by email
-	 *
-	 * @return {Promise<number>} A promise that resolves to the count of friend invitations.
-	 * @throws {Error} If there is an error retrieving the count of friend invitations.
+	 * Fetches a user by their email address.
+	 * @param email - The email address of the user to retrieve.
+	 * @returns A promise resolving to an ApiResponse containing the User data.
+	 * @throws Will throw an error if the request fails.
 	 */
-	getUserByEmail = async (email: string): Promise<User> => {
+	getUserByEmail = async (body: { email: string }): Promise<ApiResponse<User>> => {
 		try {
-			const response = await this.fetch(`${this.authUrl}findUser/${email}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				credentials: 'include'
-			});
+			const response = await this.fetch(
+				`${this.authUrl}findUser/${body.email}`,
+				{
+					method: 'GET',
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include'
+				}
+			);
 
-			const data: DataUser = await response.json();
-			return data.data;
-
+			return await response.json() as ApiResponse<User>;
 		} catch (error) {
-
-			throw new Error('Error Get Count : ' + error);
+			catchErrorRequest(error, 'UserApi.getUserByEmail');
+			throw error;
 		}
 	};
 
-	completeFirstLogin = async () => {
+	/**
+	 * Marks the user's first login as complete.
+	 * Sends a PATCH request to update the user's first login status.
+	 * @returns A promise resolving to an ApiResponse indicating the result.
+	 * @throws Will throw an error if the request fails.
+	 */
+	completeFirstLogin = async (): Promise<ApiResponse> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}firstLogin`, {
 				method: 'PATCH',
 				credentials: 'include'
 			});
 
-
-			const data: ApiResponse = await response.json();
-			return { ...data };
-
+			return response.json() as Promise<ApiResponse>;
 		} catch (error) {
-
-			throw new Error('Error Complete FirstLogin : ' + error);
+			catchErrorRequest(error, 'UserApi.completeFirstLogin');
+			throw error;
 		}
 	}
 }

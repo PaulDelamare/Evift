@@ -1,148 +1,158 @@
-// ! IMPORTS
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
-import type { GetCountFriendInvitation, InvitationData } from '$lib/models/invitation.model';
+import type { Invitation } from '$lib/models/invitation.model';
 import type { EventInvitation } from '$lib/models/event.model';
+import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
+import type { ApiResponse } from '$lib/models/response.model';
 
-// ! Class
 export default class InvitationApi extends Api {
+
 	private authUrl = `${env.API_URL}api/invitation/`;
 
 	/**
-	 * Retrieves the count of friend invitations from the server.
+	 * Retrieves the count of friend and event invitations for the current user.
 	 *
-	 * @return {Promise<number>} A promise that resolves to the count of friend invitations.
-	 * @throws {Error} If there is an error retrieving the count of friend invitations.
+	 * Makes a GET request to the server to fetch the number of pending friend and event invitations.
+	 *
+	 * @returns {Promise<ApiResponse<{ countFriendsInvitation: number; countEventInvitation: number }>>}
+	 *   A promise that resolves to an ApiResponse containing the counts.
+	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
 	 */
-	getCountFriendInvitation = async (): Promise<{
+	getCountFriendInvitation = async (): Promise<ApiResponse<{
 		countFriendsInvitation: number;
 		countEventInvitation: number;
-	}> => {
-
+	}>> => {
 		try {
-
 			const response = await this.fetch(`${this.authUrl}count`, {
 				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include'
 			});
-
-			const data: GetCountFriendInvitation = await response.json();
-			return data.data;
-
+			return await response.json();
 		} catch (error) {
-
-			throw new Error('Error Get Count : ' + error);
+			catchErrorRequest(error, 'InvitationApi.getCountFriendInvitation');
+			throw error;
 		}
 	};
 
 	/**
-	 * Retrieves all invitations for the current user.
+	 * Fetches all invitations for the current user.
 	 *
-	 * This function makes a GET request to the server to fetch all invitations.
-	 * It returns a Promise that resolves to an object of type `GetCountFriendInvitation`.
+	 * Makes a GET request to retrieve a list of invitations.
 	 *
-	 * @returns {Promise<GetCountFriendInvitation>} A Promise that resolves to the fetched invitations.
-	 * @throws {Error} If there's an error during the request, it throws an Error with the error message.
+	 * @returns {Promise<ApiResponse<Invitation[]>>}
+	 *   A promise that resolves to an ApiResponse containing an array of Invitation objects.
+	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
 	 */
-	getInvitations = async (): Promise<InvitationData> => {
-
+	getInvitations = async (): Promise<ApiResponse<Invitation[]>> => {
 		try {
-
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include'
 			});
-
-			const data: InvitationData = await response.json();
-			return data;
+			return await response.json();
 		} catch (error) {
-
-			throw new Error('Error Get Invitation : ' + error);
+			catchErrorRequest(error, 'InvitationApi.getInvitations');
+			throw error;
 		}
 	};
 
+	/**
+	 * Responds to a friend invitation by accepting or rejecting it.
+	 *
+	 * Sends a POST request to the server to accept or decline a friend invitation.
+	 *
+	 * @param {string} id - The ID of the invitation to respond to.
+	 * @param {boolean} accept - Whether to accept (true) or reject (false) the invitation.
+	 * @returns {Promise<ApiResponse>} A promise that resolves to the server's response.
+	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
+	 */
 	responseInvitation = async (
-		id: string,
-		accept: boolean
-	): Promise<{ status: number; message?: string; error?: string }> => {
-
+		body: { id: string; response: boolean }
+	): Promise<ApiResponse> => {
 		try {
-
 			const response = await this.fetch(`${this.authUrl}accept`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ id, response: accept })
+				body: JSON.stringify(body)
 			});
-
-			const data: GetCountFriendInvitation = await response.json();
-			return data;
+			return await response.json();
 		} catch (error) {
-
-			throw new Error('Error Response Invitation : ' + error);
+			catchErrorRequest(error, 'InvitationApi.responseInvitation');
+			throw error;
 		}
 	};
 
+	/**
+	 * Sends a friend invitation to a user by their ID.
+	 *
+	 * Makes a POST request to the server to send a friend invitation.
+	 *
+	 * @param {string} id - The ID of the user to invite.
+	 * @returns {Promise<ApiResponse>} A promise that resolves to the server's response.
+	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
+	 */
 	sendFriendsInvitation = async (
-		id: string
-	): Promise<{ status: number; error: string } | { status: number; message: string }> => {
-
+		body: { id: string }
+	): Promise<ApiResponse> => {
 		try {
 
 			const response = await this.fetch(`${this.authUrl}request`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ id })
+				body: JSON.stringify(body)
 			});
-
-			const data: { status: number; error: string } | { status: number; message: string } = await response.json();
-			return data;
+			return await response.json();
 
 		} catch (error) {
-
-			throw new Error('Error in Friends Invitation : ' + error);
+			catchErrorRequest(error, 'InvitationApi.sendFriendsInvitation');
+			throw error;
 		}
 	};
 
+	/**
+	 * Sends event invitations to a list of users for a specific event.
+	 *
+	 * Makes a POST request to the server to invite multiple users to an event.
+	 *
+	 * @param {string} eventId - The ID of the event to which users are being invited.
+	 * @param {string[]} invitationIds - An array of user IDs to invite.
+	 * @returns {Promise<ApiResponse>} A promise that resolves to the server's response.
+	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
+	 */
 	eventInvitation = async (
 		eventId: string,
-		invitationId: string[]
-	): Promise<{ status: number; error: string } | { status: number; message: string }> => {
-
+		invitationIds: string[]
+	): Promise<ApiResponse> => {
 		try {
-
 			const response = await this.fetch(`${this.authUrl}requestEvent`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ eventId, invitationId })
+				body: JSON.stringify({ eventId, invitationId: invitationIds })
 			});
-
-			const data: { status: number; error: string } | { status: number; message: string } = await response.json();
-			return data;
-
+			return await response.json();
 		} catch (error) {
-
-			throw new Error('Error in Event Invitation : ' + error);
+			catchErrorRequest(error, 'InvitationApi.eventInvitation');
+			throw error;
 		}
 	};
 
-	getEventInvitation = async (): Promise<EventInvitation> => {
-
+	/**
+	 * Retrieves an event invitation from the server.
+	 *
+	 * Sends a GET request to the `eventInvitation` endpoint using the configured authentication URL.
+	 * The request includes credentials and expects a JSON response containing the event invitation data.
+	 *
+	 * @returns A promise that resolves to an {@link ApiResponse} containing an {@link EventInvitation}.
+	 * @throws Will rethrow any error encountered during the fetch operation after logging it with {@link catchErrorRequest}.
+	 */
+	getEventInvitation = async (): Promise<ApiResponse<EventInvitation[]>> => {
 		try {
+
 			const response = await this.fetch(`${this.authUrl}eventInvitation`, {
 				method: 'GET',
 				headers: {
@@ -151,41 +161,44 @@ export default class InvitationApi extends Api {
 				credentials: 'include'
 			});
 
-			const data: EventInvitation | { status: number; error: string } = await response.json();
-
-			if ('error' in data) {
-				throw new Error(data.error);
-			}
+			const data: ApiResponse<EventInvitation[]> = await response.json();
 			return data;
 
 		} catch (error) {
-
-			throw new Error('Error in Event Invitation : ' + error);
+			catchErrorRequest(error, 'InvitationApi.getEventInvitation');
+			throw error;
 		}
 	};
 
+	/**
+	 * Responds to an event invitation by accepting or rejecting it.
+	 *
+	 * Sends a POST request to the server to accept or decline an event invitation.
+	 *
+	 * @param invitationId - The ID of the event invitation to respond to.
+	 * @param  accept - Whether to accept (true) or reject (false) the invitation.
+	 * @returns {Promise<ApiResponse>} A promise that resolves to the server's response.
+	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
+	 */
 	responseEventInvitation = async (
-		invitationId: string,
-		accept: boolean
-	): Promise<{ status: number; message?: string; error?: string }> => {
-
+		body: {
+			id: string,
+			response: boolean
+		}
+	): Promise<ApiResponse> => {
 		try {
 
 			const response = await this.fetch(`${this.authUrl}responseEventInvitation`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ invitationId, response: accept })
+				body: JSON.stringify(body)
 			});
-
-			const data: GetCountFriendInvitation = await response.json();
-			return data;
+			return await response.json();
 
 		} catch (error) {
-
-			throw new Error('Error Response Invitation : ' + error);
+			catchErrorRequest(error, 'InvitationApi.responseEventInvitation');
+			throw error;
 		}
 	};
 }

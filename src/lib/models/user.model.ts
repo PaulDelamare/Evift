@@ -1,12 +1,3 @@
-export interface LoginResponse {
-	accessToken: string;
-	data: {
-		user: User;
-		accessToken: string;
-	};
-	status: number;
-}
-
 export interface User {
 	id: string;
 	firstname: string;
@@ -16,11 +7,6 @@ export interface User {
 	updatedAt?: Date;
 	error?: string;
 	firstLogin?: boolean;
-}
-
-export interface DataUser {
-	data: User;
-	status: number;
 }
 
 export interface PostUser {

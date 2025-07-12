@@ -1,52 +1,60 @@
 <script lang="ts">
-	import type { ActionData } from '../../../../../routes/evift/login/$types';
+	import { superForm } from 'sveltekit-superforms';
 	import FormLoginRegister from '../FormLoginRegister.svelte';
+	import { page } from '$app/state';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { loginSchema } from '$lib/validationSchema/auth.schema';
+	import toast from 'svelte-french-toast';
 
-	// Import Variable
-	// For know if it's register or login activated
 	export let loginActivated = true;
-	// Pass email to register if user do mistake
 	export let email = '';
-	// Function for stock email in variable do on on:input email
 	export let handleEmailChange: (event: Event) => void;
-
-	// Form
-	export let form: ActionData;
-
-	// Import Key
 	export let PUBLIC_CAPTCHA_KEY: string;
+
+	const { errors, message } = superForm(page.data.formLogin, {
+		validators: zodClient(loginSchema)
+	});
+
+	$: if ($message && $message.error) {
+		toast.error($message.error);
+		submitted = false;
+	}
+
+	let submitted = false;
 </script>
 
-<!-- If login Activated, display form Login -->
 {#if loginActivated}
-	<!-- Send information to form -->
-	<!-- Send Title/Action/Inputs/onSubmit Function/textSubmit/forgotPassword -->
 	<FormLoginRegister
+		bind:submitted
 		{PUBLIC_CAPTCHA_KEY}
-		{form}
 		title="Connexion"
 		action="?/login"
-		inputs={// Display Inputs
-		[
-			// Email Input
+		inputs={[
 			{
 				type: 'text',
 				label: 'Email',
 				name: 'email',
 				value: email,
 				onInput: handleEmailChange,
-				error: form?.errors?.emailLogin
+				error: Array.isArray($errors?.email)
+					? $errors.email[0]
+					: typeof $errors?.email === 'string'
+						? $errors.email
+						: undefined
 			},
-			// Password Input
 			{
 				type: 'password',
 				label: 'Mot de passe',
 				name: 'password',
 				value: '',
-				error: form?.errors?.passwordLogin
+				error: Array.isArray($errors?.password)
+					? $errors.password[0]
+					: typeof $errors?.password === 'string'
+						? $errors.password
+						: undefined
 			}
 		]}
-		onSubmit={() => {}}
+		onSubmit={async () => {}}
 		textSubmit="Connexion"
 		forgotPassword
 	/>

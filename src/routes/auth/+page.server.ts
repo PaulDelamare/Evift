@@ -19,7 +19,6 @@ export const actions: Actions = {
             };
         }
 
-        console.log('herrer')
         return {
             firstLogin: true
         }
