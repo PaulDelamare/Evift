@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 	import FriendsInvitationList from '$lib/components/auth/invitation/FriendsInvitationList.svelte';
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
@@ -11,16 +11,37 @@
 		type ModalStore,
 		type PaginationSettings
 	} from '@skeletonlabs/skeleton';
+	import { superForm } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { uuidSchema } from '$lib/validationSchema/base.schema';
+	import toast from 'svelte-french-toast';
+	import { fakeFriends } from '$lib/driver/fakeFriends';
+	import { openAddFriend } from '$lib/driver/storeDriver';
 
 	export let data: PageData;
-	export let form: ActionData;
 
-	$: console.log(form);
-
-	const friends = data.friends;
+	const user = data.user;
+	let friends = data.friends;
 	const modalStore: ModalStore = getModalStore();
 
+	const { message } = superForm(data.formUuid, {
+		validators: zodClient(uuidSchema),
+		validationMethod: 'oninput'
+	});
+
+	$: if ($message && $message.success) {
+		toast.success($message.message);
+	}
+
+	$: if ($message && $message.error) {
+		toast.error($message.error);
+	}
+
 	let search = '';
+
+	if (user.firstLogin) {
+		friends = [fakeFriends];
+	}
 
 	let paginationSettings = {
 		page: 0,
@@ -47,6 +68,10 @@
 		paginationSettings.page * paginationSettings.limit,
 		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
 	);
+
+	$: if ($openAddFriend) {
+		renderModal(modalStore, 'FindUserByEmail', 'Contact', 'Contactez nous');
+	}
 </script>
 
 <PageLayout padding="py-12" gap="gap-12">
@@ -59,6 +84,7 @@
 			placeholder="Rechercher..."
 		/>
 		<button
+			id="addFriendButton"
 			on:click={() => renderModal(modalStore, 'FindUserByEmail', 'Contact', 'Contactez nous')}
 			class="mobile-large:justify-center px-4 py-2 rounded-xl bg-gradient text-surface-500 flex gap-2 items-center custom-transition hover:scale-[.97] active:scale-90"
 		>
@@ -66,7 +92,7 @@
 			Ajouter
 		</button>
 	</div>
-	<!-- Display event or friends invitation -->
+
 	<section class="wrap px-4 flex flex-col gap-8">
 		<FriendsInvitationList
 			friends
