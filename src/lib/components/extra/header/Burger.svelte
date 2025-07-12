@@ -1,20 +1,23 @@
 <script lang="ts">
-	// Imports
 	import { quintOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import Navigation from '../../layout/Navigation.svelte';
+	import { openBurger } from '$lib/driver/storeDriver';
 
-	// Import variable
 	export let divClass = '';
 
-	// Variables
 	let burger = false;
+
+	$: if ($openBurger) {
+		burger = true;
+	} else {
+		burger = false;
+	}
 </script>
 
-<!-- Burger Bouton -->
-<div class="absolute right-10 top-2/4 -translate-y-1/4 z-50 {divClass}">
+<div id="burgerButton" class="absolute right-10 top-2/4 -translate-y-1/4 z-50 {divClass}">
 	<div id="menuToggle ">
-		<!-- Define Hidden input for know if it check -->
+
 		<input
 			on:change={() => {
 				burger = !burger;
@@ -25,20 +28,16 @@
 			type="checkbox"
 		/>
 
-		<!-- Burger Icon -->
 		<label
 			class="toggle relative w-10 cursor-pointer m-auto block h-[calc(4px_*_3_+_11px_*_2)]"
 			for="checkbox"
 		>
-			<!-- For Top Bar -->
 			<div
 				class="bar bg-secondaryGradient bar--top bottom-[calc(50%_+_11px_+_4px/_2)] transition-[bottom,margin,transform] delay-[calc(0s_+0.35s),0s,0s]"
 			></div>
-			<!-- For Middle Bar -->
 			<div
 				class="bar bg-secondaryGradient bar--middle top-[calc(50%_-_4px/_2)] transition-[top,opacity] duration-[0.35s,0s] delay-[calc(0s_+_0.35s_*_1.3),calc(0s_+_0.35s_*_1.3)]"
 			></div>
-			<!-- For Bottom Bar -->
 			<div
 				class="bar bg-secondaryGradient bar--bottom top-[calc(50%_+_11px_+_4px/_2)] transition-[top,transform] delay-0"
 			></div>
@@ -48,11 +47,13 @@
 
 {#if burger}
 	<div
+		id="burgerMenu"
 		in:fade={{ duration: 300, easing: quintOut }}
 		out:fade={{ duration: 300, easing: quintOut }}
 		class="fixed top-0 left-0 right-0 bottom-0 bg-gradient z-40"
 	>
 		<Navigation
+			responsive
 			on:changePage={() => (burger = false)}
 			ulClass="column justify-center h-screen"
 			navClass="w-screen h-screen"
@@ -64,12 +65,10 @@
 {/if}
 
 <style lang="postcss">
-	/* Define global class */
 	.bar {
 		@apply absolute left-0 right-0 h-1 rounded-[calc(4px_/_2)] bg-secondary-500 text-inherit opacity-100 transition-[none_0.35s_cubic-bezier(.5,-0.35,.35,1.5)_0s];
 	}
 
-	/***** Collapse Animation *****/
 	#checkbox:checked + .toggle .bar {
 		@apply !bg-transparent bg-[linear-gradient(rgba(255,255,255,1)_0%,_rgba(255,255,255,1)_100%)] transition-all duration-300;
 	}
