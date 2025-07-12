@@ -11,7 +11,6 @@
 	import toast from 'svelte-french-toast';
 	import { invalidateAll } from '$app/navigation';
 	import { fakeEventInvitations } from '$lib/driver/fakeInviteEvent';
-	import { fi } from 'zod/v4/locales';
 	import { driver } from '$lib/driver/driver';
 	import { fakeUserInvitation } from '$lib/driver/fakeInvitation';
 	import { friendPage } from '$lib/driver/storeDriver';
