@@ -20,12 +20,12 @@ export interface EventDetail {
 	description: string;
 	address: string;
 	date: Date;
-	img: string;
 	userId: string;
 	createdAt: Date;
 	updatedAt: Date;
 	user: User;
 	time: string;
+	idDriver?: string;
 }
 
 export interface EventInvitation {
@@ -34,5 +34,5 @@ export interface EventInvitation {
 	id_user: string;
 	id_organizer: string;
 	idOrganizer: User;
-	event: Event;
+	event: EventDetail;
 }
