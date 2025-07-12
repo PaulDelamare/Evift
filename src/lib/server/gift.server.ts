@@ -15,7 +15,8 @@ export default class GiftApi extends Api {
 	 */
 	createList = async (body: {
 		name: string;
-		gifts: { name: string; quantity: number; url: string }[];
+		gifts: { name: string; quantity: number; url?: string | null }[];
+
 	}): Promise<ApiResponse> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}create`, {
@@ -75,15 +76,17 @@ export default class GiftApi extends Api {
 	 * @returns A promise resolving to the API response.
 	 */
 	addListEvent = async (
-		idEvent: string,
-		idList: string
+		body: {
+			idEvent: string,
+			idList: string
+		}
 	): Promise<ApiResponse> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}listEvent`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ idEvent, idList })
+				body: JSON.stringify(body)
 			});
 			return await response.json() as ApiResponse;
 		} catch (error) {
@@ -99,8 +102,10 @@ export default class GiftApi extends Api {
 	 * @returns A promise resolving to the API response.
 	 */
 	deleteListEvent = async (
-		idEvent: string,
-		idList: string
+		body: {
+			idEvent: string,
+			idList: string
+		}
 	): Promise<ApiResponse> => {
 		try {
 
@@ -108,7 +113,7 @@ export default class GiftApi extends Api {
 				method: 'DELETE',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ idEvent, idList })
+				body: JSON.stringify(body)
 			});
 			return await response.json() as ApiResponse;
 
@@ -147,16 +152,18 @@ export default class GiftApi extends Api {
 	 * @returns A promise resolving to the API response.
 	 */
 	checkGift = async (
-		idEvent: string,
-		idGift: string,
-		checked: boolean
+		body: {
+			eventId: string,
+			giftId: string,
+			taken: boolean
+		}
 	): Promise<ApiResponse> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}checkGift`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ idEvent, idGift, checked })
+				body: JSON.stringify(body)
 			});
 			return await response.json() as ApiResponse;
 		} catch (error) {
