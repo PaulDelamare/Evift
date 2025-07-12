@@ -1,79 +1,107 @@
 <script lang="ts">
-	import type { ActionData } from '../../../../../routes/evift/login/$types';
+	import { superForm } from 'sveltekit-superforms';
 	import FormRegister from '../FormLoginRegister.svelte';
+	import { page } from '$app/state';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { registerSchema } from '$lib/validationSchema/auth.schema';
+	import toast from 'svelte-french-toast';
 
-	// Import Variable
-	// For know if it's register or login activated
 	export let loginActivated = false;
-	// Pass email to login if user do mistake
 	export let email = '';
-	// Function for stock email in variable do on on:input email
 	export let handleEmailChange: (event: Event) => void;
 	export let handleActivate = () => {};
 	export let PUBLIC_CAPTCHA_KEY: string;
 
-	export let form: ActionData;
+	const { errors, message } = superForm(page.data.formRegister, {
+		validators: zodClient(registerSchema)
+	});
 
+	$: if ($message && $message.success) {
+
+		toast.success($message.message);
+		submitted = false;
+
+		handleActivate();
+	}
+
+	$: if ($message && $message.error) {
+		toast.error($message.error);
+		submitted = false;
+	}
+
+	let submitted = false;
 </script>
 
-<!-- If login not Activated, display form Register -->
 {#if !loginActivated}
-	<!-- Send information to form -->
-	<!-- Send Title/Action/Inputs/onSubmit Function/textSubmit -->
 	<FormRegister
+		bind:submitted
 		{PUBLIC_CAPTCHA_KEY}
-		{handleActivate}
-		{form}
 		title="Inscription"
 		action="?/register"
 		inputs={[
-			// Display Inputs
 			{
-				// Group input for display it in row
 				type: 'group',
 				inputs: [
-					// firstName Input
 					{
 						type: 'text',
 						label: 'Prénom*',
-						name: 'firstName',
+						name: 'firstname',
 						value: '',
-						error: form?.errors?.firstname
+						error: Array.isArray($errors?.firstname)
+							? $errors.firstname[0]
+							: typeof $errors?.firstname === 'string'
+								? $errors.firstname
+								: undefined
 					},
-					// Lastname Input
 					{
 						type: 'text',
 						label: 'Nom*',
-						name: 'name',
+						name: 'lastname',
 						value: '',
-						error: form?.errors?.lastname
+						error: Array.isArray($errors?.lastname)
+							? $errors.lastname[0]
+							: typeof $errors?.lastname === 'string'
+								? $errors.lastname
+								: undefined
 					}
 				]
 			},
-			// Email Input
+
 			{
 				type: 'text',
 				label: 'Email*',
 				name: 'email',
 				value: email,
 				onInput: handleEmailChange,
-				error: form?.errors?.emailRegister
+				error: Array.isArray($errors?.email)
+					? $errors.email[0]
+					: typeof $errors?.email === 'string'
+						? $errors.email
+						: undefined
 			},
-			// Password Input
+
 			{
 				type: 'password',
 				label: 'Mot de passe*',
 				name: 'password',
 				value: '',
-				error: form?.errors?.passwordRegister
+				error: Array.isArray($errors?.password)
+					? $errors.password[0]
+					: typeof $errors?.password === 'string'
+						? $errors.password
+						: undefined
 			},
-			// Password Confirmation Input
+
 			{
 				type: 'password',
 				label: 'Confirmation mot de passe*',
-				name: 'passwordConfirmation',
+				name: 'passwordConfirm',
 				value: '',
-				error: form?.errors?.passwordConfirmRegister
+				error: Array.isArray($errors?.passwordConfirm)
+					? $errors.passwordConfirm[0]
+					: typeof $errors?.passwordConfirm === 'string'
+						? $errors.passwordConfirm
+						: undefined
 			}
 		]}
 		onSubmit={() => {}}
