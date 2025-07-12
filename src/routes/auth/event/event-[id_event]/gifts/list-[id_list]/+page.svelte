@@ -2,12 +2,29 @@
 	import CheckGift from '$lib/components/auth/event/gift/CheckGift.svelte';
 	import BackButton from '$lib/components/extra/BackButton.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
+	import { superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { checkGiftSchema } from '$lib/validationSchema/gift.schema';
+	import toast from 'svelte-french-toast';
 
 	export let data: PageData;
 
 	const list = data.list;
 	const user = data.user;
+
+	const { message } = superForm(data.form, {
+		validators: zodClient(checkGiftSchema),
+		validationMethod: 'oninput'
+	});
+
+	$: if ($message && $message.success) {
+		toast.success($message.message);
+	}
+
+	$: if ($message && $message.error) {
+		toast.error($message.error);
+	}
 </script>
 
 <PageLayout padding="py-8">
