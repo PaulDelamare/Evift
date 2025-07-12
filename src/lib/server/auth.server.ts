@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
-import type { PostUser, User } from '../models/user.model';
+import type { User } from '../models/user.model';
 import type { ApiResponse } from '$lib/models/response.model';
 import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
 
@@ -14,7 +14,7 @@ export default class AuthApi extends Api {
 	 * @returns A promise resolving to the API response.
 	 */
 	register = async (
-		user: PostUser
+		firstname: string, lastname: string, email: string, password: string
 	): Promise<ApiResponse> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}register`, {
@@ -23,10 +23,16 @@ export default class AuthApi extends Api {
 					'Content-Type': 'application/json'
 				},
 				credentials: 'include',
-				body: JSON.stringify(user)
+				body: JSON.stringify({
+					firstname,
+					lastname,
+					email,
+					password
+				})
 			});
 
 			return response.json();
+
 		} catch (error) {
 			catchErrorRequest(error, 'AuthApi.register');
 			throw error;
@@ -89,6 +95,7 @@ export default class AuthApi extends Api {
 					: (await response.text().catch(() => 'Error')) || 'Error';
 
 			return { status, message } as ApiResponse<User>;
+
 		} catch (error) {
 			catchErrorRequest(error, 'AuthApi.getInfo');
 			throw error;
@@ -110,7 +117,9 @@ export default class AuthApi extends Api {
 				},
 				body: JSON.stringify({ email })
 			});
+
 			return response.ok;
+
 		} catch (error) {
 			catchErrorRequest(error, 'AuthApi.forgotPassword');
 			return false;
@@ -132,6 +141,7 @@ export default class AuthApi extends Api {
 		confirmPassword: string
 	): Promise<boolean> => {
 		try {
+
 			const response = await this.fetch(
 				`${this.authUrl}password/reset`,
 				{
@@ -141,6 +151,7 @@ export default class AuthApi extends Api {
 				}
 			);
 			return response.ok;
+
 		} catch (error) {
 			catchErrorRequest(error, 'AuthApi.resetPassword');
 			return false;
