@@ -16,16 +16,20 @@ export default class EventApi extends Api {
 	 * @throws Will throw an error if the request fails.
 	 */
 	createEvent = async (
-		body: FormData
+		body: { name: string, description: string, date: string, time: string, address: string, arrayInviteList?: string[] }
 	): Promise<ApiResponse<{ eventId: string }>> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}create`, {
 				method: 'POST',
 				credentials: 'include',
-				body
+				body: JSON.stringify(body),
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			});
 
-			return await response.json() as ApiResponse<{ eventId: string }>;
+			return await response.json();
+
 		} catch (error) {
 			catchErrorRequest(error, 'EventApi.createEvent');
 			throw error;
@@ -46,8 +50,8 @@ export default class EventApi extends Api {
 				},
 				credentials: 'include'
 			});
-			const data: ApiResponse<Event[]> = await response.json();
-			return data;
+
+			return await response.json();
 
 		} catch (error) {
 			catchErrorRequest(error, 'EventApi.getEvent');
@@ -115,16 +119,18 @@ export default class EventApi extends Api {
 	 * @throws Will rethrow any error encountered during the fetch operation after logging it with {@link catchErrorRequest}.
 	 */
 	changeRoleParticipant = async (
-		id_event: string,
-		id_user: string,
-		id_role: string
+		body: {
+			id_event: string,
+			id_user: string,
+			id_role: string
+		}
 	): Promise<ApiResponse> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}updateParticipant`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ id_event, id_user, id_role })
+				body: JSON.stringify(body)
 			});
 			return await response.json() as ApiResponse;
 		} catch (error) {
