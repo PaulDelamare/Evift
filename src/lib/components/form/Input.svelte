@@ -1,8 +1,6 @@
 <script lang="ts">
-	// ! IMPORT
 	import { fade } from 'svelte/transition';
 
-	// ! VARIABLE
 	export let value = '';
 	export let onInputFunc: ((event: Event) => void) | undefined = undefined;
 	export let type = 'text';
@@ -20,24 +18,17 @@
 	 * @return An array of objects with the character and delay.
 	 */
 	function createLabelSpans(text: string) {
-		// Create an array of objects
 		let spans = [];
-
-		// Delay in milliseconds
 		let delay = 0;
 
-		// Loop over the text
 		for (let char of text) {
-			// Add the object to the array
 			spans.push({ char, delay });
 			delay += 50;
 		}
 
-		// Return the array
 		return spans;
 	}
 
-	// Create spans table for animation
 	let labelSpans = createLabelSpans(label);
 </script>
 
@@ -45,7 +36,7 @@
 <div class="w-full">
 	<div class="form-control gradient">
 		<div class="bg-surface-500">
-			<!-- Email Input need required for animation -->
+
 			{#if type !== 'content'}
 				<input
 					{type}
@@ -66,7 +57,6 @@
 			{/if}
 
 			<!-- svelte-ignore a11y-label-has-associated-control -->
-			<!-- Label with All span in letter for animation -->
 			<label class="text-gradient">
 				{#each labelSpans as { char, delay }}
 					<span style="transition-delay:{delay}ms">{char}</span>
@@ -74,14 +64,12 @@
 			</label>
 		</div>
 	</div>
-	<!-- If error for this field display it -->
 	{#if error}
 		<p in:fade={{ duration: 200 }} class="errorMessage">{error}</p>
 	{/if}
 </div>
 
 <style lang="postcss">
-	/* All input css for animation */
 	.form-control {
 		@apply relative pb-[2px] w-full;
 	}
