@@ -1,87 +1,44 @@
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import * as yup from 'yup';
 import GiftApi from '$lib/server/gift.server';
+import { message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { giftSchema } from '$lib/validationSchema/gift.schema';
+
 
 export const load = (async () => {
-	return {};
+
+	const formCreateGift = await superValidate(zod(giftSchema));
+
+	return { formCreateGift };
 }) satisfies PageServerLoad;
 
-const schema = yup.object().shape({
-	name: yup.string().required('Le nom est requis*'),
-	giftsJson: yup.array().of(
-		yup.object().shape({
-			name: yup.string().min(2).max(100).required('Le nom est requis*'),
-			quantity: yup.number().min(1).max(1000).required('La quantité est requise*'),
-			url: yup
-				.string()
-				.nullable()
-				.transform((value, originalValue) => {
-					return originalValue === '' ? null : originalValue;
-				})
-				.matches(
-					/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_.+~#?&//=]*)$/,
-					'Enter correct url!'
-				)
-		})
-	)
-});
-
 export const actions: Actions = {
-	createGiftList: async ({ request, fetch }) => {
-		const data = await request.formData();
+	createGiftList: async (event) => {
 
-		// Get form data values
-		const name = data.get('name') as string;
-		const gifts = data.get('gifts') as string;
+		const form = await superValidate(event.request, zod(giftSchema));
 
-		// Transform string to json
-		const giftsJson = JSON.parse(gifts);
-
-		const errors: { error?: string; giftsJson?: string; name?: string } = {};
-
-		// ? Validation
-		try {
-			// Validation schema
-			await schema.validate({ name, giftsJson }, { abortEarly: false });
-		} catch (error) {
-			// - Catch Errors
-			// If Error in ValidationError
-			if (error instanceof yup.ValidationError) {
-				// Check what error it is and return this in errors instance
-				error.inner.forEach((err) => {
-					if (err.path?.includes('giftsJson')) {
-						errors.giftsJson = err.message;
-					}
-
-					if (err.path === 'name') {
-						errors.name = err.message;
-					}
-				});
-
-				// Return errors
-				return { status: 400, errors };
-			} else {
-				// Else Throw custom Error
-				return { status: 400, errors: 'Une erreur est survenue' };
-			}
-		}
-		if (!giftsJson.length) {
-			errors.giftsJson = 'Veuillez ajouter au moins un cadeau';
-			return { status: 400, errors };
+		if (!form.valid) {
+			return message(form, { error: 'Veuillez remplir tous les champs' });
 		}
 
-		const api = new GiftApi(fetch);
-		const response = await api.createList({ name, gifts: giftsJson });
+		if (!form.data.gifts.length) {
+			return message(form, {
+				error: 'Veuillez ajouter au moins un cadeau'
+			})
+		}
+
+		const api = new GiftApi(event.fetch);
+		const response = await api.createList(form.data);
 
 		if ('error' in response) {
-			errors.error = response.error.error;
-			return { status: 401, errors };
+			return message(form, {
+				error: response.error.error ?? 'Une erreur est survenue lors de la création de la liste de cadeaux'
+			})
 		}
 
-		return {
-			status: 200,
+		return message(form, {
 			success: true
-		};
+		});
 	}
 };
