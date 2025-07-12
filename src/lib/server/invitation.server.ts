@@ -69,15 +69,14 @@ export default class InvitationApi extends Api {
 	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
 	 */
 	responseInvitation = async (
-		id: string,
-		accept: boolean
+		body: { id: string; response: boolean }
 	): Promise<ApiResponse> => {
 		try {
 			const response = await this.fetch(`${this.authUrl}accept`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ id, response: accept })
+				body: JSON.stringify(body)
 			});
 			return await response.json();
 		} catch (error) {
@@ -96,7 +95,7 @@ export default class InvitationApi extends Api {
 	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
 	 */
 	sendFriendsInvitation = async (
-		id: string
+		body: { id: string }
 	): Promise<ApiResponse> => {
 		try {
 
@@ -104,7 +103,7 @@ export default class InvitationApi extends Api {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ id })
+				body: JSON.stringify(body)
 			});
 			return await response.json();
 
@@ -151,7 +150,7 @@ export default class InvitationApi extends Api {
 	 * @returns A promise that resolves to an {@link ApiResponse} containing an {@link EventInvitation}.
 	 * @throws Will rethrow any error encountered during the fetch operation after logging it with {@link catchErrorRequest}.
 	 */
-	getEventInvitation = async (): Promise<ApiResponse<EventInvitation>> => {
+	getEventInvitation = async (): Promise<ApiResponse<EventInvitation[]>> => {
 		try {
 
 			const response = await this.fetch(`${this.authUrl}eventInvitation`, {
@@ -162,7 +161,7 @@ export default class InvitationApi extends Api {
 				credentials: 'include'
 			});
 
-			const data: ApiResponse<EventInvitation> = await response.json();
+			const data: ApiResponse<EventInvitation[]> = await response.json();
 			return data;
 
 		} catch (error) {
@@ -176,14 +175,16 @@ export default class InvitationApi extends Api {
 	 *
 	 * Sends a POST request to the server to accept or decline an event invitation.
 	 *
-	 * @param {string} invitationId - The ID of the event invitation to respond to.
-	 * @param {boolean} accept - Whether to accept (true) or reject (false) the invitation.
+	 * @param invitationId - The ID of the event invitation to respond to.
+	 * @param  accept - Whether to accept (true) or reject (false) the invitation.
 	 * @returns {Promise<ApiResponse>} A promise that resolves to the server's response.
 	 * @throws {Error} If the request fails, the error is caught and rethrown after logging.
 	 */
 	responseEventInvitation = async (
-		invitationId: string,
-		accept: boolean
+		body: {
+			id: string,
+			response: boolean
+		}
 	): Promise<ApiResponse> => {
 		try {
 
@@ -191,7 +192,7 @@ export default class InvitationApi extends Api {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ invitationId, response: accept })
+				body: JSON.stringify(body)
 			});
 			return await response.json();
 
