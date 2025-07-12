@@ -10,9 +10,9 @@
 
 	const modalStore = getModalStore();
 
-	const listsEvent = data.listsEvent;
-	const roleUser = data.roleUser;
-	const event = data.event;
+	$: listsEvent = data.listsEvent;
+	$: roleUser = data.roleUser;
+	$: event = data.event;
 
 	let search = '';
 
