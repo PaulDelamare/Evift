@@ -14,10 +14,10 @@ export default class UserApi extends Api {
 	 * @returns A promise resolving to an ApiResponse containing the User data.
 	 * @throws Will throw an error if the request fails.
 	 */
-	getUserByEmail = async (email: string): Promise<ApiResponse<User>> => {
+	getUserByEmail = async (body: { email: string }): Promise<ApiResponse<User>> => {
 		try {
 			const response = await this.fetch(
-				`${this.authUrl}findUser/${encodeURIComponent(email)}`,
+				`${this.authUrl}findUser/${body.email}`,
 				{
 					method: 'GET',
 					headers: { 'Content-Type': 'application/json' },
