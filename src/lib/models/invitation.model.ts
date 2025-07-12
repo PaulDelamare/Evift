@@ -1,16 +1,3 @@
-export interface GetCountFriendInvitation {
-	data: {
-		countFriendsInvitation: number;
-		countEventInvitation: number;
-	};
-	status: number;
-}
-
-export interface InvitationData {
-	data: Invitation[];
-	status: number;
-}
-
 export interface Invitation {
 	id: string;
 	userId: string;

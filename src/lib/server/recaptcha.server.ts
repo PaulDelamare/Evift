@@ -1,57 +1,47 @@
 // ! IMPORTS
 import { env } from '$env/dynamic/private';
+import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
 import { Api } from './api.server';
 
 // ! Class
-export default class CaptchaApi extends Api<{
-	success: boolean;
-	challenge_ts: string;
-	hostname: string;
-	score: 0.9;
-	action: string;
-}> {
-	// - Create recapctha request validator
-	captcha = async (
+export default class CaptchaApi extends Api {
+
+	/**
+	 * Verifies a reCAPTCHA token with Google's reCAPTCHA API.
+	 * @param captcha - The reCAPTCHA token to verify.
+	 * @returns An object containing the verification result and related information.
+	 * @throws Will throw an error if the request fails.
+	 */
+	async captcha(
 		captcha: string
 	): Promise<{
 		success: boolean;
 		challenge_ts: string;
 		hostname: string;
-		score: 0.9;
+		score: number;
 		action: string;
-	}> => {
-		// ? Try request
+	}> {
 		try {
-
-			// Define request
-			// Pass recapctah validator key and captcha token
 			const response = await this.fetch(
 				`https://www.google.com/recaptcha/api/siteverify?secret=${env.SERVER_CAPTCHA_KEY}&response=${captcha}`,
 				{
 					method: 'POST',
 					headers: {
-						'Content-Type': 'application/json'
-					},
-					// Need to include credentials for have x-api-key in request with hooks
-					credentials: 'include'
+						'Content-Type': 'application/x-www-form-urlencoded'
+					}
 				}
 			);
 
-			// Get data response
-			const data: {
-				success: boolean;
-				challenge_ts: string;
-				hostname: string;
-				score: 0.9;
-				action: string;
-			} = await response.json();
+			if (!response.ok) {
+				throw new Error(`Captcha verification failed with status ${response.status}`);
+			}
 
-			// Return data
+			const data = await response.json();
+
 			return data;
 		} catch (error) {
-			// ? Catch Request
-			// Throw error
-			throw new Error('Error captcha : ' + error);
+			catchErrorRequest(error, 'CaptchaApi.captcha');
+			throw error;
 		}
-	};
+	}
 }

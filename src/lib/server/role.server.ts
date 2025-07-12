@@ -1,15 +1,25 @@
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
-import type { DataRole, Role } from '$lib/models/role.model';
+import type { Role } from '$lib/models/role.model';
+import type { ApiResponse } from '$lib/models/response.model';
+import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
 
-export default class RoleApi extends Api<DataRole> {
-	// Base url request for auth methods
+export default class RoleApi extends Api {
+
 	private authUrl = `${env.API_URL}api/rolesEvent/`;
 
-	getRoles = async (): Promise<Role[]> => {
-		// - Try Validation
+	/**
+	 * Retrieves all roles from the server.
+	 *
+	 * Sends a GET request to the `${this.authUrl}findAll` endpoint to fetch all available roles.
+	 * The request includes credentials and expects a JSON response.
+	 *
+	 * @returns A promise that resolves to an {@link ApiResponse} containing an array of {@link Role} objects.
+	 * @throws Rethrows any error encountered during the request after logging it with {@link catchErrorRequest}.
+	 */
+	getRoles = async (): Promise<ApiResponse<Role[]>> => {
+
 		try {
-			// Accept or refuse Invitation
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
 				headers: {
@@ -18,18 +28,13 @@ export default class RoleApi extends Api<DataRole> {
 				credentials: 'include'
 			});
 
-			// Get data
-			const data: DataRole | { status: number; error: string } = await response.json();
+			const data: ApiResponse<Role[]> = await response.json();
+			return data;
 
-			if ('error' in data) {
-				throw new Error(data.error);
-			}
-
-			// Return data
-			return data.data;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Error in Event Invitation : ' + error);
+
+			catchErrorRequest(error, 'RoleApi.getRoles');
+			throw error;
 		}
 	};
 }

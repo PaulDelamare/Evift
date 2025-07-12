@@ -1,15 +1,14 @@
 <script lang="ts">
-	// ! IMPORT
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 	import type { PageData } from './$types';
-
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
 	import { Paginator, type PaginationSettings } from '@skeletonlabs/skeleton';
+	import { fakeLists } from '$lib/driver/fakeGiftData';
 
-	// ! VARIABLE
 	export let data: PageData;
 
-	const lists = data.lists.data;
+	let lists = data.lists.data;
+	const user = data.user;
 
 	let search = '';
 
@@ -31,11 +30,13 @@
 		paginationSettings.page * paginationSettings.limit,
 		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
 	);
+
+	if (user.firstLogin) {
+		lists = [...fakeLists];
+	}
 </script>
 
-<!-- Displau Page Layout for disposition -->
 <PageLayout padding="py-12" gap="gap-12">
-	<!-- Display event and friends button -->
 	<div class="wrap px-4 flex w-full gap-8 justify-between mx-auto mobile-large:flex-col">
 		<input
 			bind:value={search}
@@ -57,6 +58,7 @@
 				<ul class="flex flex-col gap-8 w-full">
 					{#each paginatedSource as list}
 						<li
+							id={user.firstLogin ? list.id : ''}
 							class="items-center flex justify-between shadow-md px-8 py-4 w-full bg-surface-400 rounded-xl overflow-hidde mobile-large:flex-col mobile-large:gap-8"
 						>
 							<div class="flex items-center gap-4 mobile-large:flex-col">
@@ -66,11 +68,9 @@
 							<div
 								class="shadow-md w-full !max-w-[153px] mini-tablet:!max-w-[100px] group bg-gradient p-[2px] active:scale-95 custom-transition !duration-300 rounded-xl"
 							>
-								<!-- Second div for animation -->
 								<div
 									class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] group-hover:bg-surface-500 custom-transition rounded-[10px] !duration-300"
 								>
-									<!-- Submit button -->
 									<button
 										class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] 0 nav rounded-xl nav group-hover:text-gradient text-surface-500 custom-transition !duration-300 between justify-center gap-8"
 										type="submit"

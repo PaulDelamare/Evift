@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import { getToastStore, type ToastSettings, type ToastStore } from '@skeletonlabs/skeleton';
 	import { goto } from '$app/navigation';
 	import Submit from '$lib/components/form/Submit.svelte';
 	import XSvg from '$lib/components/svg/XSvg.svelte';
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
+	import { superForm } from 'sveltekit-superforms';
+	import { page } from '$app/state';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import toast from 'svelte-french-toast';
+	import { giftSchema } from '$lib/validationSchema/gift.schema';
 
 	export let action: string;
-
-	const toastStore: ToastStore = getToastStore();
 
 	let name: string;
 
@@ -16,70 +17,77 @@
 
 	export let form;
 
-	$: if (form) {
+	const {
+		message,
+		errors,
+		validateForm,
+		enhance,
+		form: formData
+	} = superForm(page.data.formCreateGift, {
+		validators: zodClient(giftSchema),
+		// validationMethod: 'oninput',
+		dataType: 'json'
+	});
+
+	$: if ($message) {
 		submitted = false;
 	}
 
-	$: if (form?.success) {
-		const t: ToastSettings = {
-			message: 'La liste de cadeaux a été créée avec succès',
-			background: 'bg-success-500 text-surface-500',
-			classes: 'text-surface-500'
-		};
-		toastStore.trigger(t);
+	$: if ($message && $message.success) {
+		toast.success($message.message);
 
 		goto('/auth/gift');
 	}
 
-	let values = [
-		{
-			url: '',
-			name: '',
-			quantity: 1
-		}
-	];
+	$: if ($message && $message.error) {
+		toast.error($message.error);
+	}
+
+	$formData.gifts = [{ url: '', name: '', quantity: 1 }];
 
 	const addField = () => {
-		values = [...values, { url: '', name: '', quantity: 1 }];
+		$formData.gifts = [...$formData.gifts, { url: '', name: '', quantity: 1 }];
 	};
 
 	const removeField = (index: number) => {
-		values = values.filter((_, i) => i !== index);
+		$formData.gifts = $formData.gifts.filter(
+			(_: { url: string; name: string; quantity: number }, i: number) => i !== index
+		);
 	};
-
-	$: valueFields = JSON.stringify(values);
 </script>
 
 <section class="flex flex-col gap-8">
 	<form
-		on:submit={() => (submitted = true)}
-		use:enhance={() => {
-			return async ({ update }) => {
-				update({ reset: false });
-			};
+		use:enhance
+		on:submit={async () => {
+			submitted = true;
+			const result = await validateForm();
+
+			if (!result.valid) {
+				submitted = false;
+			}
 		}}
-		method="post"
+		method="POST"
 		{action}
 		class=" w-full mr-auto flex flex-col px-4 gap-8 wrap"
-		enctype="multipart/form-data"
 	>
 		<div class="w-full">
 			<input
-				bind:value={name}
 				class="bg-surface-400 border-none rounded shadow-md w-full"
 				name="name"
 				placeholder="Nom de la liste"
+				bind:value={$formData.name}
 			/>
 
-			{#if form?.errors?.name}
-				<span class="errorMessage">{form?.errors?.name}</span>
+			{#if $errors?.name}
+				<span class="errorMessage">{$errors?.name}</span>
 			{/if}
 		</div>
-		{#each values as v, i}
+		{#each $formData.gifts as v, i}
 			<div class="flex flex-col gap-4 bg-surface-50 p-4 rounded-xl relative">
 				<div class="pl-2">
 					<h4 class="text-gradient">
-						{values[i].name !== '' ? values[i].name : `Cadeau ${i + 1}`}
+						{$formData.gifts[i].name !== '' ? $formData.gifts[i].name : `Cadeau ${i + 1}`}
 					</h4>
 				</div>
 				<div class="flex gap-4 w-full">
@@ -88,8 +96,11 @@
 						<input
 							class="bg-surface-400 border-none rounded shadow-lg w-full"
 							type="text"
-							bind:value={values[i].name}
+							bind:value={$formData.gifts[i].name}
 						/>
+						{#if $errors?.gifts && typeof $errors.gifts[i] === 'object' && $errors.gifts[i] !== null && 'name' in $errors.gifts[i]}
+							<span class="errorMessage">{$errors.gifts[i]?.name}</span>
+						{/if}
 					</label>
 
 					<label class="flex flex-col gap-2 w-2/4">
@@ -97,10 +108,13 @@
 						<input
 							class="bg-surface-400 border-none rounded shadow-lg"
 							type="number"
-							bind:value={values[i].quantity}
+							bind:value={$formData.gifts[i].quantity}
 							min="1"
 							max="1000"
 						/>
+						{#if $errors?.gifts && typeof $errors.gifts[i] === 'object' && $errors.gifts[i] !== null && 'quantity' in $errors.gifts[i]}
+							<span class="errorMessage">{$errors.gifts[i]?.quantity}</span>
+						{/if}
 					</label>
 				</div>
 				<label class="flex flex-col gap-2">
@@ -108,8 +122,11 @@
 					<input
 						class="bg-surface-400 border-none rounded shadow-lg w-full"
 						type="url"
-						bind:value={values[i].url}
+						bind:value={$formData.gifts[i].url}
 					/>
+					{#if $errors?.gifts && typeof $errors.gifts[i] === 'object' && $errors.gifts[i] !== null && 'url' in $errors.gifts[i]}
+						<span class="errorMessage">{$errors.gifts[i]?.url}</span>
+					{/if}
 				</label>
 
 				<div class="absolute !top-4 !right-4">
@@ -127,7 +144,6 @@
 			type="button"
 			on:click={addField}><PlusSvg classSvg="w-4 fill-surface-500" />Ajouter</button
 		>
-		<input type="hidden" value={valueFields} name="gifts" />
 
 		<div>
 			<div class="max-w-[300px] mx-auto">

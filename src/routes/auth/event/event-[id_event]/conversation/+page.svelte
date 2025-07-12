@@ -60,13 +60,10 @@
 	}
 
 	function sendMessage(message: string) {
-		// if (message !== '') {
 		ws.send(JSON.stringify({ message }));
-		// }
 	}
 
 	$: if (!connected) {
-		// Toast
 		const t: ToastSettings = {
 			message: 'Vous êtes déconnecté, veuillez recharger la page pour vous reconnecter.',
 			background: 'bg-error-500',

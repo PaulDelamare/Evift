@@ -1,202 +1,174 @@
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
-import type { GetAllLists, GetEventList, GetEventListDetail } from '$lib/models/gift.model';
+import type { EventListData, List } from '$lib/models/gift.model';
+import type { ApiResponse } from '$lib/models/response.model';
+import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
 
-export default class GiftApi extends Api<GetAllLists> {
-	// Base url request for auth methods
+export default class GiftApi extends Api {
+
 	private authUrl = `${env.API_URL}api/gift/`;
 
 	/**
-	 * Creates a list.
-	 *
-	 * @param body - The request body.
-	 * @param body.name - The name of the list.
-	 * @param body.gifts - The gifts in the list.
-	 * @param body.gifts[].name - The name of the gift.
-	 * @param body.gifts[].quantity - The quantity of the gift.
-	 * @param body.gifts[].url - The URL of the gift.
-	 * @return A promise that resolves to an object with the following properties:
-	 *   - message?: string - An optional message.
-	 *   - error?: string - An optional error message.
-	 *   - status: number - The status code.
-	 * @throws {Error} If there is an error creating the list.
+	 * Creates a new gift list.
+	 * @param body - The list details including name and an array of gifts.
+	 * @returns The API response.
 	 */
 	createList = async (body: {
 		name: string;
-		gifts: { name: string; quantity: number; url: string }[];
-	}): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+		gifts: { name: string; quantity: number; url?: string | null }[];
+
+	}): Promise<ApiResponse> => {
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}create`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
 				body: JSON.stringify(body)
 			});
-
-			// Get Friends
-			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
-			return data;
+			return await response.json();
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Error Get Friends By EMAIL : ' + error);
+			catchErrorRequest(error, 'GiftApi.createList');
+			throw error;
 		}
 	};
 
-	// Find all gift
-	findAll = async (): Promise<GetAllLists> => {
-		// - Try Validation
+	/**
+	 * Retrieves all gift lists.
+	 * @returns A promise resolving to an API response containing an array of gift lists.
+	 */
+	findAll = async (): Promise<ApiResponse<List[]>> => {
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}findAll`, {
 				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include'
 			});
-
-			// Get Gift
-			const data: GetAllLists = await response.json();
-
-			// Return data
-			return data;
+			return await response.json() as ApiResponse<List[]>;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Error Get Friends By EMAIL : ' + error);
+			catchErrorRequest(error, 'GiftApi.findAll');
+			throw error;
 		}
 	};
 
-	findForEvent = async (id_event: string): Promise<GetEventList> => {
-		// - Try Validation
+	/**
+	 * Retrieves the gift list data for a specific event.
+	 * @param id_event - The unique identifier of the event.
+	 * @returns A promise resolving to an API response containing the event's gift list data.
+	 */
+	findForEvent = async (id_event: string): Promise<ApiResponse<EventListData[]>> => {
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}findListEvent/${id_event}`, {
 				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include'
 			});
-
-			// Get Gift
-			const data: GetEventList = await response.json();
-
-			// Return data
-			return data;
+			return await response.json() as ApiResponse<EventListData[]>;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Get Gift : ' + error);
+			catchErrorRequest(error, 'GiftApi.findForEvent');
+			throw error;
 		}
 	};
 
+	/**
+	 * Associates a gift list with a specific event.
+	 * @param idEvent - The unique identifier of the event.
+	 * @param idList - The unique identifier of the gift list.
+	 * @returns A promise resolving to the API response.
+	 */
 	addListEvent = async (
-		idEvent: string,
-		idList: string
-	): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+		body: {
+			idEvent: string,
+			idList: string
+		}
+	): Promise<ApiResponse> => {
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}listEvent`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ idEvent, idList })
+				body: JSON.stringify(body)
 			});
-
-			// Get Friends
-			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
-			return data;
+			return await response.json() as ApiResponse;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Error Add List To Event : ' + error);
+			catchErrorRequest(error, 'GiftApi.addListEvent');
+			throw error;
 		}
 	};
 
+	/**
+	 * Removes the association between a gift list and a specific event.
+	 * @param idEvent - The unique identifier of the event.
+	 * @param idList - The unique identifier of the gift list.
+	 * @returns A promise resolving to the API response.
+	 */
 	deleteListEvent = async (
-		idEvent: string,
-		idList: string
-	): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+		body: {
+			idEvent: string,
+			idList: string
+		}
+	): Promise<ApiResponse> => {
 		try {
-			// Do request
+
 			const response = await this.fetch(`${this.authUrl}deleteListEvent`, {
 				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ idEvent, idList })
+				body: JSON.stringify(body)
 			});
+			return await response.json() as ApiResponse;
 
-			// Get Friends
-			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
-			return data;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Error Add List To Event : ' + error);
+			catchErrorRequest(error, 'GiftApi.deleteListEvent');
+			throw error;
 		}
 	};
 
-	findList = async (idList: string): Promise<GetEventListDetail> => {
-		// - Try Validation
+	/**
+	 * Retrieves the details of a specific gift list.
+	 * @param idList - The unique identifier of the gift list.
+	 * @returns A promise resolving to an API response containing the gift list data.
+	 */
+	findList = async (idList: string): Promise<ApiResponse<EventListData>> => {
+
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}findList/${idList}`, {
 				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include'
 			});
+			return await response.json() as ApiResponse<EventListData>;
 
-			// Get Gift
-			const data: GetEventListDetail = await response.json();
-
-			// Return data
-			return data;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Get Gift : ' + error);
+			catchErrorRequest(error, 'GiftApi.findList');
+			throw error;
 		}
 	};
 
+	/**
+	 * Updates the checked status of a gift for a specific event.
+	 * @param idEvent - The unique identifier of the event.
+	 * @param idGift - The unique identifier of the gift.
+	 * @param checked - The new checked status.
+	 * @returns A promise resolving to the API response.
+	 */
 	checkGift = async (
-		idEvent: string,
-		idGift: string,
-		checked: boolean
-	): Promise<{ message?: string; error?: string; status: number }> => {
-		// - Try Validation
+		body: {
+			eventId: string,
+			giftId: string,
+			taken: boolean
+		}
+	): Promise<ApiResponse> => {
 		try {
-			// Do request
 			const response = await this.fetch(`${this.authUrl}checkGift`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ idEvent, idGift, checked })
+				body: JSON.stringify(body)
 			});
-
-			// Get Friends
-			const data: { message?: string; error?: string; status: number } = await response.json();
-
-			// Return data
-			return data;
+			return await response.json() as ApiResponse;
 		} catch (error) {
-			// - Catch Errors
-			throw new Error('Error Add List To Event : ' + error);
+			catchErrorRequest(error, 'GiftApi.checkGift');
+			throw error;
 		}
 	};
 }

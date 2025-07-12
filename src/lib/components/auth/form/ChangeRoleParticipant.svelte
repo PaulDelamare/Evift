@@ -15,7 +15,6 @@
 <li
 	class="w-full flex p-4 bg-surface-400 gap-12shadow-md items-center gap-8 mini-tablet:gap-2 mini-tablet:px-2"
 >
-	<!-- Display user image (for start, the progil picture isn't available, so we display a default image) -->
 	<div>
 		<div
 			class="size-8 rounded-full overflow-hidden box-border bg-surface-500 shadow-md mobile-large:hidden"
@@ -28,12 +27,10 @@
 		</div>
 	</div>
 
-	<!-- Display user infos -->
 	<div
 		class="w-full flex flex-col items-end justify-between mini-tablet:gap-4 mini-tablet:items-center"
 	>
 		<div class="w-full flex flex-col gap-3 mini-tablet:text-center">
-			<!-- Display user name and email -->
 			<div>
 				<h4 class="text-base {user.id === participant.user.id ? 'text-gradient' : ''}">
 					{#if user.id !== participant.user.id}
@@ -47,7 +44,7 @@
 			</div>
 		</div>
 	</div>
-	{#if userRole.name === 'admin' && user.id !== participant.user.id && participant.roleRef.name !== 'admin'}
+	{#if (userRole.name === 'admin' || userRole.name === 'superAdmin') && user.id !== participant.user.id && (participant.roleRef.name !== 'admin' || userRole.name === 'superAdmin')}
 		<form
 			bind:this={form}
 			action="?/changeRoleParticipant"
