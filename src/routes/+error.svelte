@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 </script>
 
 <section class="page_404 flex justify-center">
@@ -8,13 +8,13 @@
 			<div class="col-sm-12">
 				<div class="col-sm-10 col-sm-offset-1 text-center">
 					<div class="four_zero_four_bg">
-						<h2 class="text-center">{$page.status}</h2>
+						<h2 class="text-center">{page.status}</h2>
 					</div>
 
 					<div class="contant_box_404 flex flex-col gap-4 items-center">
 						<h3 class="h2">Vous avez l'air perdu</h3>
 
-						<p>{$page.error?.message}</p>
+						<p>{page.error?.message}</p>
 
 						<a
 							href="/"
