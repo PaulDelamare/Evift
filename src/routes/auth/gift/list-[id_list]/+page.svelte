@@ -1,10 +1,15 @@
 <script lang="ts">
+	import DeleteButton from '$lib/components/extra/multiButton/DeleteButton.svelte';
+	import MultiButton from '$lib/components/extra/multiButton/MultiButton.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
+	import { confirmDelete } from '$lib/functions/modal/confirmDelete';
+	import { getModalStore, type ModalStore } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 
 	export let data: PageData;
 
-	const list = data.gifts;
+	let list = data.gifts;
 
 	let search = '';
 
@@ -14,19 +19,49 @@
 
 		return gift.name.toLowerCase().includes(searchFirstName);
 	});
+
+	const modalStore: ModalStore = getModalStore();
 </script>
 
 <PageLayout padding="py-8">
 	<section>
 		<div class="wrap px-4 flex flex-col gap-8">
-			<div>
+			<div class="flex justify-between items-center">
 				<h2 class="text-gradient">{list.name}</h2>
+				<form>
+					<MultiButton index={0} identification="gift" side="end">
+						<div slot="summary">
+							<button class="!text-gradient summary-button nav !text-base" type="submit">
+								<a href="/auth/gift/list-{list.id}/add-gift">Ajouter des cadeaux</a>
+							</button>
+						</div>
+						<form
+							on:submit={async (event) => {
+								const res = await confirmDelete(
+									event,
+									modalStore,
+									`Êtes vous sur de vouloir supprimer ${list.name} ?`
+								);
+
+								if (res.success) {
+									goto('/auth/gift', { invalidateAll: true });
+								}
+							}}
+							method="POST"
+							action="?/deleteList"
+							class="p-2"
+						>
+							<input name="id" type="hidden" value={list.id} />
+							<DeleteButton customtext="Supprimer la liste" />
+						</form>
+					</MultiButton>
+				</form>
 			</div>
 			<div>
 				{#if filteredGifts.length !== 0}
 					<div class="flex flex-col items-center gap-8">
 						<ul class="flex flex-col gap-8 w-full">
-							{#each filteredGifts as gift}
+							{#each filteredGifts as gift, index}
 								<li
 									class="items-center flex justify-between shadow-md px-8 py-4 w-full bg-surface-400 rounded-xl overflow-hidde mobile-large:flex-col mobile-large:gap-8"
 								>
@@ -34,24 +69,60 @@
 										<h4 class="text-primary-500 mini-tablet:text-lg">{gift.name}</h4>
 										<span class="text-gradient">({gift.quantity} cadeaux)</span>
 									</div>
-									{#if gift.url}
-										<div
-											class="shadow-md w-full !max-w-[153px] mini-tablet:!max-w-[100px] group bg-gradient p-[2px] active:scale-95 custom-transition !duration-300 rounded-xl"
-										>
-											<!-- Second div for animation -->
-											<div
-												class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] group-hover:bg-surface-500 custom-transition rounded-[10px] !duration-300"
-											>
-												<!-- Submit button -->
-												<button
-													class="w-full !max-w-[153px] mini-tablet:!max-w-[100px] 0 nav rounded-xl nav group-hover:text-gradient text-surface-500 custom-transition !duration-300 between justify-center gap-8"
-													type="submit"
-												>
+
+									<MultiButton {index} identification="gift">
+										<div slot="summary">
+											{#if gift.url}
+												<button class="!text-gradient summary-button nav !text-base" type="submit">
 													<a href={gift.url} target="_blank">Accéder</a>
 												</button>
-											</div>
+											{:else}
+												<form
+													on:submit={async (event) => {
+														const res = await confirmDelete(
+															event,
+															modalStore,
+															`Êtes vous sur de vouloir supprimer ${gift.name} ?`
+														);
+														if (res.success) {
+															invalidateAll().then(() => {
+																list = data.gifts;
+															});
+														}
+													}}
+													method="POST"
+													action="?/deleteGift"
+													class="p-2"
+												>
+													<input name="id" type="hidden" value={gift.id} />
+													<DeleteButton />
+												</form>
+											{/if}
 										</div>
-									{/if}
+
+										{#if gift.url}
+											<form
+												on:submit={async (event) => {
+													const res = await confirmDelete(
+														event,
+														modalStore,
+														`Êtes vous sur de vouloir supprimer ${gift.name} ?`
+													);
+													if (res.success) {
+														invalidateAll().then(() => {
+															list = data.gifts;
+														});
+													}
+												}}
+												method="POST"
+												action="?/deleteGift"
+												class="p-2"
+											>
+												<input name="id" type="hidden" value={gift.id} />
+												<DeleteButton />
+											</form>
+										{/if}
+									</MultiButton>
 								</li>
 							{/each}
 						</ul>
