@@ -11,11 +11,7 @@
 
 	export let action: string;
 
-	let name: string;
-
 	let submitted = false;
-
-	export let form;
 
 	const {
 		message,
@@ -25,7 +21,6 @@
 		form: formData
 	} = superForm(page.data.formCreateGift, {
 		validators: zodClient(giftSchema),
-		// validationMethod: 'oninput',
 		dataType: 'json'
 	});
 
@@ -136,9 +131,7 @@
 				</div>
 			</div>
 		{/each}
-		{#if form?.errors?.giftsJson}
-			<span class="errorMessage">{form?.errors?.giftsJson}</span>
-		{/if}
+		
 		<button
 			class="bg-primary-400 text-surface-500 px-3 py-2 rounded-lg flex items-center gap-2 justify-center"
 			type="button"
@@ -148,8 +141,8 @@
 		<div>
 			<div class="max-w-[300px] mx-auto">
 				<Submit {submitted} textSubmit="Créer" />
-				{#if form?.errors?.error}
-					<p class="errorMessage">{form?.errors?.error}</p>
+				{#if $message &&  $message.error}
+					<p class="errorMessage">{$message.error}</p>
 				{/if}
 			</div>
 		</div>
