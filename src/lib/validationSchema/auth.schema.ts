@@ -30,7 +30,10 @@ export const registerSchema = z.object({
                /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/,
                'Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial*'
           ),
-     secret: z.string()
+     secret: z.string(),
+     rgpd: z.boolean().refine((val) => val, {
+          message: "Vous devez accepter les conditions d'utilisation*"
+     })
 }).refine((data) => data.password === data.passwordConfirm, {
      message: "Les mots de passe ne correspondent pas*",
      path: ["passwordConfirm"],
