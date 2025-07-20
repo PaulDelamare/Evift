@@ -21,7 +21,6 @@ export const actions: Actions = {
 		}
 
 		const api = new GiftApi(event.fetch);
-		console.log(form.data.id);
 		const res = await api.deleteGift(form.data.id);
 
 		if ("error" in res) {
@@ -45,7 +44,6 @@ export const actions: Actions = {
 		}
 
 		const api = new GiftApi(event.fetch);
-		console.log(form.data.id);
 		const res = await api.deleteList(form.data.id);
 
 		if ("error" in res) {

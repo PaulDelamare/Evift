@@ -13,7 +13,6 @@ export const load = (async () => {
 
 export const actions: Actions = {
     addGift: async (event) => {
-        console.log('Here')
         const form = await superValidate(event.request, zod(addGiftSchema));
 
         if (!form.valid) {
@@ -27,7 +26,6 @@ export const actions: Actions = {
         }
 
         const api = new GiftApi(event.fetch);
-        console.log(form.data)
         const response = await api.addGift(form.data);
 
         if ('error' in response) {
