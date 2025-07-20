@@ -22,7 +22,7 @@ export const actions: Actions = {
         if (!form.data.gifts.length) {
             return message(form, {
                 error: 'Veuillez ajouter au moins un cadeau'
-            })
+            });
         }
 
         const api = new GiftApi(event.fetch);
