@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import DeleteButton from '$lib/components/extra/multiButton/DeleteButton.svelte';
+	import MultiButton from '$lib/components/extra/multiButton/MultiButton.svelte';
+	import { confirmDelete } from '$lib/functions/modal/confirmDelete';
 	import type { GetUser } from '$lib/models/user.model';
+	import { getModalStore, type ModalStore } from '@skeletonlabs/skeleton';
 
 	export let shadow =
 		'shadow-[31px_31px_82px_0_rgba(190,190,190,1),-31px_-31px_82px_0_rgba(255,255,255,1)]';
@@ -10,6 +14,9 @@
 	export let data: GetUser & { idDriver?: string };
 	export let addButton = false;
 	export let friends = false;
+	export let canDelete = false;
+
+	const modalStore: ModalStore = getModalStore();
 </script>
 
 <li
@@ -114,6 +121,29 @@
 					</div>
 				</div>
 			</form>
+		{:else if canDelete}
+			<MultiButton index={0} identification="gift" side="end">
+				<form
+					slot="summary"
+					on:submit={async (event) => {
+						const res = await confirmDelete(
+							event,
+							modalStore,
+							`Êtes vous sur de vouloir supprimer ${data.user.email} ?`
+						);
+
+						if (res.success) {
+							location.reload();
+						}
+					}}
+					method="POST"
+					action="?/deleteFriend"
+					class="p-2"
+				>
+					<input name="id" type="hidden" value={data.user.id} />
+					<DeleteButton customtext="Supprimer" />
+				</form>
+			</MultiButton>
 		{/if}
 	</div>
 </li>
