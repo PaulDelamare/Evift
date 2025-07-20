@@ -29,4 +29,30 @@ export default class FriendsApi extends Api {
 			throw error;
 		}
 	}
+
+	/**
+	 * Deletes a friend by their unique identifier.
+	 *
+	 * Sends a DELETE request to the server to remove the friend with the specified ID.
+	 * Handles errors by logging them and rethrowing for upstream handling.
+	 *
+	 * @param id - The unique identifier of the friend to delete.
+	 * @returns A promise that resolves to an {@link ApiResponse} containing the server's response.
+	 * @throws Will rethrow any errors encountered during the request.
+	 */
+	async deleteFriend(id: string): Promise<ApiResponse> {
+		try {
+			const response = await this.fetch(`${this.authUrl}delete/${id}`, {
+				method: 'DELETE',
+
+				credentials: 'include'
+			});
+
+
+			return await response.json();
+		} catch (error) {
+			catchErrorRequest(error, 'FriendsApi.deleteFriends');
+			throw error;
+		}
+	}
 }
