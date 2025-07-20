@@ -25,7 +25,6 @@ body {
 } */
 
 @layer base {
-	/* Define basic Wrap */
 	.wrap {
 		@apply w-full max-w-[1600px] mx-auto desk:max-w-[1300px];
 	}
@@ -34,7 +33,6 @@ body {
 		@apply w-full max-w-[1000px] mx-auto;
 	}
 
-	/* Basic style Balise */
 	h1 {
 		@apply text-4xl !font-leckerli tracking-widest inline leading-normal;
 	}
@@ -55,17 +53,14 @@ body {
 		@apply text-2xl !font-slab font-bold inline leading-tight;
 	}
 
-	/* Important Information */
 	span {
 		@apply !font-slab font-bold tracking-widest inline leading-normal;
 	}
 
-	/* For Date */
 	time {
 		@apply !font-condensed font-bold italic tracking-wider inline leading-normal;
 	}
 
-	/* Address */
 	address {
 		@apply !font-condensed !font-bold !inline !not-italic text-secondary-500;
 	}
@@ -81,7 +76,6 @@ body {
 		@apply text-2xl font-medium;
 	}
 
-	/* Number */
 	.number {
 		@apply text-3xl font-aoboshi;
 	}
@@ -92,7 +86,6 @@ body {
 		@apply bg-gradient;
 	}
 
-	/* Create Gradient for Text */
 	.text-gradient {
 		@apply bg-gradient bg-clip-text text-transparent;
 	}
@@ -101,7 +94,6 @@ body {
 		@apply bg-secondaryGradient bg-clip-text text-transparent;
 	}
 
-	/* Define Shadow for Box and Text */
 	.shadow-header {
 		@apply shadow-[0_0_10px_0_rgba(129,129,129,0.9)];
 	}
@@ -116,6 +108,19 @@ body {
 
 	.errorMessage {
 		@apply text-red-500 text-sm pt-2 font-medium;
+	}
+
+
+	.delete-multi-button {
+		@apply bg-surface-50 flex w-full items-center gap-2 rounded-md px-2 text-sm text-red-500 transition-all hover:bg-red-50;
+	}
+
+	.summary-button {
+		@apply bg-surface-50 h-fit border-e px-2 text-sm/none transition-all hover:bg-gray-100;
+	}
+
+	.basic-multi-button {
+		@apply bg-surface-50 block w-full rounded-lg px-4 py-2 text-start text-sm text-gray-500 transition-all hover:bg-gray-100 hover:text-gray-700;
 	}
 
 	/* Class combo */

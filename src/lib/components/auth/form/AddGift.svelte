@@ -7,7 +7,7 @@
 	import { page } from '$app/state';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import toast from 'svelte-french-toast';
-	import { giftSchema } from '$lib/validationSchema/gift.schema';
+	import { addGiftSchema } from '$lib/validationSchema/gift.schema';
 
 	export let action: string;
 
@@ -19,19 +19,21 @@
 		validateForm,
 		enhance,
 		form: formData
-	} = superForm(page.data.formCreateGift, {
-		validators: zodClient(giftSchema),
+	} = superForm(page.data.formAddGift, {
+		validators: zodClient(addGiftSchema),
 		dataType: 'json'
 	});
+
+	$formData.id = page.data.id_list;
 
 	$: if ($message) {
 		submitted = false;
 	}
 
 	$: if ($message && $message.success) {
-		toast.success($message.message);
+		toast.success($message.message || 'Operation successful.');
 
-		goto('/auth/gift');
+		goto('/auth/gift/list-' + page.data.id_list);
 	}
 
 	$: if ($message && $message.error) {
@@ -66,18 +68,6 @@
 		{action}
 		class=" w-full mr-auto flex flex-col px-4 gap-8 wrap"
 	>
-		<div class="w-full">
-			<input
-				class="bg-surface-400 border-none rounded shadow-md w-full"
-				name="name"
-				placeholder="Nom de la liste"
-				bind:value={$formData.name}
-			/>
-
-			{#if $errors?.name}
-				<span class="errorMessage">{$errors?.name}</span>
-			{/if}
-		</div>
 		{#each $formData.gifts as v, i}
 			<div class="flex flex-col gap-4 bg-surface-50 p-4 rounded-xl relative">
 				<div class="pl-2">
@@ -131,7 +121,7 @@
 				</div>
 			</div>
 		{/each}
-		
+		<input type="hidden" name="id" value={$formData.id} />
 		<button
 			class="bg-primary-400 text-surface-500 px-3 py-2 rounded-lg flex items-center gap-2 justify-center"
 			type="button"
@@ -141,7 +131,7 @@
 		<div>
 			<div class="max-w-[300px] mx-auto">
 				<Submit {submitted} textSubmit="Créer" />
-				{#if $message &&  $message.error}
+				{#if $message && $message.error}
 					<p class="errorMessage">{$message.error}</p>
 				{/if}
 			</div>

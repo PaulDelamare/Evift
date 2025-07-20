@@ -17,8 +17,30 @@ export const giftSchema = z.object({
           z.object({
                name: z.string({ message: "Le nom est requis*" }).min(2, { message: "Le nom doit contenir au moins 2 caractères" }).max(100, { message: "Le nom ne doit pas dépasser 100 caractères" }),
                quantity: z.number({ message: "La quantité est requise*" }).min(1, { message: "La quantité minimale est 1" }).max(1000, { message: "La quantité maximale est 1000" }),
-               url: z.string({ message: "L'URL est requise*" }).url({message: 'L\'URL doit être valide'}).nullable().transform((value) => {
-                    return value === "" ? null : value;
-               })
+               url: z.string({ message: "L'URL est requise*" })
+                    .optional()
+                    .nullable()
+                    .refine(
+                         (value) => value === null || value === "" || z.string().url().safeParse(value).success,
+                         { message: "L'URL doit être valide" }
+                    )
+                    .transform((value) => value === "" ? null : value)
+          }).array()
+});
+
+export const addGiftSchema = z.object({
+     id: z.string().uuid('Id invalide*'),
+     gifts:
+          z.object({
+               name: z.string({ message: "Le nom est requis*" }).min(2, { message: "Le nom doit contenir au moins 2 caractères" }).max(100, { message: "Le nom ne doit pas dépasser 100 caractères" }),
+               quantity: z.number({ message: "La quantité est requise*" }).min(1, { message: "La quantité minimale est 1" }).max(1000, { message: "La quantité maximale est 1000" }),
+               url: z.string({ message: "L'URL est requise*" })
+                    .optional()
+                    .nullable()
+                    .refine(
+                         (value) => value === null || value === "" || z.string().url().safeParse(value).success,
+                         { message: "L'URL doit être valide" }
+                    )
+                    .transform((value) => value === "" ? null : value)
           }).array()
 });

@@ -49,7 +49,7 @@
 		invitations = [fakeUserInvitation];
 		if ($friendPage) {
 			event = false;
-		}else {
+		} else {
 			event = true;
 		}
 	}

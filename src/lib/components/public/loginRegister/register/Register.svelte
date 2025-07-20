@@ -17,7 +17,6 @@
 	});
 
 	$: if ($message && $message.success) {
-
 		toast.success($message.message);
 		submitted = false;
 
@@ -34,6 +33,12 @@
 
 {#if !loginActivated}
 	<FormRegister
+		errorRgpd={Array.isArray($errors?.rgpd)
+			? $errors.rgpd[0]
+			: typeof $errors?.rgpd === 'string'
+				? $errors.rgpd
+				: undefined}
+		rgpd
 		bind:submitted
 		{PUBLIC_CAPTCHA_KEY}
 		title="Inscription"

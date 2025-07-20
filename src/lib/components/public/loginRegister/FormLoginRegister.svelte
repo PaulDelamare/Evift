@@ -5,6 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import Captcha from '$lib/components/extra/captcha/Captcha.svelte';
 	import { enhance } from '$app/forms';
+	import CustomCheckbox from '$lib/components/extra/CustomCheckbox.svelte';
 
 	export let title = '';
 	export let inputs: FormInput[];
@@ -14,12 +15,14 @@
 	export let forgotPassword = false;
 	export let submitted = false;
 	export let PUBLIC_CAPTCHA_KEY: string;
+	export let rgpd = false;
+	export let errorRgpd: string | undefined = undefined;
 
 	let captchaSubmit: Captcha;
 	let token = '';
 	let innerWidth = 0;
 	let duration = 500;
-	
+
 	$: {
 		if (innerWidth < 850) {
 			duration = 0;
@@ -34,7 +37,7 @@
 <svelte:window bind:innerWidth />
 
 <div
-	class="mobile-large:p-8 mobile:px-4 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl"
+	class="mobile-large:p-8 mobile:px-4 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl min-h-[744.5px]"
 	in:fade={{ duration: 1000 }}
 	out:fade={{ duration }}
 >
@@ -85,6 +88,24 @@
 
 		{#if forgotPassword}
 			<a class="self-end text-secondary-500" href="/">Mot de passe oublie ?</a>
+		{/if}
+
+		{#if rgpd}
+			<label for="rgpd" class="text-gradient flex items-center gap-1 font-medium">
+				<CustomCheckbox classCheck="!scale-50" name="rgpd" />
+
+				J'accepte la
+				<div>
+					<a href="/privacy" class="">politique de confidentialité</a>
+					<div class="h-[2px] w-full gradient"></div>
+				</div>
+			</label>
+
+			{#if errorRgpd}
+				<p in:fade={{ duration: 200 }} class="errorMessage">
+					{errorRgpd}
+				</p>
+			{/if}
 		{/if}
 
 		<Submit {textSubmit} bind:submitted />
