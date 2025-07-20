@@ -171,4 +171,79 @@ export default class GiftApi extends Api {
 			throw error;
 		}
 	};
+
+	/**
+	 * Deletes a gift by its ID.
+	 *
+	 * Sends a DELETE request to the server to remove the specified gift.
+	 * Handles errors by logging them and rethrowing.
+	 *
+	 * @param id - The unique identifier of the gift to delete.
+	 * @returns A promise that resolves to an {@link ApiResponse} indicating the result of the operation.
+	 * @throws Will throw an error if the request fails.
+	 */
+	deleteGift = async (id: string): Promise<ApiResponse> => {
+		try {
+
+			const response = await this.fetch(`${this.authUrl}deleteGift/${id}`, {
+				method: 'DELETE',
+				credentials: 'include'
+			});
+
+			return await response.json() as ApiResponse;
+
+		} catch (error) {
+			catchErrorRequest(error, 'GiftApi.deleteGift');
+			throw error;
+		}
+	}
+
+	/**
+	 * Deletes a gift list by its unique identifier.
+	 *
+	 * Sends a DELETE request to the server to remove the specified gift list.
+	 * Handles errors by logging them and rethrowing the exception.
+	 *
+	 * @param id - The unique identifier of the gift list to delete.
+	 * @returns A promise that resolves to an {@link ApiResponse} indicating the result of the operation.
+	 * @throws Will rethrow any error encountered during the request.
+	 */
+	deleteList = async (id: string): Promise<ApiResponse> => {
+		try {
+			const response = await this.fetch(`${this.authUrl}deleteList/${id}`, {
+				method: 'DELETE',
+				credentials: 'include'
+			});
+			return await response.json() as ApiResponse;
+		} catch (error) {
+			catchErrorRequest(error, 'GiftApi.deleteList');
+			throw error;
+		}
+	}
+
+	/**
+	 * Adds a new gift to the specified user's gift list.
+	 *
+	 * @param body - An object containing the user ID and an array of gifts to add.
+	 * Each gift includes a name, quantity, and an optional URL.
+	 * @returns A promise that resolves to an `ApiResponse` indicating the result of the operation.
+	 * @throws Will throw an error if the request fails.
+	 */
+	addGift = async (body: {
+		id: string;
+		gifts: { name: string; quantity: number; url?: string | null }[];
+	}): Promise<ApiResponse> => {
+		try {
+			const response = await this.fetch(`${this.authUrl}addGift/${body.id}`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				credentials: 'include',
+				body: JSON.stringify(body)
+			});
+			return await response.json() as ApiResponse;
+		} catch (error) {
+			catchErrorRequest(error, 'GiftApi.addGift');
+			throw error;
+		}
+	}
 }
