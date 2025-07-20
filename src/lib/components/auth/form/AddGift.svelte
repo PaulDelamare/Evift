@@ -31,7 +31,7 @@
 	}
 
 	$: if ($message && $message.success) {
-		toast.success($message.message);
+		toast.success($message.message || 'Operation successful.');
 
 		goto('/auth/gift/list-' + page.data.id_list);
 	}
