@@ -234,7 +234,7 @@ export default class GiftApi extends Api {
 		gifts: { name: string; quantity: number; url?: string | null }[];
 	}): Promise<ApiResponse> => {
 		try {
-			const response = await this.fetch(`${this.authUrl}addGift/${body.id}`, {
+			const response = await this.fetch(`${this.authUrl}addGift`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
