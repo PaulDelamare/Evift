@@ -95,7 +95,6 @@
 
 	<section class="wrap px-4 flex flex-col gap-8">
 		<FriendsInvitationList
-			friends
 			shadow="shadow-[15px_15px_60px_0_rgba(190,190,190,1),-15px_-15px_60px_0_rgba(255,255,255,1)]"
 			sizeImg="size-12"
 			dataArray={paginatedSource}

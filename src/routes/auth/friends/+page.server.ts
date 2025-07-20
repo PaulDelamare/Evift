@@ -97,5 +97,30 @@ export const actions: Actions = {
 		}
 
 		return JSON.stringify({ success: true });
+	},
+
+	deleteFriend: async (event) => {
+
+		const form = await superValidate(event, zod(uuidSchema));
+
+		if (!form.valid) {
+			return JSON.stringify({
+				error: 'Formulaire invalide, veuillez vérifier les champs.'
+			});
+		}
+
+		const api = new FriendsApi(event.fetch);
+		const res = await api.deleteFriend(form.data.id);
+
+		if ('error' in res) {
+			return JSON.stringify({
+				error: res.error ? res.error.error : 'Unknown error occurred'
+			});
+		}
+
+		return JSON.stringify({
+			status: 200,
+			success: true
+		});
 	}
 };

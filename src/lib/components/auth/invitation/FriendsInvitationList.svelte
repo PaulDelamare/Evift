@@ -20,7 +20,7 @@ The component get invitation from the server
  -->
 <ul class="column gap-12 {friends ? 'gap-4' : ''}">
 	{#each dataArray as data}
-		<User {friends} {data} {button} {shadow} {sizeImg} />
+		<User canDelete {friends} {data} {button} {shadow} {sizeImg} />
 	{:else}
 		<h4>{nothingMessage}</h4>
 	{/each}
