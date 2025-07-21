@@ -16,9 +16,6 @@
 
 	export let parent: SvelteComponent;
 
-	let innerWidth: number;
-	let innerHeight: number;
-
 	const cBase =
 		'card p-4 py-12 w-[75%] max-h-[95svh] shadow-xl space-y-4 column justify-center bg-surface-500 rounded-2xl relative mini-tablet:w-11/12 z-0  overflow-hidden';
 
@@ -55,8 +52,6 @@
 		);
 	});
 </script>
-
-<svelte:window bind:innerWidth bind:innerHeight />
 
 <!-- @component Creates a simple form modal. -->
 {#if $modalStore[0]}
