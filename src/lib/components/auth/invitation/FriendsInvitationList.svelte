@@ -10,6 +10,7 @@
 
 	export let friends = false;
 	export let nothingMessage = "Vous ne possédez pour l'instant aucun ami.";
+	export let successDelete: () => void = () => {};
 </script>
 
 <!-- @component
@@ -20,8 +21,8 @@ The component get invitation from the server
  -->
 <ul class="column gap-12 {friends ? 'gap-4' : ''}">
 	{#each dataArray as data}
-		<User canDelete {friends} {data} {button} {shadow} {sizeImg} />
+		<User canDelete {friends} {data} {button} {shadow} {sizeImg} {successDelete} />
 	{:else}
-		<h4>{nothingMessage}</h4>
+		<h4 class="text-center">{nothingMessage}</h4>
 	{/each}
 </ul>
