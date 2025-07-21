@@ -3,16 +3,14 @@
 	import { browser } from '$app/environment';
 	import 'driver.js/dist/driver.css';
 	import { driver } from './driver';
-
-	let innerWidth = 0;
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	onMount(async () => {
 		if (!browser) return;
 
-		if (innerWidth && innerWidth > 1150) {
+		if ($innerWidthStore && $innerWidthStore > 1150) {
 			driver.drive();
+
 		}
 	});
 </script>
-
-<svelte:window bind:innerWidth />
