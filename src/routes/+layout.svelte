@@ -7,6 +7,7 @@
 	import { modalComponentRegistry } from '$lib/components/modal/allModal';
 	import InstallButton from '$lib/components/utils/InstallButton.svelte';
 	import { Toaster } from 'svelte-french-toast';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	initializeStores();
 	const modalStore = getModalStore();
@@ -14,9 +15,15 @@
 	function handlePopstate() {
 		modalStore.close();
 	}
+
+	let innerWidth = 0;
+
+	$: if (innerWidth) {
+		innerWidthStore.set(innerWidth);
+	}
 </script>
 
-<svelte:window on:popstate={handlePopstate} />
+<svelte:window bind:innerWidth on:popstate={handlePopstate} />
 
 <CustomAppShell
 	headerSticky
