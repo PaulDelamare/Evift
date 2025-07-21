@@ -14,6 +14,7 @@
 	import { driver } from '$lib/driver/driver';
 	import { fakeUserInvitation } from '$lib/driver/fakeInvitation';
 	import { friendPage } from '$lib/driver/storeDriver';
+	import NotificationCircle from '$lib/components/extra/notificationCircle/NotificationCircle.svelte';
 
 	export let data: PageData;
 	const user = data.user;
@@ -21,8 +22,8 @@
 	let event = true;
 	let eventInvitations = data.invitationsEvent;
 	let invitations: Invitation[] = data.invitations;
-
-	const imgUrl = data.imgUrl;
+	let notificationFriends = data.notificationFriends;
+	let notificationEvents = data.notificationEvents;
 
 	const { message } = superForm(data.formInvitationUser, {
 		validators: zodClient(responseInvitationSchema),
@@ -35,6 +36,8 @@
 		invalidateAll().then(() => {
 			invitations = data.invitations;
 			eventInvitations = data.invitationsEvent;
+			notificationFriends = data.notificationFriends;
+			notificationEvents = data.notificationEvents;
 		});
 
 		$message.success = false;
@@ -61,9 +64,12 @@
 			on:click={() => (event = true)}
 			class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {event
 				? 'bg-gradient text-surface-500'
-				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full"
+				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full relative"
 		>
 			<p class="nav">Evenement</p>
+
+			<NotificationCircle notification={notificationEvents} active={event} />
+
 		</button>
 
 		<button
@@ -77,9 +83,12 @@
 			}}
 			class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {!event
 				? 'bg-gradient text-surface-500'
-				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full text-surface-500"
+				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full text-surface-500 relative"
 		>
 			<p class="nav">Amis</p>
+
+			<NotificationCircle notification={notificationFriends} active={!event} />
+
 		</button>
 	</div>
 
