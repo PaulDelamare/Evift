@@ -1,47 +1,32 @@
 <script lang="ts">
-	// Imports
+
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import type { SvelteComponent } from 'svelte';
 	import CloseModalButton from './CloseModalButton.svelte';
 	import Input from '../form/Input.svelte';
 	import Submit from '../form/Submit.svelte';
 
-	// Stores
 	const modalStore = getModalStore();
 
-	// Props
-	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
-
-	// Variable
-	let innerWidth: number;
-	let innerHeight: number;
 	let submitted = false;
 
-	// Base Classes
 	const cBase =
 		'card p-4 py-12 w-[75%] max-h-[95svh] shadow-xl space-y-4 column justify-center bg-surface-500 rounded-2xl relative mini-tablet:w-11/12 z-0  overflow-hidden';
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight />
-
 <!-- @component Creates a simple form modal. -->
 {#if $modalStore[0]}
-	<!-- Component Modal -->
 	<div class={cBase}>
-		<!-- Background style  -->
-		<!-- Close Button -->
 		<CloseModalButton {parent} classSVG="fill-secondary-500" />
-		<!-- Content in Modal -->
+
 		<div class="column gap-12 mini-tablet:gap-8 w-full mx-auto max-w-[565px]">
-			<!-- Title -->
 			<div class="text-center text-gradient">
 				<h2 class="tablet:text-3xl tracking-normal">Contactez nous !</h2>
 			</div>
-			<!--  Form Contact -->
+
 			<form class="column gap-8 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8">
 				<Input value="" name="email" label="Email" />
-				<!-- Bloc with message -->
 				<Input
 					classInput="min-h-[180px] tablet:min-h-[130px]"
 					type="content"
@@ -49,7 +34,6 @@
 					name="message"
 					label="Contenu du message"
 				/>
-				<!-- Display Submit -->
 				<Submit textSubmit="Envoyer" bind:submitted />
 			</form>
 		</div>
