@@ -29,11 +29,7 @@
 				if (data.success) {
 					invalidateAll().then(() => {
 						toast.success('Tutoriel complété !');
-						setTimeout(() => {
-							goto('/auth/event').then(() => {
-								location.reload();
-							});
-						}, 500);
+						goto('/auth/event', { invalidateAll: true });
 					});
 				} else if ('error' in data) {
 					toast.error("Une erreur s'est produite");
@@ -377,7 +373,7 @@
 					onHighlightStarted: () => {
 						goto('/auth/friends');
 					},
-					disableActiveInteraction: true,
+					disableActiveInteraction: true
 				}
 			]
 		});
