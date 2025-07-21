@@ -12,8 +12,12 @@
 
 	let search = '';
 	let events = data.allEvent;
-	const imgUrl = data.imgUrl;
-	const user = data.user;
+	let user = data.user;
+
+	$: if (data.user && !data.user.firstLogin) {
+		user = data.user;
+		events = data.allEvent;
+	}
 
 	let paginationSettings = {
 		page: 0,

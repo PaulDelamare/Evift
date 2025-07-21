@@ -116,7 +116,7 @@ export const actions: Actions = {
 				httpOnly: true,
 				maxAge: 5 * 60 * 60
 			});
-			throw redirect(302, '/auth/event');
+			throw redirect(303, '/auth/event');
 		}
 
 		return message(form, {

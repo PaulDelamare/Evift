@@ -1,8 +1,10 @@
-import { type Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import UserApi from '$lib/server/user.server';
 
 export const load = (async () => {
+
+    redirect(303, '/auth/event');
     return {};
 }) satisfies PageServerLoad;
 

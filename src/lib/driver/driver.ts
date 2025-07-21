@@ -6,10 +6,31 @@ const mod = await import('driver.js');
 const createDriver = mod.driver;
 
 export const driver = createDriver({
-     allowClose: false,
+     allowClose: true,
      showProgress: true,
 
+     onDestroyed: async () => {
+          const response = await fetch('/auth/friends?/completeFirstLogin', {
+               method: 'POST',
+               headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+               },
+               body: ''
+          });
+          const json = await response.json();
+          const data = JSON.parse(JSON.parse(json.data));
+          if (data.success) {
+               invalidateAll().then(() => {
+                    toast.success('Tutoriel complété !');
+                    goto('/auth/event', { invalidateAll: true })
+               });
+          } else if ('error' in data) {
+               toast.error("Une erreur s'est produite");
+          }
+     },
+
      steps: [
+
           // Page Evenement
           {
                popover: {
@@ -330,30 +351,7 @@ export const driver = createDriver({
                     closeModal.set(true);
                     goto('/auth/friends');
                },
-               disableActiveInteraction: true,
-               onDeselected: async () => {
-                    const response = await fetch('?/completeFirstLogin', {
-                         method: 'POST',
-                         headers: {
-                              'Content-Type': 'application/x-www-form-urlencoded'
-                         },
-                         body: ''
-                    });
-                    const json = await response.json();
-                    const data = JSON.parse(JSON.parse(json.data));
-                    if (data.success) {
-                         invalidateAll().then(() => {
-                              toast.success('Tutoriel complété !');
-                              setTimeout(() => {
-                                   goto('/auth/event').then(() => {
-                                        location.reload();
-                                   });
-                              }, 1000);
-                         });
-                    } else if ('error' in data) {
-                         toast.error("Une erreur s'est produite");
-                    }
-               }
+               disableActiveInteraction: true
           }
      ]
 });

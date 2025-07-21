@@ -17,6 +17,7 @@
 	import toast from 'svelte-french-toast';
 	import { fakeFriends } from '$lib/driver/fakeFriends';
 	import { openAddFriend } from '$lib/driver/storeDriver';
+	import { invalidateAll } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -72,6 +73,12 @@
 	$: if ($openAddFriend) {
 		renderModal(modalStore, 'FindUserByEmail', 'Contact', 'Contactez nous');
 	}
+
+	const successDelete = () => {
+		invalidateAll().then(() => {
+			friends = data.friends;
+		});
+	};
 </script>
 
 <PageLayout padding="py-12" gap="gap-12">
@@ -99,6 +106,7 @@
 			sizeImg="size-12"
 			dataArray={paginatedSource}
 			button={false}
+			{successDelete}
 		/>
 		{#if paginatedSource.length > 0}
 			<Paginator

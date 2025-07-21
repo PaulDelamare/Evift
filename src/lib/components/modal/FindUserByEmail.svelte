@@ -18,8 +18,6 @@
 
 	const me = page.data.user;
 
-	let innerWidth: number;
-	let innerHeight: number;
 	let submitted = false;
 	let inputValue = '';
 
@@ -54,8 +52,6 @@
 		closeModal.set(false);
 	}
 </script>
-
-<svelte:window bind:innerWidth bind:innerHeight />
 
 <!-- @component Creates a simple form modal. -->
 {#if $modalStore[0]}

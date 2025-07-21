@@ -6,6 +6,7 @@
 	import Captcha from '$lib/components/extra/captcha/Captcha.svelte';
 	import { enhance } from '$app/forms';
 	import CustomCheckbox from '$lib/components/extra/CustomCheckbox.svelte';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	export let title = '';
 	export let inputs: FormInput[];
@@ -20,11 +21,10 @@
 
 	let captchaSubmit: Captcha;
 	let token = '';
-	let innerWidth = 0;
 	let duration = 500;
 
 	$: {
-		if (innerWidth < 850) {
+		if ($innerWidthStore < 850) {
 			duration = 0;
 		} else {
 			duration = 500;
@@ -34,7 +34,6 @@
 
 <Captcha {PUBLIC_CAPTCHA_KEY} bind:this={captchaSubmit} bind:token />
 
-<svelte:window bind:innerWidth />
 
 <div
 	class="mobile-large:p-8 mobile:px-4 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl min-h-[744.5px]"

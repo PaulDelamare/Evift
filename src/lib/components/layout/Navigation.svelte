@@ -22,6 +22,8 @@
 
 	$: if (user && user.firstLogin) {
 		totalNotification = 2;
+	} else if (user && !user.firstLogin) {
+		totalNotification = notificationEvents + notificationFriends;
 	}
 
 	let nav: { text: string; path: string; start: boolean; id: string }[] = [];
@@ -98,7 +100,16 @@
 <nav class={navC}>
 	<ul class={ulC}>
 		{#each nav as item}
-			<li id="{item.id}{responsive ? "-responsive" : ""}" class="{liC} {item.text === 'Invitation' && !contact ? 'relative' : ''} {item.text === 'Invitation' && !contact && totalNotification > 0 ? 'pt-2 pr-6' : ''}">
+			<li
+				id="{item.id}{responsive ? '-responsive' : ''}"
+				class="{liC} {item.text === 'Invitation' && !contact ? 'relative' : ''} {item.text ===
+					'Invitation' &&
+				!contact &&
+				totalNotification > 0 &&
+				!responsive
+					? 'pt-2 pr-6'
+					: ''}"
+			>
 				<a
 					on:click={changePage}
 					aria-current={item.start
@@ -120,7 +131,9 @@
 				{#if item.text === 'Invitation' && !contact && totalNotification > 0}
 					<div
 						id="notificationNumber"
-						class="absolute -z-10 -top-[0px] leading-none p-2 -right-[0px] text-surface-500 bg-secondary-500/80 size-6 flex justify-center items-center rounded-full"
+						class="absolute -z-10 -top-[0px] leading-none p-2 -right-[0px] text-surface-500 bg-secondary-500/80 size-6 flex justify-center items-center rounded-full {responsive
+							? 'bg-surface-500 !text-secondary-500 left-[65%] top-1/4'
+							: ''}"
 					>
 						<span>
 							{totalNotification < 9 ? totalNotification : '9+'}
