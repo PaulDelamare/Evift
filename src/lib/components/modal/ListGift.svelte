@@ -12,9 +12,6 @@
 	/** Exposes parent props to this component. */
 	export let parent: SvelteComponent;
 
-	let innerWidth: number;
-	let innerHeight: number;
-
 	const lists: List[] = page.data.lists;
 	const event = page.data.event;
 	let listsEvent = page.data.listsEvent as EventListData[];
@@ -43,8 +40,6 @@
 		return list.name.toLowerCase().includes(search.toLowerCase());
 	});
 </script>
-
-<svelte:window bind:innerWidth bind:innerHeight />
 
 <!-- @component Add a gift list to event -->
 {#if $modalStore[0]}
