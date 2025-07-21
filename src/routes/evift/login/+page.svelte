@@ -3,6 +3,7 @@
 	import Login from '$lib/components/public/loginRegister/login/Login.svelte';
 	import Register from '$lib/components/public/loginRegister/register/Register.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -11,7 +12,6 @@
 	let loginActivated = true;
 	let email = '';
 
-	let innerWidth = 0;
 
 	// Functions
 	/**
@@ -23,7 +23,7 @@
 	 */
 	const handleActivate = () => {
 		loginActivated = !loginActivated;
-		if (innerWidth < 850) {
+		if ($innerWidthStore < 850) {
 			const element: HTMLElement | null = document.querySelector('#top');
 			if (element) {
 				scrollToTop(element);
@@ -57,7 +57,6 @@
 	};
 </script>
 
-<svelte:window bind:innerWidth />
 
 <PageLayout padding="py-12 flex flex-col justify-center">
 	<!-- Wrap container -->
