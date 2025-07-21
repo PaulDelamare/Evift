@@ -5,7 +5,8 @@
 	import { confirmDelete } from '$lib/functions/modal/confirmDelete';
 	import { getModalStore, type ModalStore } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
+	import ConfirmDelete from '$lib/components/auth/form/ConfirmDelete.svelte';
 
 	export let data: PageData;
 
@@ -21,6 +22,12 @@
 	});
 
 	const modalStore: ModalStore = getModalStore();
+
+	const successDelete = () => {
+		invalidateAll().then(() => {
+			list = data.gifts;
+		});
+	};
 </script>
 
 <PageLayout padding="py-8">
@@ -77,50 +84,22 @@
 													<a href={gift.url} target="_blank">Accéder</a>
 												</button>
 											{:else}
-												<form
-													on:submit={async (event) => {
-														const res = await confirmDelete(
-															event,
-															modalStore,
-															`Êtes vous sur de vouloir supprimer ${gift.name} ?`
-														);
-														if (res.success) {
-															invalidateAll().then(() => {
-																list = data.gifts;
-															});
-														}
-													}}
-													method="POST"
+												<ConfirmDelete
+													id={gift.id}
+													name={gift.name}
 													action="?/deleteGift"
-													class="p-2"
-												>
-													<input name="id" type="hidden" value={gift.id} />
-													<DeleteButton />
-												</form>
+													{successDelete}
+												/>
 											{/if}
 										</div>
 
 										{#if gift.url}
-											<form
-												on:submit={async (event) => {
-													const res = await confirmDelete(
-														event,
-														modalStore,
-														`Êtes vous sur de vouloir supprimer ${gift.name} ?`
-													);
-													if (res.success) {
-														invalidateAll().then(() => {
-															list = data.gifts;
-														});
-													}
-												}}
-												method="POST"
+											<ConfirmDelete
+												id={gift.id}
+												name={gift.name}
 												action="?/deleteGift"
-												class="p-2"
-											>
-												<input name="id" type="hidden" value={gift.id} />
-												<DeleteButton />
-											</form>
+												{successDelete}
+											/>
 										{/if}
 									</MultiButton>
 								</li>
