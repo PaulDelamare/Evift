@@ -22,9 +22,7 @@ export const driver = createDriver({
           if (data.success) {
                invalidateAll().then(() => {
                     toast.success('Tutoriel complété !');
-                    setTimeout(() => {
-                         goto('/auth/event', {invalidateAll: true})
-                    }, 500);
+                    goto('/auth/event', { invalidateAll: true })
                });
           } else if ('error' in data) {
                toast.error("Une erreur s'est produite");
