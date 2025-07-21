@@ -4,19 +4,41 @@
 	import 'driver.js/dist/driver.css';
 	import { closeModal, friendPage, openAddFriend, openBurger } from './storeDriver';
 	import { driver } from './driver';
-	import { goto, invalidateAll } from '$app/navigation';
-	import { writable } from 'svelte/store';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import toast from 'svelte-french-toast';
-
-	let innerWidth = 0;
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	onMount(async () => {
 		const mod = await import('driver.js');
 		const createDriver = mod.driver;
 
 		const driverResponsive = createDriver({
-			allowClose: false,
+			allowClose: true,
 			showProgress: true,
+
+			onDestroyed: async () => {
+				const response = await fetch('/auth/friends?/completeFirstLogin', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: ''
+				});
+				const json = await response.json();
+				const data = JSON.parse(JSON.parse(json.data));
+				if (data.success) {
+					invalidateAll().then(() => {
+						toast.success('Tutoriel complété !');
+						setTimeout(() => {
+							goto('/auth/event').then(() => {
+								location.reload();
+							});
+						}, 500);
+					});
+				} else if ('error' in data) {
+					toast.error("Une erreur s'est produite");
+				}
+			},
 
 			steps: [
 				{
@@ -356,40 +378,15 @@
 						goto('/auth/friends');
 					},
 					disableActiveInteraction: true,
-					onDeselected: async () => {
-						const response = await fetch('?/completeFirstLogin', {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/x-www-form-urlencoded'
-							},
-							body: ''
-						});
-						const json = await response.json();
-						const data = JSON.parse(JSON.parse(json.data));
-						if (data.success) {
-							invalidateAll().then(() => {
-								toast.success('Tutoriel complété !');
-								setTimeout(() => {
-									goto('/auth/event').then(() => {
-										location.reload();
-									});
-								}, 1000);
-							});
-						} else if ('error' in data) {
-							toast.error("Une erreur s'est produite");
-						}
-					}
 				}
 			]
 		});
 		if (!browser) return;
 
-		if (innerWidth && innerWidth <= 1150) {
+		if ($innerWidthStore && $innerWidthStore <= 1150) {
 			driverResponsive.drive();
 		} else {
 			driver.destroy();
 		}
 	});
 </script>
-
-<svelte:window bind:innerWidth />
