@@ -26,6 +26,7 @@
 	$: if ($message && $message.error) {
 		toast.error($message.error);
 		submitted = false;
+		$message.error = null;
 	}
 
 	let submitted = false;
