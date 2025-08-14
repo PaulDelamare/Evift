@@ -30,21 +30,25 @@ self.addEventListener('activate', event => {
      );
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', async event => {
      if (event.request.url.includes('/api/') ||
           event.request.url.includes('/uploads/')) {
           return;
      }
 
-     event.respondWith(
-          fetch(event.request)
-               .catch(() => {
-                    return caches.match(event.request)
-                         .then(cachedResponse => {
-                              return cachedResponse || new Response('Not found', { status: 404 });
-                         });
-               })
-     );
+     event.respondWith((async () => {
+          try {
+               const response = await fetch(event.request);
+               return response;
+          } catch (error) {
+               const cachedResponse = await caches.match(event.request);
+               if (cachedResponse) {
+                    return cachedResponse;
+               }
+               // Redirige vers la page d'erreur SvelteKit
+               return Response.redirect('/error?status=400&message=Vous%20%C3%AAtes%20hors%20ligne', 302);
+          }
+     })());
 });
 
 self.addEventListener('message', event => {
