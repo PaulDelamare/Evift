@@ -68,7 +68,16 @@ body {
 	/* Navigation */
 	/*! For add transition Add duration !*/
 	.nav {
-		@apply text-2xl !font-condensed font-bold inline leading-normal custom-transition !duration-0;
+		font-size : clamp(1.1rem, 1.5vw, 1.5rem);
+		@apply !font-condensed font-bold inline leading-normal custom-transition !duration-0;
+		
+	}
+
+	input:focus,
+	input:active,
+	textarea:focus,
+	textarea:active {
+		@apply !border-b-light-blue-500 !outline-0;
 	}
 
 	/* Text on Home page */
@@ -87,7 +96,7 @@ body {
 	}
 
 	.text-gradient {
-		@apply bg-gradient bg-clip-text text-transparent;
+		@apply !bg-gradient !bg-clip-text !text-transparent;
 	}
 
 	.text-gradient-secondary {
@@ -165,9 +174,9 @@ body {
 			@apply text-3xl;
 		}
 
-		.nav {
+		/* .nav {
 			@apply text-xl;
-		}
+		} */
 
 		.information {
 			@apply text-xl;
