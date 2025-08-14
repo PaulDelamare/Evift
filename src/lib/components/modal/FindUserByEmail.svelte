@@ -21,7 +21,7 @@
 	let submitted = false;
 	let inputValue = '';
 
-	const { message, enhance, errors } = superForm(page.data.form);
+	const { message, enhance, errors, form } = superForm(page.data.form);
 
 	let user = $message?.user;
 
@@ -45,12 +45,13 @@
 	}
 
 	const cBase =
-		'card p-4 py-12 w-[75%] max-h-[95svh] shadow-xl space-y-4 column justify-center bg-surface-500 rounded-2xl relative mini-tablet:w-11/12 z-0';
+		'card p-2 py-12 w-[75%] max-h-[95svh] shadow-xl space-y-4 column justify-center bg-surface-500 rounded-2xl relative mini-tablet:w-11/12 z-0';
 
 	$: if ($closeModal) {
 		modalStore.close();
 		closeModal.set(false);
 	}
+
 </script>
 
 <!-- @component Creates a simple form modal. -->
@@ -68,7 +69,17 @@
 				class="column gap-8 w-full py-4 max-h-[50svh] overflow-y-auto mini-tablet:gap-8 overflow-x-hidden"
 			>
 				<div class="w-full">
-					<Input value={inputValue} name="email" label="Email" />
+					<Input
+						onInputFunc={(e) => {
+							if (e.target) {
+								// @ts-ignore
+								inputValue = e.target.value;
+							}
+						}}
+						value={inputValue.toLowerCase()}
+						name="email"
+						label="Email"
+					/>
 					{#if $errors.email}
 						<span class="errorMessage">{$errors.email}</span>
 					{/if}
@@ -80,8 +91,32 @@
 					<span class="errorMessage">{$message.error}</span>
 				{/if}
 			</form>
-			{#if user}
+			{#if user && !('error' in user.user)}
 				<User data={user} button={false} sizeImg="size-20" addButton />
+			{:else if user && 'error' in user.user}
+				<div
+					class="max-w-md mx-auto bg-surface-50 border border-primary-200 rounded-lg shadow-sm p-2 flex flex-col items-center gap-4 text-center"
+				>
+					<h2 class="text-primary-700 font-semibold text-lg">Aucun utilisateur trouvé</h2>
+
+					<p class="text-primary-500 font-bold text-base">
+						{inputValue.toLowerCase()}
+					</p>
+
+					<p class="text-secondary-500 text-sm">
+						Vous pouvez inviter cette personne à rejoindre la plateforme.
+					</p>
+
+					<form use:enhance method="POST" action="?/requestFriend" class="mt-2 w-full">
+						<input type="hidden" name="email" value={inputValue.toLowerCase()} />
+						<button
+							type="submit"
+							class="w-full py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition font-medium"
+						>
+							Inviter
+						</button>
+					</form>
+				</div>
 			{/if}
 		</div>
 	</div>
