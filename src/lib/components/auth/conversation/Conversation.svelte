@@ -38,7 +38,7 @@
 
 <svelte:window bind:innerHeight />
 
-<div class="flex h-full [max-height:_calc(100vh_-_79px)] overflow-hidden">
+<div class="flex h-full [min-height:_calc(100vh_-_79px)] overflow-hidden">
 	<!-- Main Chat Area -->
 	<div class="flex-1 flex flex-col justify-between">
 		<!-- Chat Header -->
