@@ -13,7 +13,7 @@
 
 			<Logo white text link />
 
-			<Navigation hoverFooter aClass="text-surface-500" contact ulClass="gap-8 flex-col" />
+			<Navigation hover = {false} hoverFooter aClass="text-surface-500" contact ulClass="gap-8 flex-col items-center" />
 
 			<Network />
 		</div>
