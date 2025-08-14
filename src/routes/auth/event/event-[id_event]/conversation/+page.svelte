@@ -23,6 +23,8 @@
 	const eventId = data.event.id_event;
 	const user = data.user as User;
 	const event = data.event;
+	const token = data.token;
+	const urlWs = data.urlWs;
 
 	let conversationComponent: Conversation;
 
@@ -31,18 +33,31 @@
 	let element: HTMLElement;
 
 	onMount(() => {
-		ws = new WebSocket(`ws://localhost:3000/ws/message?id_event=${eventId}`);
+		ws = new WebSocket(`${urlWs}/message?id_event=${eventId}&token=${token}`);
 
 		ws.addEventListener('message', handleMessage);
 
 		ws.addEventListener('open', () => {
 			connected = true;
+
+			// === Ping automatique toutes les 25 secondes ===
+			const pingInterval = setInterval(() => {
+				if (ws.readyState === WebSocket.OPEN) {
+					ws.send(JSON.stringify({ type: 'ping' }));
+				} else {
+					clearInterval(pingInterval);
+				}
+			}, 25000);
 		});
 
-		ws.addEventListener('close', () => {
+		ws.addEventListener('close', (event) => {
 			connected = false;
 		});
 	});
+
+	const scrollToBottom = async (node: HTMLElement) => {
+		node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
+	};
 
 	function handleMessage(msg: MessageEvent) {
 		const data = JSON.parse(msg.data);
@@ -50,11 +65,11 @@
 		switch (data.type) {
 			case 'MESSAGES_ADD':
 				messages = [...messages, data.data];
-				conversationComponent.scrollToBottom(element);
+				scrollToBottom(element);
 				break;
 			case 'MESSAGES_SET':
 				messages = data.data;
-				conversationComponent.scrollToBottom(element);
+				scrollToBottom(element);
 				break;
 		}
 	}
