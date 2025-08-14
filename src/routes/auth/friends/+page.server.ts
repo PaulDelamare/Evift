@@ -8,6 +8,8 @@ import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { findUserByEmailSchema } from '$lib/validationSchema/friends.schema';
 import { uuidSchema } from '$lib/validationSchema/base.schema';
+import { requestAccount } from '$lib/validationSchema/requestAccount.schema';
+import RequestAccountApi from '$lib/server/requestAccount.server';
 
 export const load = (async (event) => {
 
@@ -122,5 +124,22 @@ export const actions: Actions = {
 			status: 200,
 			success: true
 		});
+	},
+
+	requestFriend: async (event) => {
+		const form = await superValidate(event, zod(requestAccount));
+
+		if (!form.valid) {
+			return message(form, { error: 'Veuillez remplir tous les champs' });
+		}
+
+		const api = new RequestAccountApi(event.fetch);
+		const res = await api.requestAccount(form.data.email, null);
+
+		if ('error' in res) {
+			return message(form, { error: res.error.error });
+		}
+
+		return message(form, { success: true, message: 'Demande de compte envoyée avec succès' });
 	}
 };
