@@ -18,6 +18,9 @@
 	export let PUBLIC_CAPTCHA_KEY: string;
 	export let rgpd = false;
 	export let errorRgpd: string | undefined = undefined;
+	export let moreContent = "";
+	export let classCustom = "";
+	export let classForm = "";
 
 	let captchaSubmit: Captcha;
 	let token = '';
@@ -36,7 +39,7 @@
 
 
 <div
-	class="mobile-large:p-8 mobile:px-4 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl min-h-[744.5px]"
+	class="{classCustom} mobile-large:p-8 mobile:px-4 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl min-h-[744.5px]"
 	in:fade={{ duration: 1000 }}
 	out:fade={{ duration }}
 >
@@ -53,13 +56,14 @@
 			submitted = true;
 			captchaSubmit.onSubmitCaptcha();
 		}}
-		class="column w-full gap-10 text max-w-[450px] mx-auto"
+		class="{classForm} column w-full gap-10 text max-w-[450px] mx-auto"
 	>
-		<h2 class="text-gradient mobile:text-4xl">{title}</h2>
+		<h2 class="!text-gradient mobile:text-4xl">{title}</h2>
+		<p class="text-center text-sm">{moreContent}</p>
 
 		{#each inputs as input}
 			{#if input.type === 'group'}
-				<div class="flex justify-between gap-8 mini-tablet:flex-col mini-tablet:w-full">
+				<div class="flex justify-between !w-full gap-8 mini-tablet:flex-col mini-tablet:w-full">
 					{#each input.inputs as subInput}
 						<Input
 							type={subInput.type}
