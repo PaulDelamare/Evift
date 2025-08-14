@@ -40,15 +40,15 @@
 		});
 	};
 
-	// Mount
 	onMount(() => {
-		// Check if grecaptcha is already loaded
-		// @ts-expect-error
-		if (window.grecaptcha) {
-			onSubmitCaptcha();
-		}
+		let check = setInterval(() => {
+			// @ts-expect-error
+			if (window.grecaptcha) {
+				clearInterval(check);
+				onSubmitCaptcha();
+			}
+		}, 100);
 	});
-
 </script>
 
 <!-- Define in header the captcha -->
