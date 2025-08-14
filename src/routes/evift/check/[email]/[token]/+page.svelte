@@ -1,26 +1,22 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
-	import FormRegister from '../FormLoginRegister.svelte';
-	import { page } from '$app/state';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { registerSchema } from '$lib/validationSchema/auth.schema';
 	import toast from 'svelte-french-toast';
+	import FormLoginRegister from '$lib/components/public/loginRegister/FormLoginRegister.svelte';
+	import type { PageData } from './$types';
+	import PageLayout from '$lib/components/structure/PageLayout.svelte';
+	import { goto } from '$app/navigation';
 
-	export let loginActivated = false;
-	export let email = '';
-	export let handleEmailChange: (event: Event) => void;
-	export let handleActivate = () => {};
-	export let PUBLIC_CAPTCHA_KEY: string;
+	export let data: PageData;
 
-	const { errors, message } = superForm(page.data.formRegister, {
-		validators: zodClient(registerSchema)
-	});
+	const PUBLIC_CAPTCHA_KEY = data.captchaKey;
+	const email = data.email;
+
+	const { errors, message } = superForm(data.form);
 
 	$: if ($message && $message.success) {
 		toast.success($message.message);
 		submitted = false;
-
-		handleActivate();
+		goto('/evift/login');
 	}
 
 	$: if ($message && $message.error) {
@@ -32,8 +28,10 @@
 	let submitted = false;
 </script>
 
-{#if !loginActivated}
-	<FormRegister
+<PageLayout>
+	<FormLoginRegister
+    classCustom="w-full bg-transparent"
+    classForm="!max-w-[700px] bg-surface-500 p-8 shadow-lg rounded-3xl"
 		errorRgpd={Array.isArray($errors?.rgpd)
 			? $errors.rgpd[0]
 			: typeof $errors?.rgpd === 'string'
@@ -43,6 +41,7 @@
 		bind:submitted
 		{PUBLIC_CAPTCHA_KEY}
 		title="Inscription"
+		moreContent="Vous retrouverez les invitations des utilisateurs après l'inscription. L'adresse email utilisé pour l'inscription est {email}."
 		action="?/register"
 		inputs={[
 			{
@@ -74,19 +73,6 @@
 			},
 
 			{
-				type: 'text',
-				label: 'Email*',
-				name: 'email',
-				value: email,
-				onInput: handleEmailChange,
-				error: Array.isArray($errors?.email)
-					? $errors.email[0]
-					: typeof $errors?.email === 'string'
-						? $errors.email
-						: undefined
-			},
-
-			{
 				type: 'password',
 				label: 'Mot de passe*',
 				name: 'password',
@@ -113,4 +99,4 @@
 		onSubmit={() => {}}
 		textSubmit="Inscription"
 	/>
-{/if}
+</PageLayout>

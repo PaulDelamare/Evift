@@ -31,7 +31,7 @@
 					<h2 class="text-gradient text-center">Liste des cadeaux</h2>
 				</div>
 			</div>
-			{#if roleUser.role?.name === 'admin' || roleUser.role?.name === 'gift'}
+			{#if roleUser.role?.name === 'admin' || roleUser.role?.name === 'superAdmin' || roleUser.role?.name === 'gift'}
 				<div class="wrap flex flex-col">
 					<button
 						on:click={() =>

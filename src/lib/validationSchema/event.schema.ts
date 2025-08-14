@@ -32,3 +32,28 @@ export const createEventSchema = z.object({
           }
      }
 });
+
+export const inviteFriends = z.object({
+     arrayInviteList: z.array(z.string().uuid()).optional(),
+     inviteList: z.string(),
+     eventId: z.string().uuid()
+}).superRefine((data, ctx) => {
+     if (data.inviteList && data.inviteList.trim() !== "") {
+          const uuids = data.inviteList.split(",").map(s => s.trim()).filter(Boolean);
+          const invalid = uuids.filter(uuid => !z.string().uuid().safeParse(uuid).success);
+          if (invalid.length > 0) {
+               ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: `Les valeurs suivantes ne sont pas des UUID valides: ${invalid.join(", ")}`,
+                    path: ["inviteList"],
+               });
+          } else {
+               data.arrayInviteList = uuids;
+          }
+     }
+});
+
+export const inviteNonFriendsSchema = z.object({
+     userId: z.string().uuid(),
+     eventId: z.string().uuid()
+});

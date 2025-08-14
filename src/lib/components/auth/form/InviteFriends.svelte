@@ -5,7 +5,13 @@
 	export let friends: boolean;
 	export let inviteList: string[];
 
-	let selected = false;
+	export let selected = false;
+	export let reset = false;
+
+	$: if (reset) {
+		selected = false;
+		reset = true;
+	}
 </script>
 
 <li class="w-full flex p-4 bg-surface-400 gap-12shadow-md items-center gap-8 mini-tablet:gap-4">

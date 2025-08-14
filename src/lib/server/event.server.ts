@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/private';
 import { Api } from './api.server';
-import type { Participant } from '$lib/models/participant.model';
+import type { InviteUser, Participant } from '$lib/models/participant.model';
 import type { ApiResponse } from '$lib/models/response.model';
 import { catchErrorRequest } from '$lib/functions/utils/catchErrorRequest/catchErrorRequest';
 import type { Event } from '$lib/models/event.model';
@@ -103,6 +103,26 @@ export default class EventApi extends Api {
 			);
 
 			return await response.json() as ApiResponse<Participant[]>;
+
+		} catch (error) {
+			catchErrorRequest(error, 'EventApi.getParticipants');
+			throw error;
+		}
+	};
+
+
+	getInviteUserForEvent = async (id: string): Promise<ApiResponse<InviteUser[]>> => {
+		try {
+			const response = await this.fetch(
+				`${this.authUrl}inviteUserForEvent/${id}`,
+				{
+					method: 'GET',
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include'
+				}
+			);
+
+			return await response.json() as ApiResponse<InviteUser[]>;
 
 		} catch (error) {
 			catchErrorRequest(error, 'EventApi.getParticipants');

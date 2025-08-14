@@ -26,7 +26,7 @@ export const handle = (async ({ event, resolve }) => {
 	const api = new AuthApi(event.fetch);
 	const userInfo = await api.getInfo();
 
-	if ('error' in userInfo) {
+	if ('error' in userInfo || !(userInfo.status === 200 || userInfo.status === 201 || userInfo.status === 204)) {
 
 		event.cookies.delete('accessToken', { path: '/' });
 		event.locals.user = undefined;

@@ -38,7 +38,8 @@ export const actions: Actions = {
 
 		if (!form.valid) {
 			return message(form, {
-				error: 'Formulaire invalide, veuillez vérifier les champs.'
+				error: 'Formulaire invalide, veuillez vérifier les champs.',
+				errors: form.errors
 			});
 		}
 
@@ -84,7 +85,8 @@ export const actions: Actions = {
 
 		if (!form.valid) {
 			return message(form, {
-				errors: form.errors
+				errors: form.errors,
+				error: "Formulaire invalide, veuillez vérifier les champs."
 			});
 		}
 

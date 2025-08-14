@@ -112,13 +112,13 @@
 			>
 				<a
 					on:click={changePage}
-					aria-current={item.start
+					aria-current={item.start && !hoverFooter
 						? $page.url.pathname.startsWith(item.path)
 							? mobile
 								? 'location'
 								: 'page'
 							: undefined
-						: $page.url.pathname === item.path
+						: $page.url.pathname === item.path && !hoverFooter
 							? mobile
 								? 'location'
 								: 'page'

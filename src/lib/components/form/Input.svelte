@@ -34,13 +34,13 @@
 
 <!-- Container-->
 <div class="w-full">
-	<div class="form-control gradient">
+	<div class="form-control !gradient">
 		<div class="bg-surface-500">
 
 			{#if type !== 'content'}
 				<input
 					{type}
-					class="text-tertiary-500 {classInput}"
+					class="!text-tertiary-500 {classInput}"
 					{name}
 					required
 					{value}
@@ -48,7 +48,7 @@
 				/>
 			{:else}
 				<textarea
-					class="!box-border text-tertiary-500 {classInput} resize-none"
+					class="!box-border !text-tertiary-500 {classInput} resize-none"
 					{name}
 					required
 					{value}
@@ -57,7 +57,7 @@
 			{/if}
 
 			<!-- svelte-ignore a11y-label-has-associated-control -->
-			<label class="text-gradient">
+			<label class="!text-gradient">
 				{#each labelSpans as { char, delay }}
 					<span style="transition-delay:{delay}ms">{char}</span>
 				{/each}
