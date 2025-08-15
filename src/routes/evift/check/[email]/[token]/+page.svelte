@@ -30,8 +30,8 @@
 
 <PageLayout>
 	<FormLoginRegister
-    classCustom="w-full bg-transparent"
-    classForm="!max-w-[700px] bg-surface-500 p-8 shadow-lg rounded-3xl"
+		classCustom="w-full bg-transparent"
+		classForm="!max-w-[700px] bg-surface-500 p-8 shadow-lg rounded-3xl"
 		errorRgpd={Array.isArray($errors?.rgpd)
 			? $errors.rgpd[0]
 			: typeof $errors?.rgpd === 'string'
