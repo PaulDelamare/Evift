@@ -7,13 +7,15 @@
 
 	// Know if form is submitted
 	export let submitted: boolean;
+	export let rounded = "";
+	export let classCustom =""
 </script>
 
 <!-- Container for animation -->
-<div class="w-full group bg-gradient p-[2px] active:scale-95 custom-transition">
+<div class="w-full group bg-gradient p-[2px] active:scale-95 custom-transition {rounded} {classCustom}">
 	<!-- Second div for animation -->
 	<div
-		class="w-full group-hover:bg-surface-500 custom-transition {submitted ? 'bg-surface-500' : ''}"
+		class="w-full group-hover:bg-surface-500 custom-transition {rounded} {submitted ? 'bg-surface-500' : ''}"
 	>
 		<!-- Submit button -->
 		<button
