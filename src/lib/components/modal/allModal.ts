@@ -3,6 +3,7 @@ import ContactModal from './ContactModal.svelte';
 import FindUserByEmail from './FindUserByEmail.svelte';
 import ParticipantModel from './ParticipantModel.svelte';
 import ListGift from './ListGift.svelte';
+import AddProductModal from './AddProductModal.svelte';
 
 export const modalComponentRegistry: Record<string, ModalComponent> = {
 	ContactModal: {
@@ -26,6 +27,12 @@ export const modalComponentRegistry: Record<string, ModalComponent> = {
 	ListGift: {
 		// Pass a reference to your custom component
 		ref: ListGift
+		// Add the component properties as key/value pairs
+		// props: { },
+	},
+	AddProductModal: {
+		// Pass a reference to your custom component
+		ref: AddProductModal
 		// Add the component properties as key/value pairs
 		// props: { },
 	}
