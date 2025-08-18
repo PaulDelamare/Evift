@@ -90,7 +90,7 @@
 		<input class="hidden" type="text" name="secret" value={token} />
 
 		{#if forgotPassword}
-			<a class="self-end text-secondary-500" href="/">Mot de passe oublie ?</a>
+			<a class="self-end text-secondary-500" href="/evift/login/forgot-password">Mot de passe oublie ?</a>
 		{/if}
 
 		{#if rgpd}
