@@ -11,6 +11,7 @@ let email: string;
 let token: string;
 
 export const load = (async (event) => {
+
     email = event.params.email;
     token = event.params.token;
 

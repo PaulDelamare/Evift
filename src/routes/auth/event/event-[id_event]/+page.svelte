@@ -7,6 +7,7 @@
 	import renderModal from '$lib/functions/modal/renderModal';
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
+	import CartSvg from '$lib/components/svg/CartSvg.svelte';
 
 	export let data: PageData;
 	$: event = data.event.event;
@@ -48,7 +49,7 @@
 			class=" wrap gap-8 grid grid-cols-[repeat(auto-fit,_minmax(360px,_1fr))] mini-tablet:grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))] px-4"
 		>
 			<div
-				class="w-full min-h-96 bg-gradient rounded-3xl flex flex-col justify-center items-center gap-8 text-surface-500"
+				class="w-full px-2 min-h-96 bg-gradient rounded-3xl flex flex-col justify-center items-center gap-8 text-surface-500"
 			>
 				<LogoSvg fill="fill-surface-500" widthSvg={75} />
 				<h3>Liste de cadeaux</h3>
@@ -57,12 +58,21 @@
 				</a>
 			</div>
 			<div
-				class="w-full min-h-96 bg-gradient rounded-3xl flex flex-col justify-center items-center gap-8 text-surface-500"
+				class="w-full px-2 min-h-96 bg-gradient rounded-3xl flex flex-col justify-center items-center gap-8 text-surface-500"
 			>
 				<MessageSvg classSvg="fill-surface-500 w-24" />
 				<h3>Conversation</h3>
 				<a href="/auth/event/event-{id_event}/conversation">
 					<SlideButton text="Accéder" />
+				</a>
+			</div>
+			<div
+				class="w-full min-h-96 bg-gradient rounded-3xl flex flex-col justify-center px-2 items-center gap-8 text-surface-500"
+			>
+				<CartSvg classSvg="fill-surface-500 w-24" />
+				<h3 class="text-center">À Ramener</h3>
+				<a href="/auth/event/event-{id_event}/item">
+					<SlideButton text="Accéder" toRight={false} />
 				</a>
 			</div>
 		</div>

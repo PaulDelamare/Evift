@@ -30,7 +30,7 @@ self.addEventListener('activate', event => {
      );
 });
 
-self.addEventListener('fetch', async event => {
+self.addEventListener('fetch', event => {
      if (event.request.url.includes('/api/') ||
           event.request.url.includes('/uploads/')) {
           return;
@@ -38,15 +38,29 @@ self.addEventListener('fetch', async event => {
 
      event.respondWith((async () => {
           try {
-               const response = await fetch(event.request);
-               return response;
+               const networkResponse = await fetch(event.request);
+               if (event.request.method === 'GET' && networkResponse.ok) {
+                    const cache = await caches.open(CACHE);
+                    cache.put(event.request, networkResponse.clone());
+               }
+               return networkResponse;
           } catch (error) {
+               self.clients.matchAll().then(clients => {
+                    clients.forEach(client => {
+                         client.postMessage({ type: 'OFFLINE' });
+                    });
+               });
+
                const cachedResponse = await caches.match(event.request);
                if (cachedResponse) {
                     return cachedResponse;
                }
-               // Redirige vers la page d'erreur SvelteKit
-               return Response.redirect('/error?status=400&message=Vous%20%C3%AAtes%20hors%20ligne', 302);
+
+               if (event.request.mode === 'navigate') {
+                    return caches.match('/')
+                         .then(response => response || new Response('Vous êtes hors ligne.', { status: 503, statusText: 'Offline' }));
+               }
+               return new Response('Vous êtes hors ligne.', { status: 503, statusText: 'Offline' });
           }
      })());
 });

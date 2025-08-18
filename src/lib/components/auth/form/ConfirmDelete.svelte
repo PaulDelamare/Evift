@@ -10,6 +10,8 @@
 	export let name: string;
 	export let action: string;
 	export let successDelete: () => void;
+	export let classCustom = '';
+	export let classForm = '';
 </script>
 
 <form
@@ -25,8 +27,8 @@
 	}}
 	method="POST"
 	{action}
-	class="p-2"
+	class="p-2 {classForm}"
 >
 	<input name="id" type="hidden" value={id} />
-	<DeleteButton />
+	<DeleteButton classButton={classCustom} />
 </form>
