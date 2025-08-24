@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 	import { getModalStore, type ModalStore } from '@skeletonlabs/skeleton';
 	import renderModal from '$lib/functions/modal/renderModal';
+	import { goto } from '$app/navigation';
 
 	export let ulClass = '';
 	export let liClass = '';
@@ -13,6 +14,9 @@
 	export let hover = false;
 	export let hoverFooter = false;
 	export let responsive = false;
+
+	// Nouveau : contrôle si on veut afficher le bouton install
+	export let showInstall = false;
 
 	$: user = $page.data.user;
 	$: notificationFriends = $page.data.notificationFriends as number;
@@ -30,51 +34,16 @@
 
 	$: if (!user) {
 		nav = [
-			{
-				text: 'Accueil',
-				path: '/',
-				start: false,
-				id: 'home-unauth'
-			},
-			{
-				text: 'Qui Sommes-Nous ?',
-				path: '/evift/details',
-				start: true,
-				id: 'about-unauth'
-			},
-			{
-				text: 'Inscription/Connexion',
-				path: '/evift/login',
-				start: true,
-				id: 'login-unauth'
-			}
+			{ text: 'Accueil', path: '/', start: false, id: 'home-unauth' },
+			{ text: 'Qui Sommes-Nous ?', path: '/evift/details', start: true, id: 'about-unauth' },
+			{ text: 'Inscription/Connexion', path: '/evift/login', start: true, id: 'login-unauth' }
 		];
 	} else {
 		nav = [
-			{
-				text: 'Evénements',
-				path: '/auth/event',
-				start: true,
-				id: 'event-auth'
-			},
-			{
-				text: 'Liste des cadeaux',
-				path: '/auth/gift',
-				start: true,
-				id: 'gift-auth'
-			},
-			{
-				text: 'Invitation',
-				path: '/auth/invitation',
-				start: true,
-				id: 'invitation-auth'
-			},
-			{
-				text: 'Amis',
-				path: '/auth/friends',
-				start: true,
-				id: 'friends-auth'
-			}
+			{ text: 'Evénements', path: '/auth/event', start: true, id: 'event-auth' },
+			{ text: 'Liste des cadeaux', path: '/auth/gift', start: true, id: 'gift-auth' },
+			{ text: 'Invitation', path: '/auth/invitation', start: true, id: 'invitation-auth' },
+			{ text: 'Amis', path: '/auth/friends', start: true, id: 'friends-auth' }
 		];
 	}
 
@@ -85,16 +54,60 @@
 	const aC = `nav ${aClass} ${hover ? 'hover:!text-gradient hover:!duration-300' : ''} ${hoverFooter ? 'hover:!text-surface-700 hover:!duration-300' : ''}`;
 	const navC = `${navClass}`;
 
-	/**
-	 * Emits a "changePage" event when a click is detected.
-	 *
-	 * @return {void} This function does not return anything.
-	 */
 	const changePage = (): void => {
 		dispatch('changePage');
 	};
 
 	const modalStore: ModalStore = getModalStore();
+
+	let installAvailable = false;
+	let isIOS = false;
+	let isStandalone = false;
+
+	function handleBeforeInstallPrompt() {
+		if (typeof window !== 'undefined') {
+			installAvailable = true;
+			localStorage.setItem('pwa_install_available', 'true');
+		}
+	}
+
+	function handleAppInstalled() {
+		installAvailable = false;
+		localStorage.removeItem('pwa_install_available');
+		localStorage.setItem('pwa_installed', 'true');
+		goto('/evift/login');
+	}
+
+	onMount(() => {
+		isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !('MSStream' in window);
+		isStandalone =
+			window.matchMedia('(display-mode: standalone)').matches ||
+			(window.navigator as any).standalone ||
+			(document.referrer || '').includes('android-app://');
+
+		if (isStandalone || localStorage.getItem('pwa_installed') === 'true') {
+			goto('/evift/login');
+		}
+
+		if (localStorage.getItem('pwa_install_available') === 'true') {
+			installAvailable = true;
+		}
+
+		window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+		window.addEventListener('appinstalled', handleAppInstalled as EventListener);
+	});
+
+	onDestroy(() => {
+		if (typeof window !== 'undefined') {
+			window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
+			window.removeEventListener('appinstalled', handleAppInstalled as EventListener);
+		}
+	});
+
+	function triggerInstallFromNav() {
+		if (!installAvailable || isIOS || isStandalone) return;
+		window.dispatchEvent(new CustomEvent('pwa-install-trigger'));
+	}
 </script>
 
 <nav class={navC}>
@@ -142,11 +155,13 @@
 				{/if}
 			</li>
 		{/each}
+
 		{#if user && !contact}
 			<form class={liC} action="/evift/login?/logout" method="POST">
 				<button class={aC} type="submit"> Déconnexion </button>
 			</form>
 		{/if}
+
 		{#if contact}
 			<li class={liC}>
 				<button
@@ -154,6 +169,14 @@
 					class={aC}
 				>
 					Contact
+				</button>
+			</li>
+		{/if}
+
+		{#if showInstall && installAvailable && !isIOS && !isStandalone}
+			<li class={liC}>
+				<button on:click={triggerInstallFromNav} class={aC} aria-label="Installer l'application">
+					Installer l'application
 				</button>
 			</li>
 		{/if}
