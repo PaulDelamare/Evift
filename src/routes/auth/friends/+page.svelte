@@ -18,6 +18,7 @@
 	import { fakeFriends } from '$lib/driver/fakeFriends';
 	import { openAddFriend } from '$lib/driver/storeDriver';
 	import { invalidateAll } from '$app/navigation';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	export let data: PageData;
 
@@ -81,23 +82,25 @@
 	};
 </script>
 
-<PageLayout padding="py-12" gap="gap-12">
-	<!-- Display event and friends button -->
-	<div class="wrap px-4 flex w-full gap-8 justify-between mx-auto mobile-large:flex-col">
-		<input
-			bind:value={search}
-			type="search"
-			class="bg-surface-400 border-none shadow-md rounded-full"
-			placeholder="Rechercher..."
-		/>
-		<button
-			id="addFriendButton"
-			on:click={() => renderModal(modalStore, 'FindUserByEmail', 'Contact', 'Contactez nous')}
-			class="mobile-large:justify-center px-4 py-2 rounded-xl bg-gradient text-surface-500 flex gap-2 items-center custom-transition hover:scale-[.97] active:scale-90"
-		>
-			<PlusSvg classSvg="fill-surface-500 w-4" />
-			Ajouter
-		</button>
+<PageLayout padding={$innerWidthStore < 1151 ? 'mb-10 pt-4' : 'py-24'} gap="gap-12">
+	<div class="wrap px-4 flex flex-col gap-4 items-center">
+		<h3 class="text-center text-gradient w-fit">Amis</h3>
+		<div class="px-4 flex w-full gap-8 justify-between mx-auto mobile-large:flex-col">
+			<input
+				bind:value={search}
+				type="search"
+				class="bg-surface-400 border-none shadow-md rounded-full"
+				placeholder="Rechercher..."
+			/>
+			<button
+				id="addFriendButton"
+				on:click={() => renderModal(modalStore, 'FindUserByEmail', 'Contact', 'Contactez nous')}
+				class="mobile-large:justify-center px-4 py-2 rounded-xl bg-gradient text-surface-500 flex gap-2 items-center custom-transition hover:scale-[.97] active:scale-90"
+			>
+				<PlusSvg classSvg="fill-surface-500 w-4" />
+				Ajouter
+			</button>
+		</div>
 	</div>
 
 	<section class="wrap px-4 flex flex-col gap-8">
