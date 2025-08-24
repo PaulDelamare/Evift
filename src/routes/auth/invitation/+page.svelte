@@ -15,6 +15,7 @@
 	import { fakeUserInvitation } from '$lib/driver/fakeInvitation';
 	import { friendPage } from '$lib/driver/storeDriver';
 	import NotificationCircle from '$lib/components/extra/notificationCircle/NotificationCircle.svelte';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	export let data: PageData;
 	const user = data.user;
@@ -58,38 +59,39 @@
 	}
 </script>
 
-<PageLayout padding="py-12" gap="gap-12">
-	<div id="invitationNav" class="flex gap-8 justify-between mx-auto px-4">
-		<button
-			on:click={() => (event = true)}
-			class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {event
-				? 'bg-gradient text-surface-500'
-				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full relative"
-		>
-			<p class="nav">Evenement</p>
+<PageLayout padding={$innerWidthStore < 1151 ? 'pb-36 pt-4' : 'py-24'} gap="gap-12">
+	<div class="wrap flex flex-col gap-4 items-center">
+		<h3 class="text-center text-gradient w-fit">Invitations</h3>
+		<div id="invitationNav" class="flex gap-8 justify-between mx-auto px-4">
+			<button
+				on:click={() => (event = true)}
+				class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {event
+					? 'bg-gradient text-surface-500'
+					: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full relative"
+			>
+				<p class="nav">Evenement</p>
 
-			<NotificationCircle notification={notificationEvents} active={event} />
+				<NotificationCircle notification={notificationEvents} active={event} />
+			</button>
 
-		</button>
+			<button
+				id="friendsInvitation"
+				on:click={() => {
+					event = false;
 
-		<button
-			id="friendsInvitation"
-			on:click={() => {
-				event = false;
+					if (user.firstLogin) {
+						driver.moveNext();
+					}
+				}}
+				class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {!event
+					? 'bg-gradient text-surface-500'
+					: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full text-surface-500 relative"
+			>
+				<p class="nav">Amis</p>
 
-				if (user.firstLogin) {
-					driver.moveNext();
-				}
-			}}
-			class="max-w-[183px] w-[183px] mobile-large:w-[100px] text-center shadow-md cursor-pointer {!event
-				? 'bg-gradient text-surface-500'
-				: 'bg-surface-400 text-tertiary-500'} py-1 rounded-full text-surface-500 relative"
-		>
-			<p class="nav">Amis</p>
-
-			<NotificationCircle notification={notificationFriends} active={!event} />
-
-		</button>
+				<NotificationCircle notification={notificationFriends} active={!event} />
+			</button>
+		</div>
 	</div>
 
 	<section class="wrap px-4">

@@ -38,7 +38,8 @@ export const actions: Actions = {
 		}
 
 		return message(form, {
-			success: true
+			success: true,
+			message: 'Liste de cadeaux créée avec succès'
 		});
 	}
 };

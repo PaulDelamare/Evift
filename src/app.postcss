@@ -42,7 +42,8 @@ body {
 	}
 
 	h2 {
-		@apply text-[50px] !font-akshar font-bold tracking-widest inline leading-tight;
+		font-size: clamp(1.8rem, 3vw, 3rem);
+		@apply !font-akshar font-bold tracking-widest inline leading-tight;
 	}
 
 	h3 {
@@ -50,7 +51,8 @@ body {
 	}
 
 	h4 {
-		@apply text-2xl !font-slab font-bold inline leading-tight;
+		font-size: clamp(1.3rem, 2vw, 2rem);
+		@apply !font-slab font-bold inline leading-tight;
 	}
 
 	span {
@@ -166,9 +168,9 @@ body {
 	/* Responsive */
 	@media screen and (max-width: 640px) {
 		/* Responsive style Balise */
-		h2 {
+		/* h2 {
 			@apply text-5xl;
-		}
+		} */
 
 		h3 {
 			@apply text-3xl;

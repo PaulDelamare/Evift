@@ -1,4 +1,6 @@
 <script>
+	import { page } from '$app/stores';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 	import BlueBg from './BlueBg.svelte';
 	import PinkBg from './PinkBg.svelte';
 
@@ -17,20 +19,21 @@
 	export let blueRight = 'right-0 mini-desk:-right-52';
 </script>
 
-<!-- Display Page Hero -->
-<slot name="hero" />
-<!-- Place div whith flex display -->
 <div
-	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden min-h-[80svh]"
+	id="target-element"
+	class="w-full"
 >
-	<!-- If pink background is true display pink background -->
+	<slot name="hero" />
+</div>
+
+<div
+	class="flex flex-col {gap} {padding} mini-tablet:gap-12 mini-tablet:py-12 relative overflow-hidden min-h-[100svh]"
+>
 	{#if pinkBackground}
 		<PinkBg {pinkWidth} {pinkTop} {pinkLeft} />
 	{/if}
-	<!-- If blue background is true display blue background -->
 	{#if blueBackground}
 		<BlueBg {blueWidth} {blueBottom} {blueRight} />
 	{/if}
-	<!-- Display all page content -->
 	<slot />
 </div>

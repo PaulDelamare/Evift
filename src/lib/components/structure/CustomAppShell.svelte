@@ -14,7 +14,7 @@
 	export let footerFixe: boolean = false;
 
 	// Position class
-	const sticky = 'sticky top-0 z-50';
+	const sticky = 'fixed top-0 z-50 w-full';
 
 	// Create class
 	const headerC = `${headerClass} ${headerSticky ? sticky : ''} ${headerFixe ? 'fixed top-0 w-full' : ''} bg-surface-500 max-h-[79px]`;

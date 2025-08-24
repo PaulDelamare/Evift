@@ -1,9 +1,11 @@
 <script lang="ts">
+	import BackButton from '$lib/components/extra/BackButton.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 </script>
 
-<PageLayout>
+<PageLayout padding="py-24 mt-12 flex flex-col justify-center">
 	<section>
+		<div class="p-2"><BackButton url={`/evift/login`} fillSvg="fill-primary-500" /></div>
 		<div class="middle-wrap flex flex-col items-center text-center gap-8 px-4">
 			<div class="flex flex-col items-center gap-4">
 				<h2 class="mb-4 font-bold text-primary">Conditions générales d'utilisation</h2>

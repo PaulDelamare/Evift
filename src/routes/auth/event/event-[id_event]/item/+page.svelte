@@ -13,6 +13,7 @@
 	import toast from 'svelte-french-toast';
 	import ConfirmDelete from '$lib/components/auth/form/ConfirmDelete.svelte';
 	import { invalidateAll } from '$app/navigation';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 	const modalStore = getModalStore();
 
 	const { message } = superForm(data.formReleaseItem);
@@ -82,9 +83,9 @@
 	};
 </script>
 
-<PageLayout padding="py-8" gap="gap-8">
-	<div class="min-h-screen px-2 font-sans flex flex-col items-center overflow-x-hidden min-w-0">
-		<header class="text-center w-full wrap">
+<PageLayout padding="{$innerWidthStore < 1151 ? 'mb-10 pt-4' : 'py-24'}" gap="gap-8">
+	<div class="min-h-screen px-2 font-sans flex flex-col gap-4 items-center overflow-x-hidden min-w-0">
+		<header class="text-center w-full wrap flex flex-col gap-4">
 			<BackButton url={`/auth/event/event-${data.event.id_event}`} fillSvg="fill-secondary-500" />
 			<h2
 				class="font-extrabold text-3xl md:text-4xl lg:text-5xl tracking-tight leading-tight bg-gradient-to-r text-gradient bg-clip-text text-transparent"
