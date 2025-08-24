@@ -4,6 +4,7 @@
 	import PlusSvg from '$lib/components/svg/PlusSvg.svelte';
 	import { Paginator, type PaginationSettings } from '@skeletonlabs/skeleton';
 	import { fakeLists } from '$lib/driver/fakeGiftData';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	export let data: PageData;
 
@@ -36,22 +37,26 @@
 	}
 </script>
 
-<PageLayout padding="py-12" gap="gap-12">
-	<div class="wrap px-4 flex w-full gap-8 justify-between mx-auto mobile-large:flex-col">
-		<input
-			bind:value={search}
-			type="search"
-			class="bg-surface-400 border-none shadow-md rounded-full"
-			placeholder="Rechercher..."
-		/>
-		<a
-			href="/auth/gift/create"
-			class="mobile-large:justify-center px-4 py-2 rounded-xl bg-gradient text-surface-500 flex gap-2 items-center custom-transition hover:scale-[.97] active:scale-90"
-		>
-			<PlusSvg classSvg="fill-surface-500 w-4" />
-			Ajouter
-		</a>
+<PageLayout padding={$innerWidthStore < 1151 ? 'mb-10 pt-4' : 'py-24'} gap="gap-12">
+	<div class="wrap flex flex-col gap-4 items-center">
+		<h3 class="text-center text-gradient w-fit">Liste de cadeaux</h3>
+		<div class="wrap px-4 flex w-full gap-8 justify-between mx-auto mobile-large:flex-col">
+			<input
+				bind:value={search}
+				type="search"
+				class="bg-surface-400 border-none shadow-md rounded-full"
+				placeholder="Rechercher..."
+			/>
+			<a
+				href="/auth/gift/create"
+				class="mobile-large:justify-center px-4 py-2 rounded-xl bg-gradient text-surface-500 flex gap-2 items-center custom-transition hover:scale-[.97] active:scale-90"
+			>
+				<PlusSvg classSvg="fill-surface-500 w-4" />
+				Ajouter
+			</a>
+		</div>
 	</div>
+
 	<section>
 		{#if paginatedSource.length !== 0}
 			<div class="wrap px-4 flex flex-col items-center gap-8">
