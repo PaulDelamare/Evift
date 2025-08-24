@@ -20,7 +20,7 @@
 		<img class="w-full" src="/svg/login/{img}" alt="Svg Register" />
 	</div>
 	<!-- Display Text title -->
-	<h2 class="mobile-large:text-4xl">
+	<h2 class="text-pretty">
 		{h2}
 	</h2>
 	<!-- Display Text -->
