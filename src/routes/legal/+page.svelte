@@ -1,9 +1,11 @@
 <script>
+	import BackButton from '$lib/components/extra/BackButton.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
 </script>
 
-<PageLayout>
+<PageLayout padding="py-24 mt-12 flex flex-col justify-center">
 	<section>
+		<div class="p-2"><BackButton url={`/evift/login`} fillSvg="fill-primary-500" /></div>
 		<div class="middle-wrap flex flex-col items-center text-center gap-8 px-4">
 			<div>
 				<h2 class="mb-4 font-bold text-primary">Mentions légales</h2>
@@ -21,7 +23,7 @@
 				</h3>
 				<div class=" text-justify">
 					<p class="mb-4 text-lg text-tertiary w-full">
-						Le présent site, accessible à l’URL http://localhost:5173/ (le « Site »), est édité par
+						Le présent site, accessible à l’URL https://evift.fr (le « Site »), est édité par
 						:
 					</p>
 					<p class="mb-4 text-lg text-tertiary w-full">
@@ -31,19 +33,19 @@
 				</div>
 			</div>
 			<div class="bar bg-tertiary-500 h-[1px] max-w-[600px]"></div>
-			<div class="w-full flex flex-col ">
+			<div class="w-full flex flex-col">
 				<h3 class="self-start mb-4 text-2xl font-bold text-primary w-full text-start">
 					Hébergement :
 				</h3>
 				<div class=" text-justify">
 					<p class="mb-4 text-lg text-tertiary w-full">
-						Le Site est hébergé par la société localhost, situé 16 bis rue Georges Brassens 76960
-						Notre Dame de Bondeville, (contact téléphonique ou email : +33781875226).
+						Le Site est hébergé sur un Nas synology par l'entreprise Posware, situé 61 rue du mail 76000
+						Rouen, (contact téléphonique ou email : +33781875226).
 					</p>
 				</div>
 			</div>
 			<div class="bar bg-tertiary-500 h-[1px] max-w-[600px]"></div>
-			<div class="w-full flex flex-col ">
+			<div class="w-full flex flex-col">
 				<h3 class="self-start mb-4 text-2xl font-bold text-primary w-full text-start">
 					Directeur de publication :
 				</h3>
@@ -54,7 +56,7 @@
 				</div>
 			</div>
 			<div class="bar bg-tertiary-500 h-[1px] max-w-[600px]"></div>
-			<div class="w-full flex flex-col ">
+			<div class="w-full flex flex-col">
 				<h3 class="self-start mb-4 text-2xl font-bold text-primary w-full text-start">
 					Nous contacter :
 				</h3>
@@ -67,7 +69,7 @@
 				</div>
 			</div>
 			<div class="bar bg-tertiary-500 h-[1px] max-w-[600px]"></div>
-			<div class="w-full flex flex-col ">
+			<div class="w-full flex flex-col">
 				<h3 class="self-start mb-4 text-2xl font-bold text-primary w-full text-start">
 					Données personnelles :
 				</h3>
