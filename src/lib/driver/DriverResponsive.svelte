@@ -91,10 +91,11 @@
 
 				// Burger
 				{
-					element: '#burgerButton',
+					element: '#navbar-responsive',
 					popover: {
 						title: 'Menu',
-						description: 'En cliquant sur ce bouton, vous pourrez accéder aux autres pages.',
+						description:
+							"C'est ici que vous retrouvez la navigation pour accéder aux autres pages.",
 						side: 'bottom',
 						align: 'start'
 					},
@@ -106,19 +107,6 @@
 				},
 
 				{
-					popover: {
-						title: 'Menu',
-						description: 'Voici la liste de toutes les pages accessibles.',
-						side: 'bottom',
-						align: 'start'
-					},
-					disableActiveInteraction: true,
-					onHighlightStarted: () => {
-						openBurger.set(true);
-						goto('/auth/event');
-					}
-				},
-				{
 					element: '#gift-auth-responsive',
 					popover: {
 						title: 'Listes de cadeaux',
@@ -129,7 +117,6 @@
 					disableActiveInteraction: true,
 					onHighlightStarted: () => {
 						goto('/auth/event');
-						openBurger.set(true);
 					},
 					onDeselected: () => {
 						goto('/auth/gift');
@@ -162,6 +149,19 @@
 				},
 
 				// Notifications
+				{
+					element: '#invitation-auth-responsive',
+					popover: {
+						title: 'Invitations',
+						description: 'Maintenant dirigeons nous vers la page des invitations.',
+						side: 'bottom',
+						align: 'start'
+					},
+					disableActiveInteraction: true,
+					onHighlightStarted: () => {
+						goto('/auth/invitation');
+					}
+				},
 				{
 					popover: {
 						title: 'Invitations',
@@ -260,6 +260,19 @@
 				},
 
 				// Friends
+				{
+					element: '#friends-auth-responsive',
+					popover: {
+						title: 'Amis',
+						description: 'Et enfin, vous pourrez gérer vos amis.',
+						side: 'bottom',
+						align: 'start'
+					},
+					disableActiveInteraction: true,
+					onHighlightStarted: () => {
+						goto('/auth/friends');
+					}
+				},
 
 				{
 					popover: {
@@ -359,6 +372,22 @@
 						goto('/auth/friends');
 						openAddFriend.set(true);
 						closeModal.set(false);
+					},
+					disableActiveInteraction: true
+				},
+				{
+					element: '#logout-button',
+					popover: {
+						title: "Une dernière chose",
+						description:
+							'En cliquant sur ce dernier bouton, vous aurez la possibilité de voir vos informations. et de vous déconnecter. Pratique, non ?',
+						side: 'bottom',
+						align: 'start'
+					},
+					onHighlightStarted: () => {
+						goto('/auth/friends');
+						openAddFriend.set(false);
+						closeModal.set(true);
 					},
 					disableActiveInteraction: true
 				},
