@@ -58,9 +58,9 @@
 </script>
 
 
-<PageLayout padding="py-12 flex flex-col justify-center">
-	<!-- Wrap container -->
-	<section class="wrap px-8 mobile-large:px-4">
+<PageLayout padding="py-24 mt-12 flex flex-col justify-center">
+
+	<section class="wrap px-8 mobile-large:px-2">
 		<div
 			class="tablet:overflow-visible tablet:shadow-none tablet:gap-12 tablet:!flex-col rounded-xl flex overflow-hidden shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] custom-transition min-h-[667px] relative {!loginActivated
 				? 'justify-end'
