@@ -10,7 +10,12 @@
 	let showInstallButton = false;
 	let isIOS = false;
 	let isStandalone = false;
-	let showInstallMessage = true; // Ajouté
+	let showInstallMessage = true;
+
+	function setInstalledFlag() {
+		localStorage.setItem('pwa_installed', 'true');
+		document.cookie = 'pwa_installed=true; path=/; SameSite=Lax';
+	}
 
 	onMount(() => {
 		isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !('MSStream' in window);
@@ -20,18 +25,26 @@
 			(window.navigator as any).standalone ||
 			document.referrer.includes('android-app://');
 
-		if (isStandalone) return;
+		if (isStandalone) {
+			setInstalledFlag();
+			return;
+		}
 
 		if (typeof window !== 'undefined' && !isIOS) {
 			window.addEventListener('beforeinstallprompt', (event) => {
 				event.preventDefault();
 				deferredPrompt = event as BeforeInstallPromptEvent;
 				showInstallButton = true;
+
+				setTimeout(() => {
+					showInstallButton = false;
+				}, 20000);
 			});
 
 			window.addEventListener('appinstalled', () => {
 				showInstallButton = false;
-				console.info('Application installée avec succès!');
+				setInstalledFlag();
+				console.info('✅ Application installée avec succès!');
 			});
 		}
 	});
@@ -41,9 +54,10 @@
 			deferredPrompt.prompt();
 			deferredPrompt.userChoice.then((choiceResult) => {
 				if (choiceResult.outcome === 'accepted') {
-					console.info("L'utilisateur a installé l'app");
+					console.info("✅ L'utilisateur a installé l'app");
+					setInstalledFlag();
 				} else {
-					console.info("L'utilisateur a refusé");
+					console.info("❌ L'utilisateur a refusé");
 				}
 				deferredPrompt = null;
 				showInstallButton = false;
