@@ -75,7 +75,7 @@
 						{$formData.gifts[i].name !== '' ? $formData.gifts[i].name : `Cadeau ${i + 1}`}
 					</h4>
 				</div>
-				<div class="flex gap-4 w-full">
+				<div class="flex flex-col sm:flex-row gap-4 w-full">
 					<label class="w-full flex flex-col gap-2">
 						<span class="pl-2">Nom du cadeau :</span>
 						<input
@@ -88,7 +88,7 @@
 						{/if}
 					</label>
 
-					<label class="flex flex-col gap-2 w-2/4">
+					<label class="flex flex-col gap-2 w-full sm:w-2/4">
 						<span class="pl-2">Quantité :</span>
 						<input
 							class="bg-surface-400 border-none rounded shadow-lg"
@@ -114,7 +114,7 @@
 					{/if}
 				</label>
 
-				<div class="absolute !top-4 !right-4">
+				<div class="absolute top-2 right-2 sm:top-4 sm:right-4">
 					<button class="" type="button" on:click={() => removeField(i)}
 						><XSvg classSVG="w-4 fill-secondary-500" /></button
 					>
