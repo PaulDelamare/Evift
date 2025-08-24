@@ -7,6 +7,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { checkGiftSchema } from '$lib/validationSchema/gift.schema';
 	import toast from 'svelte-french-toast';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 
 	export let data: PageData;
 
@@ -27,7 +28,7 @@
 	}
 </script>
 
-<PageLayout padding="py-8">
+<PageLayout padding="{$innerWidthStore < 1151 ? 'mb-10 pt-4' : 'py-24'}">
 	<section>
 		<div class="wrap px-4 flex flex-col gap-8">
 			<div class="text-center">
