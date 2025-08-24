@@ -39,7 +39,7 @@
 
 
 <div
-	class="{classCustom} mobile-large:p-8 mobile:px-4 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl min-h-[744.5px]"
+	class="{classCustom} mobile-large:p-8 mobile:px-2 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl min-h-[744.5px]"
 	in:fade={{ duration: 1000 }}
 	out:fade={{ duration }}
 >
@@ -94,18 +94,20 @@
 		{/if}
 
 		{#if rgpd}
-			<label for="rgpd" class="text-gradient flex items-center gap-1 font-medium">
+			<label for="rgpd" class="text-gradient flex items-center gap-2 font-medium mobile:text-sm tablet:text-base w-full">
 				<CustomCheckbox classCheck="!scale-50" name="rgpd" />
 
-				J'accepte la
-				<div>
-					<a href="/privacy" class="">politique de confidentialité</a>
-					<div class="h-[2px] w-full gradient"></div>
-				</div>
+				<span class="flex items-center gap-1 flex-wrap">
+					J'accepte la
+					<a href="/privacy" class="break-words min-w-[120px]">
+						politique de confidentialité
+						<div class="h-[1px] w-full gradient"></div>
+					</a>
+				</span>
 			</label>
 
 			{#if errorRgpd}
-				<p in:fade={{ duration: 200 }} class="errorMessage">
+				<p in:fade={{ duration: 200 }} class="errorMessage mobile:text-xs tablet:text-sm">
 					{errorRgpd}
 				</p>
 			{/if}
