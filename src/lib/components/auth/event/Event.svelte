@@ -36,16 +36,16 @@
 	<div class="w-full p-4 flex flex-col justify-between gap-4 items-center">
 		<div class="w-full flex gap-3 justify-between flex-col items-center">
 			<div class="w-full flex-col flex gap-2">
-				<h4 class=" text-center">
+				<h4 class="text-center text-base md:text-lg lg:text-xl break-words">
 					{event.name.charAt(0).toUpperCase() + event.name.slice(1)}
 				</h4>
-				<time class="text-center">Le {formatDate(event.date)} à {event.time}</time>
+				<time class="text-center text-sm md:text-base">Le {formatDate(event.date)} à {event.time}</time>
 			</div>
 			<div class="whitespace-nowrap flex gap-2">
 				<div>
 					<DotSvg classSvg="fill-secondary-500 w-4 p-0" />
 				</div>
-				<address class="">{event.address}</address>
+				<address class="text-xs md:text-sm break-words">{event.address}</address>
 			</div>
 		</div>
 		<div class="flex w-full gap-4 justify-center flex-col">
