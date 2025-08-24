@@ -7,6 +7,8 @@
 	import type { PageData } from './$types';
 	import { goto, invalidateAll } from '$app/navigation';
 	import ConfirmDelete from '$lib/components/auth/form/ConfirmDelete.svelte';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
+	import BackButton from '$lib/components/extra/BackButton.svelte';
 
 	export let data: PageData;
 
@@ -30,11 +32,14 @@
 	};
 </script>
 
-<PageLayout padding="py-8">
+<PageLayout padding="{$innerWidthStore < 1151 ? 'mb-10 pt-4' : 'py-24'}">
 	<section>
+		<div class="px-4">
+			<BackButton url={`/auth/gift`} fillSvg="fill-primary-500" />
+		</div>
 		<div class="wrap px-4 flex flex-col gap-8">
-			<div class="flex justify-between items-center">
-				<h2 class="text-gradient">{list.name}</h2>
+			<div class="flex justify-between items-center {$innerWidthStore < 1151 ? 'flex-col gap-4' : ''}">
+				<h2 class="text-gradient {$innerWidthStore < 1151 ? 'text-center' : ''}">{list.name}</h2>
 				<form>
 					<MultiButton index={0} identification="gift" side="end">
 						<div slot="summary">
