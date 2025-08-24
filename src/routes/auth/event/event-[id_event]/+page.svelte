@@ -8,6 +8,8 @@
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 	import CartSvg from '$lib/components/svg/CartSvg.svelte';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
+	import BackButton from '$lib/components/extra/BackButton.svelte';
 
 	export let data: PageData;
 	$: event = data.event.event;
@@ -17,7 +19,11 @@
 </script>
 
 <PageLayout>
-	<section slot="hero" class="bg-gradient py-12">
+	<section slot="hero" class="bg-gradient py-12 {$innerWidthStore > 1150 ? 'pt-32' : ''}">
+		<div class="px-4">
+			<BackButton url={`/auth/event`} fillSvg="fill-surface-500" />
+		</div>
+		
 		<div class="wrap px-4 flex flex-col gap-4">
 			<div class=" flex items-center justify-center gap-8 text-surface-500 mini-tablet:flex-col">
 				<div class="h-44 tablet:w-full w-80 overflow-hidden box-border shadow-md rounded-3xl">
