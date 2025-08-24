@@ -50,7 +50,7 @@
 			submitted = true;
 			captchaSubmit.onSubmitCaptcha();
 		}}
-		class="!max-w-[700px] bg-surface-500 p-8 shadow-lg rounded-3xl column w-full gap-10 text mx-auto "
+		class="!max-w-[700px] bg-surface-500 p-8 shadow-lg rounded-3xl column w-full gap-10 text mx-auto"
 	>
 		<h2 class="!text-gradient mobile:text-4xl">Mot de passe oublié</h2>
 		<p class="text-center text-sm">
