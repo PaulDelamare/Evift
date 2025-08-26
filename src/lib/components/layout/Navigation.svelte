@@ -85,7 +85,12 @@
 			(window.navigator as any).standalone ||
 			(document.referrer || '').includes('android-app://');
 
-		if (isStandalone || localStorage.getItem('pwa_installed') === 'true') {
+		let currentPath = window.location.pathname;
+
+		if (
+			(isStandalone || localStorage.getItem('pwa_installed') === 'true') &&
+			(currentPath === '/' || currentPath === '/details')
+		) {
 			goto('/evift/login');
 		}
 
