@@ -44,7 +44,7 @@
 			$innerWidthStore > 1150 ? 'pt-[80px]' : 'pt-2'
 		}`}
 	>
-		<BackButton url={`/auth/event/event-${event.event.id}`} fillSvg="fill-surface-500" />
+		<BackButton url={`/auth/event/event-${event.id_event}`} fillSvg="fill-surface-500" />
 		<h3 class="text-2xl font-semibold">{event.event.name}</h3>
 	</section>
 

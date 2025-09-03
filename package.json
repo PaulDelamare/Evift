@@ -14,7 +14,8 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
 		"docker:linux": "docker build -t evift . --platform=linux/amd64",
-		"docker:tar": "docker save evift > image-linux.tar"
+		"docker:tar": "docker save evift > image-linux.tar",
+		"generate:test": "npx playwright codegen http://localhost:5173/"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",

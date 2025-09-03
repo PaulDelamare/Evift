@@ -46,7 +46,7 @@
 	<form
 		use:enhance={() => {
 			return async ({ update }) => {
-				update({ reset: false });
+				update({ reset: false, invalidateAll: false });
 			};
 		}}
 		{action}

@@ -20,13 +20,14 @@
 	$: filteredLists = listsEvent.filter((list) => {
 		return list.list.name.toLowerCase().includes(search.toLowerCase());
 	});
+
 </script>
 
 <PageLayout padding={$innerWidthStore < 1151 ? 'mb-10 pt-4' : 'py-24'} gap="gap-8">
 	<section>
 		<div class="wrap px-4 flex flex-col gap-8">
 			<div>
-				<BackButton url={`/auth/event/event-${event.event.id}`} fillSvg="fill-secondary-500" />
+				<BackButton url={`/auth/event/event-${event.id_event}`} fillSvg="fill-secondary-500" />
 
 				<div class="flex justify-center">
 					<h2 class="text-gradient text-center">Liste des cadeaux</h2>
@@ -75,7 +76,7 @@
 									>
 										<a
 											class="mini-tablet:text-base mobile-large:text-2xl"
-											href="/auth/event/event-{event.event.id}/gifts/list-{list.id}">Accéder</a
+											href="/auth/event/event-{event.id_event}/gifts/list-{list.id}">Accéder</a
 										>
 									</button>
 								</div>
