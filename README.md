@@ -1,51 +1,161 @@
 # Evift
 
-Bienvenue sur Evift. Evift a pour ambition de faciliter les organisations d'événement familiaux ou avec ses amis en simplifiant la gestion de l'événement et des cadeaux comme pour les anniversaires ou Noël. En simplifiant l'organisation, Evift a pour objectif de rapprocher les familles et amis qui n'osent pas se voir à cause de la difficulté d'organisation générale.
+> Plateforme de gestion d’événements et de listes de cadeaux pour familles et amis.
 
-Ceci est une première version. De nombreuses améliorations et nouveautés seront ajoutées dans le futur pour améliorer au mieux l'expérience utilisateur et la gestion des événements.
+---
 
-Ce projet a été réalisé dans le cadre d'un projet scolaire.
+## Table des matières
+
+- [Evift](#evift)
+  - [Table des matières](#table-des-matières)
+  - [Présentation](#présentation)
+  - [Prérequis](#prérequis)
+  - [Installation et configuration](#installation-et-configuration)
+  - [Structure du projet](#structure-du-projet)
+  - [Scripts npm utiles](#scripts-npm-utiles)
+  - [Lancement en développement](#lancement-en-développement)
+  - [Tests](#tests)
+  - [Build et mise en production](#build-et-mise-en-production)
+  - [Déploiement sur NAS avec Docker \& Portainer](#déploiement-sur-nas-avec-docker--portainer)
+  - [Bonnes pratiques \& conseils](#bonnes-pratiques--conseils)
+
+---
+
+## Présentation
+
+Evift vise à simplifier l’organisation d’événements (anniversaires, Noël, etc.) et la gestion des cadeaux, pour rapprocher familles et amis. Ce projet a été initié dans le cadre d’un projet scolaire et continue d’évoluer.
 
 ## Prérequis
 
-- Posséder git pour récupérer le projet
+- [Git](https://git-scm.com/) pour cloner le projet
+- [Node.js](https://nodejs.org/) >= 18 (testé avec 20.x)
+- [npm](https://www.npmjs.com/) >= 9.8.1
+- [Docker](https://www.docker.com/) (pour la production)
+- Accès à [Portainer](https://www.portainer.io/) (pour le déploiement sur NAS)
 
-- Posséder node pour avoir accès à la commande npm (version 9.8.1)
+## Installation et configuration
 
-## Récupérer le projet
+1. **Cloner le projet**
+	```bash
+	git clone https://github.com/PaulDelamare/Evift.git
+	cd evift
+	```
 
-Récupérer le projet à l'aide de la commande :
+2. **Installer les dépendances**
+	```bash
+	npm install
+	```
 
-```bash
-git clone https://github.com/PaulDelamare/Evift.git
+3. **Configurer les variables d’environnement**
+	- Copier `.env.exemple` en `.env` et compléter les valeurs nécessaires :
+	  ```bash
+	  cp .env.exemple .env
+	  # puis éditer .env
+	  ```
+	- Les clés Google reCAPTCHA sont obligatoires (voir https://www.google.com/recaptcha/about/)
+
+## Structure du projet
+
+```
+evift/
+├── build/                # Fichiers générés pour la prod (après build)
+│   ├── client/           # Fichiers statiques pour le client
+│   ├── server/           # Code serveur compilé
+│   └── ...
+├── src/                  # Code source principal
+│   ├── app.html          # Template HTML principal
+│   ├── app.d.ts          # Types globaux
+│   ├── app.postcss       # Config PostCSS
+│   ├── evift.ts          # Entrée principale
+│   ├── hooks.server.ts   # Hooks SvelteKit
+│   ├── lib/              # Librairies, composants, modèles, stores, etc.
+│   │   ├── components/   # Composants Svelte réutilisables
+│   │   ├── driver/       # Intégration de driver.js (tours interactifs)
+│   │   ├── functions/    # Fonctions utilitaires
+│   │   ├── models/       # Modèles TypeScript (User, Event, Gift...)
+│   │   ├── server/       # Fonctions côté serveur (API, auth...)
+│   │   ├── stores/       # Stores Svelte
+│   │   └── validationSchema/ # Schémas de validation Zod
+│   └── routes/           # Pages et endpoints SvelteKit
+│       ├── auth/         # Authentification, invitations, gifts, events...
+│       ├── evift/        # Pages principales de l'app
+│       ├── cgu/ legal/ privacy/ error/ # Pages légales et erreurs
+│       └── ...
+├── static/               # Fichiers statiques accessibles publiquement
+├── tests/                # Tests Playwright/Vitest
+├── Dockerfile            # Image Docker pour la prod
+├── package.json          # Dépendances et scripts
+├── vite.config.ts        # Config Vite
+├── svelte.config.js      # Config SvelteKit
+├── tsconfig.json         # Config TypeScript
+└── ...
 ```
 
-Puis ensuite rentrer dans le projet avec :
+## Scripts npm utiles
 
-```bash
-cd evift
-```
+- `npm run dev` : Lancer le serveur de développement
+- `npm run build` : Générer le build de production
+- `npm run preview` : Prévisualiser le build localement
+- `npm run test` : Lancer tous les tests (Playwright + Vitest)
+- `npm run lint` : Vérifier le linting
+- `npm run format` : Formatter le code
+- `npm run docker:linux` : Builder l’image Docker pour Linux/amd64
+- `npm run docker:tar` : Exporter l’image Docker en archive tar
 
-## Installer les dépendances
-
-Pour le bon fonctionnement du site, il faut tout d'abord installer les dépendances sinon il se produira des erreurs. Faites le avec la commande :
-
-```bash
-npm install
-```
-
-## Ajouter le .env
-
-Il ne faut pas oublier non plus d'ajouter le .env dans le projet. Ce fichier regroupe les informations importantes et secrètes du projet. Vous pouvez retrouver un exemple de ce qu'il faut remplir dans se .env dans le .env.exemple. Il faut donc ensuite adapter les données avec vos informations.
-
-> Le projet utilise le système de Google pour éviter les robots. Il faut donc que vous alliez chercher votre clef sur https://www.google.com/recaptcha/about/
-
-## Lancer le site
-
-Une fois, toutes ces étapes réalisées (si vous avez également récupéré l'api) il ne vous reste plus qu'à lancer le site avec la commande :
+## Lancement en développement
 
 ```bash
 npm run dev
 ```
+Le site sera accessible sur [http://localhost:5173/](http://localhost:5173/)
 
-Le site se lancera sur l'URL : http://localhost:5173/
+## Tests
+
+- **Tests end-to-end** :
+  ```bash
+  npm run test:integration
+  ```
+  (Lance Playwright sur le build local)
+
+- **Tests unitaires** :
+  ```bash
+  npm run test:unit
+  ```
+
+## Build et mise en production
+
+1. **Générer le build**
+	```bash
+	npm run build
+	```
+
+2. **Créer l’image Docker (Linux/amd64)**
+	```bash
+	npm run docker:linux
+	```
+
+3. **Exporter l’image Docker en tar**
+	```bash
+	npm run docker:tar
+	```
+
+## Déploiement sur NAS avec Docker & Portainer
+
+1. Se connecter à l’interface Portainer de votre NAS.
+2. Aller dans la section « Images » puis « Importer ».
+3. Uploader le fichier `image-linux.tar` généré précédemment.
+4. Une fois l’image importée, aller dans « Stacks » et mettre à jour la stack correspondante à Evift pour utiliser la nouvelle image.
+5. Redémarrer la stack si besoin.
+
+
+## Bonnes pratiques & conseils
+
+- **Sécurité :** Ne jamais versionner le fichier `.env` avec des secrets.
+- **Mises à jour :** Après chaque modification majeure, relancer un build et mettre à jour l’image sur le NAS.
+- **Tests :** Toujours lancer les tests avant un déploiement.
+- **Logs :** Surveillez les logs de la stack via Portainer pour détecter d’éventuels problèmes.
+- **Support :** Pour toute question, ouvrir une issue sur le [repo GitHub](https://github.com/PaulDelamare/Evift).
+
+---
+
+© Projet Evift – Paul Delamare
