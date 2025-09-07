@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:5173/');
+  await page.goto('https://evift.fr/');
   await expect(page.getByRole('img', { name: 'Mockup du site EVIFT sur' })).toBeVisible();
   await page.getByText('Crée ton événement Crée ton é').click();
   await page.getByText('Rejoins un événement Accepte').click();

@@ -4,20 +4,20 @@
 
 ---
 
-## Table des matières
+## Sommaire
 
 - [Evift](#evift)
-  - [Table des matières](#table-des-matières)
-  - [Présentation](#présentation)
-  - [Prérequis](#prérequis)
-  - [Installation et configuration](#installation-et-configuration)
-  - [Structure du projet](#structure-du-projet)
-  - [Scripts npm utiles](#scripts-npm-utiles)
-  - [Lancement en développement](#lancement-en-développement)
-  - [Tests](#tests)
-  - [Build et mise en production](#build-et-mise-en-production)
-  - [Déploiement sur NAS avec Docker \& Portainer](#déploiement-sur-nas-avec-docker--portainer)
-  - [Bonnes pratiques \& conseils](#bonnes-pratiques--conseils)
+	- [Sommaire](#sommaire)
+	- [Présentation](#présentation)
+	- [Prérequis](#prérequis)
+	- [Installation et configuration](#installation-et-configuration)
+	- [Structure du projet](#structure-du-projet)
+	- [Scripts npm utiles](#scripts-npm-utiles)
+	- [Lancement en développement](#lancement-en-développement)
+	- [Tests](#tests)
+	- [Build et mise en production](#build-et-mise-en-production)
+	- [Déploiement sur NAS avec Docker \& Portainer](#déploiement-sur-nas-avec-docker--portainer)
+	- [Bonnes pratiques \& conseils](#bonnes-pratiques--conseils)
 
 ---
 
