@@ -26,14 +26,16 @@
 	}
 
 	let innerWidth = 0;
+	let installed = data.installed;
 
 	$: if (innerWidth) {
 		innerWidthStore.set(innerWidth);
 	}
 
-	import { afterNavigate } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
 	import UserSvg from '$lib/components/svg/UserSvg.svelte';
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
 
 	afterNavigate(() => {
 		const targetElement = document.getElementById('target-element');
@@ -99,7 +101,6 @@
 						Déconnexion
 					</button>
 				</form>
-
 			</div>
 		</div>
 	{/if}

@@ -63,40 +63,111 @@
 	let installAvailable = false;
 	let isIOS = false;
 	let isStandalone = false;
+	let isMobile = false;
 
-	function handleBeforeInstallPrompt() {
-		if (typeof window !== 'undefined') {
-			installAvailable = true;
-			localStorage.setItem('pwa_install_available', 'true');
+	// Détection robuste - retourne vrai seulement si le navigateur indique explicitement standalone
+	function isStandaloneMode(): boolean {
+		if (typeof window === 'undefined') return false;
+		const navAny = window.navigator as any;
+		try {
+			const mm = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+			const navStandalone = navAny.standalone === true;
+			const referrerAndroid = (document.referrer || '').startsWith('android-app://');
+			return !!(mm || navStandalone || referrerAndroid);
+		} catch (e) {
+			return false;
 		}
 	}
 
+	// Handler beforeinstallprompt : stocke l'event pour déclenchement manuel plus tard
+	function handleBeforeInstallPrompt(e: Event) {
+		if (typeof window === 'undefined') return;
+		(window as any).__pwa_deferred_prompt = e;
+		installAvailable = true;
+		try {
+			sessionStorage.setItem('pwa_install_available', 'true');
+		} catch (err) {}
+		console.debug('[PWA] beforeinstallprompt received — installAvailable=true');
+	}
+
+	// Handler appinstalled : on marque l'installation, mais on ne redirige QUE si on est réellement en standalone
 	function handleAppInstalled() {
 		installAvailable = false;
-		localStorage.removeItem('pwa_install_available');
-		localStorage.setItem('pwa_installed', 'true');
-		goto('/evift/login');
+		try {
+			sessionStorage.removeItem('pwa_install_available');
+			localStorage.setItem('pwa_installed', 'true'); // uniquement info, ne déclenche pas la redirection à lui seul
+		} catch (err) {}
+		console.debug('[PWA] appinstalled event — stored pwa_installed=true');
+
+		// redirige uniquement si le navigateur est réellement en standalone
+		if (isStandaloneMode()) {
+			console.debug('[PWA] confirmed standalone after install -> redirect to /evift/login');
+			goto('/evift/login');
+		} else {
+			console.debug('[PWA] appinstalled but not standalone -> no redirect');
+		}
+	}
+
+	// déclenche l'installation depuis le nav (bouton)
+	async function triggerInstallFromNav() {
+		if (!installAvailable || isIOS || isStandalone) return;
+
+		const deferred = (window as any).__pwa_deferred_prompt;
+		if (deferred && typeof deferred.prompt === 'function') {
+			try {
+				await deferred.prompt();
+				// attendre userChoice si présent
+				if (deferred.userChoice && typeof deferred.userChoice.then === 'function') {
+					const choice = await deferred.userChoice;
+					console.debug('[PWA] userChoice', choice);
+				}
+				(window as any).__pwa_deferred_prompt = undefined;
+				installAvailable = false;
+				try { sessionStorage.removeItem('pwa_install_available'); } catch (e) {}
+			} catch (err) {
+				// fallback : dispatch un event custom pour que d'autres handlers s'en occupent
+				window.dispatchEvent(new CustomEvent('pwa-install-trigger'));
+			}
+		} else {
+			// fallback
+			window.dispatchEvent(new CustomEvent('pwa-install-trigger'));
+		}
 	}
 
 	onMount(() => {
-		isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !('MSStream' in window);
-		isStandalone =
-			window.matchMedia('(display-mode: standalone)').matches ||
-			(window.navigator as any).standalone ||
-			(document.referrer || '').includes('android-app://');
+		isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent) && !('MSStream' in window);
+		isMobile = typeof navigator !== 'undefined' && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+		isStandalone = isStandaloneMode();
 
-		let currentPath = window.location.pathname;
+		let currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
 
-		if (
-			(isStandalone || localStorage.getItem('pwa_installed') === 'true') &&
-			(currentPath === '/' || currentPath === '/details')
-		) {
+		// chemins où l'on souhaite forcer la redirection depuis la PWA
+		const pathsToRedirect = new Set(['/','/evift','/evift/','/evift/details','/details']);
+
+		// NOTE IMPORTANTE : on **NE** redirige plus juste parce que localStorage.pwa_installed === 'true'.
+		// On redirige uniquement si le navigateur indique le mode standalone (vraie PWA context).
+		const shouldRedirect = isStandalone; // strict
+
+		// Debug : affiche les valeurs pour comprendre ce qui change quand tu ouvres l'inspecteur
+		console.debug('[PWA] onMount debug:',
+			{ currentPath, isMobile, isIOS, isStandalone, localStorage_pwa_installed: (() => { try { return localStorage.getItem('pwa_installed'); } catch (e) { return 'err'; } })(),
+			  session_pwa_install_available: (() => { try { return sessionStorage.getItem('pwa_install_available'); } catch (e) { return 'err'; } })(),
+			  userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'no-nav' }
+		);
+
+		if (shouldRedirect && pathsToRedirect.has(currentPath)) {
+			console.debug('[PWA] redirect condition met -> goto /evift/login');
 			goto('/evift/login');
+		} else {
+			console.debug('[PWA] redirect condition NOT met -> stay');
 		}
 
-		if (localStorage.getItem('pwa_install_available') === 'true') {
-			installAvailable = true;
-		}
+		// restore installAvailable depuis session (UI)
+		try {
+			if (sessionStorage.getItem('pwa_install_available') === 'true') {
+				installAvailable = true;
+			}
+		} catch (err) {}
 
 		window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
 		window.addEventListener('appinstalled', handleAppInstalled as EventListener);
@@ -108,11 +179,6 @@
 			window.removeEventListener('appinstalled', handleAppInstalled as EventListener);
 		}
 	});
-
-	function triggerInstallFromNav() {
-		if (!installAvailable || isIOS || isStandalone) return;
-		window.dispatchEvent(new CustomEvent('pwa-install-trigger'));
-	}
 </script>
 
 <nav class={navC}>
