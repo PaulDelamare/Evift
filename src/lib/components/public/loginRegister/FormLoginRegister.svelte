@@ -39,7 +39,7 @@
 
 
 <div
-	class="{classCustom} mobile-large:p-8 mobile:px-2 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl min-h-[744.5px]"
+	class="{classCustom} mobile-large:p-8 mobile:px-2 tablet:shadow-[41px_41px_82px_0_rgba(190,190,190,1),-41px_-41px_82px_0_rgba(255,255,255,1)] bg-surface-500 w-2/4 tablet:w-full p-12 column justify-center tablet:rounded-xl  {$innerWidthStore < 1151 ? 'min-h-0' : 'min-h-[744.5px]'}"
 	in:fade={{ duration: 1000 }}
 	out:fade={{ duration }}
 >
