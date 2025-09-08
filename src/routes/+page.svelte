@@ -39,7 +39,7 @@
 				document.cookie = 'pwa_installed=; path=/; max-age=0';
 			} catch (e) {}
 
-			goto('/evift/login', { replaceState: true });
+			// goto('/evift/login', { replaceState: true });
 		}
 
 		if ($page.url.pathname === '/' && $page.data.user) {

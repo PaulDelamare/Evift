@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import LogoSvg from '$lib/components/extra/logo/LogoSvg.svelte';
 	import PageLayout from '$lib/components/structure/PageLayout.svelte';
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -47,7 +48,7 @@
 </script>
 
 <PageLayout padding="py-8">
-	<section class="bg-gradient py-4" slot="hero">
+	<section class="bg-gradient py-4 {$innerWidthStore < 1151 ? 'pt-20' : ''}" slot="hero">
 		<div class="wrap px-4 py-12 flex justify-center">
 			<h1
 				class=" text-[3.5rem] text-surface-500 !drop-shadow-2xl [text-shadow:_1px_1px_5px_rgba(0,0,0,0.5)]"

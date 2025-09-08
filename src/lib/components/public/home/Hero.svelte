@@ -1,39 +1,29 @@
 <script lang="ts">
+	import { innerWidthStore } from '$lib/stores/innerScreen.store';
+
 	// Imports
 	import { onDestroy } from 'svelte';
 	import Typewriter from 'svelte-typewriter';
 
-	// Variable
-	// Define text number for Display title and description associate to this number
 	let text = 0;
-	// Create Interval Variable
-	// Add Comment for disabled eslint for no import NodeJS but it's not necessary
-	let intervalId: NodeJS.Timeout; // eslint-disable-line no-undef
 
-	// Create Function for start interval
+	let intervalId: NodeJS.Timeout;
+
 	const startInterval = () => {
-		// Start interval
 		intervalId = setInterval(() => {
-			// Text increment
 			text++;
-			// If text > 2 then text = 0
 			if (text >= 3) text = 0;
-			// Execute all 10 secondes
 		}, 10000);
 	};
 
-	// Start interval
 	startInterval();
 
-	// Destroy interval when component destroyed
 	onDestroy(() => {
 		clearInterval(intervalId);
 	});
 </script>
 
-<!-- Display Hero -->
-<section class="bg-secondaryGradient h-[55rem] max-h-[94svh]">
-	<!-- Display Hero Information -->
+<section class="bg-secondaryGradient h-[55rem] max-h-[94svh] {$innerWidthStore < 1151 ? 'pt-20' : ''}">
 	<div
 		class="wrap h-full between px-12 gap-8 tablet:flex-col tablet:py-12 tablet:px-4 tablet:justify-evenly"
 	>
@@ -49,7 +39,6 @@
 						<h2 class="text-shadow-custom">Créez votre Wish List</h2>
 					{/if}
 				</Typewriter>
-				<!-- Display description with Textwritter animation -->
 				<Typewriter interval={30} cursor={false} unwriteInterval={0}>
 					{#if text == 0}
 						<h4 class="text-shadow-custom tablet:text-xl">
@@ -66,8 +55,6 @@
 					{/if}
 				</Typewriter>
 			</div>
-			<!-- Display title with Textwritter animation -->
-			<!-- Display button -->
 			<a
 				href="/evift/login"
 				class="nav px-12 py-2 bg-secondary-500 rounded-xl shadow-custom hover:bg-secondary-600 custom-transition !duration-300"
@@ -75,7 +62,6 @@
 				Je commence
 			</a>
 		</div>
-		<!-- Display mockup -->
 		<div class="w-[719px] mini-desk:max-w-[400px] tablet:!w-full mockup">
 			<img
 				class="w-full"
