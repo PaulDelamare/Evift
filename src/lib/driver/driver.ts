@@ -8,6 +8,9 @@ const createDriver = mod.driver;
 export const driver = createDriver({
      allowClose: true,
      showProgress: true,
+     doneBtnText: 'Terminer',
+     nextBtnText: 'Suivant',
+     prevBtnText: 'Précédent',
 
      onDestroyed: async () => {
           const response = await fetch('/auth/friends?/completeFirstLogin', {

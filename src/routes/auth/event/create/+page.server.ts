@@ -38,6 +38,7 @@ export const actions: Actions = {
 
 		const api = new EventApi(event.fetch);
 		const eventResult = await api.createEvent(form.data);
+
 		if ('error' in eventResult) {
 			return message(form, { error: eventResult.error.error || 'Une erreur est survenue lors de la création de l\'événement' });
 		}
